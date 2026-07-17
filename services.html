@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="FitItUp Services | 1-on-1 Online Coaching, Home Workouts, Diet Plans, Kids Training, Calisthenics by Ashish Satarkar." />
+  <title>Services | FIT IT UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-hero { min-height:42vh;display:flex;align-items:flex-end;padding-top:var(--nav-height);background:var(--clr-bg);position:relative;overflow:hidden; }
+    .page-hero::before { content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 60% 0%,rgba(0,242,254,0.12) 0%,transparent 60%); }
+    .page-hero__content { position:relative;z-index:1;padding-block:var(--sp-16) var(--sp-12); }
+    .page-hero__eyebrow { font-size:var(--fs-xs);font-weight:var(--fw-semi);color:var(--clr-red);text-transform:uppercase;letter-spacing:0.18em;margin-bottom:var(--sp-4);display:flex;align-items:center;gap:var(--sp-2); }
+    .page-hero__eyebrow::before { content:'';display:block;width:20px;height:2px;background:var(--clr-red); }
+    .page-hero h1 { font-family:var(--font-heading);font-size:clamp(2.8rem,8vw,6rem);text-transform:uppercase;line-height:0.95;margin-bottom:var(--sp-5); }
+    .page-hero p { font-size:var(--fs-md);color:var(--clr-gray-300);max-width:520px;line-height:1.7; }
+
+    /* Service Detail Cards */
+    .service-detail {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-6);
+      padding: var(--sp-10) 0;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .service-detail:last-child { border-bottom: none; }
+
+    .service-detail__icon-wrap {
+      width: 72px; height: 72px;
+      background: rgba(230,57,70,0.1);
+      border: 1px solid rgba(230,57,70,0.2);
+      border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+    .service-detail__header { display:flex;align-items:center;gap:var(--sp-4); }
+    .service-detail__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem,4vw,2.5rem);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .service-detail__desc {
+      font-size: var(--fs-base);
+      color: var(--clr-gray-300);
+      line-height: 1.8;
+      margin-top: var(--sp-4);
+    }
+    .service-detail__body {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-6);
+    }
+    .service-includes h4 {
+      font-family: var(--font-heading);
+      font-size: var(--fs-lg);
+      text-transform: uppercase;
+      color: var(--clr-red);
+      margin-bottom: var(--sp-4);
+      letter-spacing: 0.08em;
+    }
+    .service-includes ul { display:flex;flex-direction:column;gap:var(--sp-3); }
+    .service-includes li {
+      display: flex; align-items: flex-start; gap: var(--sp-3);
+      font-size: var(--fs-sm); color: var(--clr-gray-300);
+    }
+    .service-includes li::before {
+      content: '✅';
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .service-best {
+      background: rgba(230,57,70,0.06);
+      border: 1px solid rgba(230,57,70,0.15);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-5);
+      display: flex; flex-direction: column; gap: var(--sp-2);
+    }
+    .service-best h4 {
+      font-size: var(--fs-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--clr-red);
+      font-weight: var(--fw-semi);
+    }
+    .service-best p { font-size: var(--fs-sm); color: var(--clr-gray-300); line-height: 1.6; }
+
+    @media (min-width: 768px) {
+      .service-detail__body { grid-template-columns: 1fr 1fr; }
+      .service-detail { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar--scrolled" id="navbar">
+  <div class="container navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <div class="logo-mark"><img src="images/fititup-logo.png" alt="Fit It Up Emblem" class="logo-img"></div>
+    </a>
+    <ul class="navbar__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="navbar__cta">
+      <a href="contact.html" class="btn btn-primary btn-sm">Book Free Call</a>
+    </div>
+    <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav class="mobile-menu__nav">
+    <a href="index.html">Home <span class="arrow">→</span></a>
+    <a href="about.html">About <span class="arrow">→</span></a>
+    <a href="services.html" class="active">Services <span class="arrow">→</span></a>
+    <a href="programs.html">Programs <span class="arrow">→</span></a>
+    <a href="contact.html">Contact <span class="arrow">→</span></a>
+  </nav>
+  <div class="mobile-menu__cta">
+    <a href="https://wa.me/919999999999" class="btn btn-wa" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a href="contact.html" class="btn btn-primary">Book Free Call</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container page-hero__content">
+    <p class="page-hero__eyebrow" data-animate>What I Offer</p>
+    <h1 data-animate data-delay="1">Everything You Need<br><span class="text-red">To Get Fit</span></h1>
+    <p data-animate data-delay="2">Online, at home, or wherever you are: FitItUp comes to you.</p>
+  </div>
+</section>
+
+<!-- SERVICES LIST -->
+<section class="section" style="background:var(--clr-bg);">
+  <div class="container">
+
+    <!-- Service 1 -->
+    <div class="service-detail" data-animate>
+      <div class="service-detail__header">
+        <div class="service-detail__icon-wrap">📱</div>
+        <h2 class="service-detail__title">1-on-1 Online Coaching</h2>
+      </div>
+      <p class="service-detail__desc">Your own personal trainer in your pocket. Weekly workout plans, form check videos, daily check-ins via WhatsApp, and nutrition guidance, all tailored to your goals.</p>
+      <div class="service-detail__body">
+        <div class="service-includes">
+          <h4>What's Included</h4>
+          <ul>
+            <li>Custom weekly workout plan</li>
+            <li>Personalised diet &amp; meal guide</li>
+            <li>WhatsApp support (Mon–Sat)</li>
+            <li>Weekly progress check-in</li>
+            <li>Plan adjustments every 2 weeks</li>
+            <li>Monthly video feedback session</li>
+          </ul>
+        </div>
+        <div>
+          <div class="service-best">
+            <h4>Best For</h4>
+            <p>Busy professionals, working parents, anyone who wants accountability without a gym membership.</p>
+          </div>
+          <a href="programs.html" class="btn btn-primary" style="margin-top:var(--sp-5);width:100%;">View Pricing →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 2 -->
+    <div class="service-detail" data-animate>
+      <div class="service-detail__header">
+        <div class="service-detail__icon-wrap">🏠</div>
+        <h2 class="service-detail__title">Home Workout Coaching</h2>
+      </div>
+      <p class="service-detail__desc">No gym? No problem. I design effective workout programs using bodyweight, resistance bands, or minimal equipment, perfectly suited to your home or apartment.</p>
+      <div class="service-detail__body">
+        <div class="service-includes">
+          <h4>What's Included</h4>
+          <ul>
+            <li>Equipment-free or minimal equipment plans</li>
+            <li>Video exercise library access</li>
+            <li>Beginner to advanced levels</li>
+            <li>Nutrition plan included</li>
+            <li>WhatsApp support</li>
+          </ul>
+        </div>
+        <div>
+          <div class="service-best">
+            <h4>Best For</h4>
+            <p>People who prefer training at home or have no gym access: no excuses, just results.</p>
+          </div>
+          <a href="programs.html" class="btn btn-primary" style="margin-top:var(--sp-5);width:100%;">View Pricing →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 3 -->
+    <div class="service-detail" data-animate>
+      <div class="service-detail__header">
+        <div class="service-detail__icon-wrap">🥗</div>
+        <h2 class="service-detail__title">Diet &amp; Nutrition Plans</h2>
+      </div>
+      <p class="service-detail__desc">Forget crash diets. Get a sustainable, Indian-food-friendly nutrition plan built around your daily schedule, food preferences, and fitness goals.</p>
+      <div class="service-detail__body">
+        <div class="service-includes">
+          <h4>What's Included</h4>
+          <ul>
+            <li>Full calorie &amp; macro calculation</li>
+            <li>Indian meal options included</li>
+            <li>Veg/non-veg customisation</li>
+            <li>Supplement guidance (if needed)</li>
+            <li>4-week structured meal plan</li>
+            <li>Grocery shopping list</li>
+          </ul>
+        </div>
+        <div>
+          <div class="service-best">
+            <h4>Best For</h4>
+            <p>Anyone wanting to lose fat, gain muscle, or improve energy levels through smarter food choices.</p>
+          </div>
+          <a href="programs.html" class="btn btn-primary" style="margin-top:var(--sp-5);width:100%;">View Pricing →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 4 -->
+    <div class="service-detail" data-animate>
+      <div class="service-detail__header">
+        <div class="service-detail__icon-wrap">🧒</div>
+        <h2 class="service-detail__title">Kids Fitness Training</h2>
+      </div>
+      <p class="service-detail__desc">Building healthy habits early creates lifelong champions. Structured, fun, age-appropriate fitness sessions for children aged 6–16, online or in-person.</p>
+      <div class="service-detail__body">
+        <div class="service-includes">
+          <h4>What's Included</h4>
+          <ul>
+            <li>Age-appropriate workout routines</li>
+            <li>Flexibility &amp; coordination exercises</li>
+            <li>Nutrition tips for growing kids</li>
+            <li>Fun, engaging sessions</li>
+            <li>Parent progress updates</li>
+            <li>Online or in-person (location-based)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="service-best">
+            <h4>Best For</h4>
+            <p>Parents who want their children to build strength, discipline, and confidence from an early age.</p>
+          </div>
+          <a href="programs.html" class="btn btn-primary" style="margin-top:var(--sp-5);width:100%;">View Pricing →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 5 -->
+    <div class="service-detail" data-animate>
+      <div class="service-detail__header">
+        <div class="service-detail__icon-wrap">🏋️</div>
+        <h2 class="service-detail__title">Calisthenics Training</h2>
+      </div>
+      <p class="service-detail__desc">Master your own bodyweight. From basic push-ups to advanced muscle-ups: I'll guide you through a structured calisthenics progression system.</p>
+      <div class="service-detail__body">
+        <div class="service-includes">
+          <h4>What's Included</h4>
+          <ul>
+            <li>Skill progression roadmap</li>
+            <li>Strength &amp; mobility combined</li>
+            <li>No gym equipment needed</li>
+            <li>Video tutorials per exercise</li>
+            <li>Monthly milestone tracking</li>
+          </ul>
+        </div>
+        <div>
+          <div class="service-best">
+            <h4>Best For</h4>
+            <p>Anyone who wants to build functional strength, body control, and athleticism, with zero equipment needed.</p>
+          </div>
+          <a href="programs.html" class="btn btn-primary" style="margin-top:var(--sp-5);width:100%;">View Pricing →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner section">
+  <div class="container cta-banner__inner" data-animate>
+    <h2 class="cta-banner__title">Not Sure Which<br><span>Service Fits You?</span></h2>
+    <p class="cta-banner__sub">Let's figure it out together. Book a free 15-minute call with Ashish, with no commitments, just clarity.</p>
+    <div class="cta-banner__buttons">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book Free Call →</a>
+      <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20help%20me%20pick%20the%20right%20service!" class="btn btn-wa btn-lg" target="_blank" rel="noopener">WhatsApp Ashish</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="navbar__logo" style="display:inline-flex;margin-bottom:var(--sp-4);"><div class="logo-mark"><img src="images/fititup-logo.png" alt="Fit It Up Emblem" class="logo-img"></div><div class="logo-text"><span class="logo-text__main">Fit It Up</span><span class="logo-text__sub">Train Smart. Live Fit.</span></div></a>
+        <p>India's premium online personal fitness coaching brand.</p>
+        <div class="footer__socials">
+          <a href="https://instagram.com/fititup07" class="footer__social-link" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="https://youtube.com/@fititup07" class="footer__social-link" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg></a>
+          <a href="https://wa.me/919999999999" class="footer__social-link" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col" id="fc2-links"><div class="footer__col-title" onclick="toggleFooterCol('fc2-links')">Quick Links<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="footer__col-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="programs.html">Programs</a><a href="contact.html">Contact</a></div></div>
+      <div class="footer__col" id="fc2-services"><div class="footer__col-title" onclick="toggleFooterCol('fc2-services')">Services<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="footer__col-links"><a href="services.html">1-on-1 Coaching</a><a href="services.html">Home Workouts</a><a href="services.html">Diet Plans</a><a href="services.html">Kids Training</a><a href="services.html">Calisthenics</a></div></div>
+      <div class="footer__col" id="fc2-contact"><div class="footer__col-title" onclick="toggleFooterCol('fc2-contact')">Contact<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="footer__col-links"><a href="https://wa.me/919999999999" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:ashish@fititup.in">ashish@fititup.in</a><a href="https://instagram.com/fititup07" target="_blank" rel="noopener">@fititup07</a></div></div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copyright">© 2024 <span>FitItUp</span> by Ashish Satarkar. All rights reserved.</p>
+      <div class="footer__policy-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919999999999" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg>
+</a>
+<div class="mobile-cta-bar">
+  <a href="https://wa.me/919999999999" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="contact.html" class="btn btn-primary" style="flex:2;">🚀 Book My Free Call</a>
+</div>
+
+<script src="script.js"></script>
+<script>function toggleFooterCol(id){const c=document.getElementById(id);if(window.innerWidth<768)c.classList.toggle('is-open');}</script>
+</body>
+</html>

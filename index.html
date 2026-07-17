@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="FitItUp | Personal fitness coaching by Ashish Satarkar. 1-on-1 training, diet plans, home workouts, and e-coaching in India. Start your transformation today." />
+  <meta name="keywords" content="personal trainer India, fitness coach, gym trainer, diet plan, home workout, e-coaching, kids fitness, Ashish Satarkar" />
+  <meta property="og:title" content="FIT IT UP | Train With Ashish Satarkar" />
+  <meta property="og:description" content="India's premium personal fitness coaching brand. Real results, real trainer." />
+  <title>FIT IT UP | Personal Fitness Coaching by Ashish Satarkar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════ NAVBAR ══ -->
+<nav class="navbar navbar--transparent" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar__inner">
+    <a href="index.html" class="navbar__logo" aria-label="FitItUp Home">
+      <div class="logo-mark" aria-hidden="true">
+        <img src="images/fititup-logo.png" alt="Fit It Up Emblem" class="logo-img">
+      </div>
+    </a>
+
+    <ul class="navbar__links" role="list">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="navbar__cta">
+      <a href="programs.html" class="btn btn-primary btn-sm">Book a Session</a>
+    </div>
+
+    <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════ MOBILE MENU ══ -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav class="mobile-menu__nav">
+    <a href="index.html" class="active">Home <span class="arrow">→</span></a>
+    <a href="about.html">About <span class="arrow">→</span></a>
+    <a href="services.html">Services <span class="arrow">→</span></a>
+    <a href="programs.html">Programs <span class="arrow">→</span></a>
+    <a href="contact.html">Contact <span class="arrow">→</span></a>
+  </nav>
+  <div class="mobile-menu__cta">
+    <a href="https://wa.me/919999999999?text=Hi%20Ashish!" class="btn btn-wa" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a href="programs.html" class="btn btn-primary">Book Free Consultation</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ HERO ══ -->
+<section class="hero" id="hero" aria-label="Hero section">
+
+  <!-- Background Image (Real Portrait Photo - IMG_1365) -->
+  <div class="hero__bg">
+    <picture>
+      <img
+        src="images/ashish-1365.png"
+        alt="Ashish Satarkar | Personal Fitness Trainer, FitItUp"
+        fetchpriority="high"
+      />
+    </picture>
+  </div>
+
+  <!-- Gradient Overlays for Readability -->
+  <div class="hero__overlay" aria-hidden="true"></div>
+  <div class="hero__glow" aria-hidden="true"></div>
+
+  <!-- Content Column (Left Side) -->
+  <div class="hero__content">
+    <div class="container">
+      <div class="hero__inner">
+
+        <!-- Eyebrow -->
+        <div class="hero__eyebrow" data-animate>
+          <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+          <span class="hero__eyebrow-text">🔥 India's Online Fitness Coach</span>
+        </div>
+
+        <!-- Headline (Stacked) -->
+        <h1 class="hero__headline" data-animate data-delay="1">
+          TRAIN<br>
+          <span class="highlight">SMART.</span><br>
+          <span class="outline">LIVE</span><br>
+          FIT.
+        </h1>
+
+        <!-- Copy -->
+        <div data-animate data-delay="2">
+          <p class="hero__copy">
+            Expert 1-on-1 coaching for fat loss, muscle gain, and lifelong fitness, delivered online, anywhere in India.
+          </p>
+          <p class="hero__tagline-hindi">अपने आप को बेहतर बनाओ, आज से शुरुआत करें।</p>
+        </div>
+
+        <!-- Overlapping Member Avatars -->
+        <div class="hero__members" data-animate data-delay="2.5">
+          <div class="member-avatars">
+            <span class="member-avatar" style="background: linear-gradient(135deg, #FF512F, #DD2476);">R</span>
+            <span class="member-avatar" style="background: linear-gradient(135deg, #00F2FE, #4FACFE);">S</span>
+            <span class="member-avatar" style="background: linear-gradient(135deg, #BFFF00, #38EF7D);">A</span>
+            <span class="member-avatar" style="background: linear-gradient(135deg, #FF0844, #FFB199);">M</span>
+          </div>
+          <div class="member-text">
+            Loved by <strong>500+</strong> active members
+          </div>
+        </div>
+
+        <!-- CTAs (Pill layout) -->
+        <div class="hero__cta" data-animate data-delay="3">
+          <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%20want%20to%20book%20a%20free%20call!"
+             class="btn btn-primary btn-lg"
+             style="border-radius: var(--radius-pill); font-weight: var(--fw-black); letter-spacing: 0.05em;"
+             target="_blank"
+             rel="noopener noreferrer">
+            TRY FOR FREE →
+          </a>
+          <a href="contact.html"
+             class="btn btn-outline btn-lg"
+             style="border-radius: var(--radius-pill); border-color: var(--clr-gray-700); background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"
+             rel="noopener noreferrer">
+            SCHEDULE CALL 📅
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="hero__stats" data-animate data-delay="4">
+          <div class="hero__stat">
+            <span class="hero__stat-value" data-count="500">0<span>+</span></span>
+            <span class="hero__stat-label">Clients</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-value" data-count="3">0<span>+ Yrs</span></span>
+            <span class="hero__stat-label">Coaching</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-value">100<span>%</span></span>
+            <span class="hero__stat-label">Online</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero__scroll" aria-hidden="true">
+    <div class="hero__scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════ MARQUEE BAND ══ -->
+<div class="marquee-band" role="marquee" aria-label="Fitness features marquee">
+  <div class="marquee-band__inner">
+    <span class="marquee-band__item">💪 Home Workouts</span>
+    <span class="marquee-band__item">🥗 Diet Plans</span>
+    <span class="marquee-band__item">🧒 Kids Training</span>
+    <span class="marquee-band__item">📱 E-Coaching</span>
+    <span class="marquee-band__item">🏋️ Calisthenics</span>
+    <span class="marquee-band__item">⚡ Strength Training</span>
+    <span class="marquee-band__item">🔥 Fat Loss</span>
+    <span class="marquee-band__item">🎯 Goal-Based Plans</span>
+  </div>
+  <div class="marquee-band__inner" aria-hidden="true">
+    <span class="marquee-band__item">💪 Home Workouts</span>
+    <span class="marquee-band__item">🥗 Diet Plans</span>
+    <span class="marquee-band__item">🧒 Kids Training</span>
+    <span class="marquee-band__item">📱 E-Coaching</span>
+    <span class="marquee-band__item">🏋️ Calisthenics</span>
+    <span class="marquee-band__item">⚡ Strength Training</span>
+    <span class="marquee-band__item">🔥 Fat Loss</span>
+    <span class="marquee-band__item">🎯 Goal-Based Plans</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ SERVICES ══ -->
+<section class="services section" id="services">
+  <div class="container">
+    <div class="text-center" data-animate>
+      <p class="section-label" style="justify-content:center;">What I Offer</p>
+      <h2 class="section-title">Programs Built<br><span class="text-red">For Your Goals</span></h2>
+      <p class="section-subtitle" style="margin-inline:auto;margin-top:var(--sp-4);">Every program is custom-built around your body, lifestyle, and fitness goals. No generic plans.</p>
+    </div>
+
+    <div class="services__grid">
+      <!-- 1. Home Workout Coaching -->
+      <div class="service-card" data-animate data-delay="1">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 class="service-card__title">Home Workout Coaching</h3>
+        <p class="service-card__desc">Zero equipment plans built for your space. Get active, fit, and strong without stepping foot outside.</p>
+        <a href="services.html" class="service-card__link">Learn More →</a>
+      </div>
+
+      <!-- 2. Diet & Nutrition Plans -->
+      <div class="service-card" data-animate data-delay="2">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2"/><path d="M18 15v7"/><path d="M15 15h7"/></svg>
+        </div>
+        <h3 class="service-card__title">Diet &amp; Nutrition Plans</h3>
+        <p class="service-card__desc">Science-backed, customised to your lifestyle. Indian food options, both veg and non-veg tailored for you.</p>
+        <a href="services.html" class="service-card__link">Learn More →</a>
+      </div>
+
+      <!-- 3. Online E-Coaching -->
+      <div class="service-card" data-animate data-delay="3">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3 class="service-card__title">Online E-Coaching</h3>
+        <p class="service-card__desc">Weekly check-ins, form feedback, and 24/7 support directly via WhatsApp. Train with Ashish from anywhere in India.</p>
+        <a href="services.html" class="service-card__link">Learn More →</a>
+      </div>
+
+      <!-- 4. Kids Fitness Training -->
+      <div class="service-card" data-animate data-delay="4">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a5 5 0 1 0 0 10A5 5 0 0 0 12 2z"/><path d="M12 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+        </div>
+        <h3 class="service-card__title">Kids Fitness Training</h3>
+        <p class="service-card__desc">Building strong habits from an early age. Fun, engaging, and structured fitness exercises for kids aged 6–16.</p>
+        <a href="services.html" class="service-card__link">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ WHY CHOOSE US ══ -->
+<section class="why section" id="about-preview">
+  <div class="container">
+    <div class="why__layout">
+      <div class="why__image" data-animate="left">
+        <img src="images/why-fititup.jpg" alt="Coach Ashish Satarkar standing on the beach at sunset" loading="lazy" />
+        <div class="why__badge">
+          <div class="why__badge-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="why__badge-text">
+            <strong>Certified Trainer</strong>
+            <span>5+ Years Experience</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-animate="right">
+        <p class="section-label">Why FitItUp</p>
+        <h2 class="section-title">Train With <span class="text-red">Ashish</span> | See Real Results</h2>
+        <p class="section-subtitle" style="margin-bottom:var(--sp-8);">Ashish Satarkar isn't just your trainer; he's your accountability partner, nutrition advisor, and biggest supporter on your fitness journey.</p>
+
+        <div class="why__features">
+          <div class="why__feature">
+            <div class="why__feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="why__feature-body">
+              <h4>100% Personalised Plans</h4>
+              <p>No copy-paste workouts. Every plan is designed from scratch based on your body type, goals, and lifestyle.</p>
+            </div>
+          </div>
+          <div class="why__feature">
+            <div class="why__feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="why__feature-body">
+              <h4>WhatsApp Support: Always Available</h4>
+              <p>Ask anything, anytime. Ashish stays connected with every client via WhatsApp for daily check-ins and guidance.</p>
+            </div>
+          </div>
+          <div class="why__feature">
+            <div class="why__feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="why__feature-body">
+              <h4>Flexible: In-Studio or Online</h4>
+              <p>Train at the FitItUp studio or get coached remotely. Same dedication, same results, wherever you are in India.</p>
+            </div>
+          </div>
+          <div class="why__feature">
+            <div class="why__feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="why__feature-body">
+              <h4>Indian-Budget Pricing</h4>
+              <p>Premium coaching at honest Indian prices. Transparent ₹ INR pricing, with no hidden charges or gimmicks.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="about.html" class="btn btn-primary" style="margin-top:var(--sp-8);">Meet Ashish →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ TESTIMONIALS ══ -->
+<section class="testimonials section" id="testimonials">
+  <div class="container">
+    <div class="text-center" data-animate>
+      <p class="section-label" style="justify-content:center;">Client Results</p>
+      <h2 class="section-title">Real People. <span class="text-red">Real Transformations.</span></h2>
+      <p class="section-subtitle" style="margin-inline:auto;margin-top:var(--sp-4);">Over 500 clients have transformed their bodies and lives with FitItUp. Here's what they say.</p>
+    </div>
+
+    <div class="testimonials__grid">
+      <div class="testi-card" data-animate data-delay="1">
+        <div class="testi-card__stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testi-card__quote">Ashish completely changed how I look at fitness. In just 3 months I lost 12 kg and feel stronger than ever. His WhatsApp support kept me on track every single day.</p>
+        <div class="testi-card__author">
+          <div class="testi-card__avatar">R</div>
+          <div>
+            <div class="testi-card__name">Rahul Sharma</div>
+            <div class="testi-card__meta">Lost 12 kg in 3 months · Mumbai</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card" data-animate data-delay="2">
+        <div class="testi-card__stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testi-card__quote">I tried many online trainers before Ashish. He is the only one who actually understood my body type and gave me a realistic Indian diet plan. I gained 8 kg of muscle!</p>
+        <div class="testi-card__author">
+          <div class="testi-card__avatar">P</div>
+          <div>
+            <div class="testi-card__name">Priya Desai</div>
+            <div class="testi-card__meta">Muscle Gain · Pune</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card" data-animate data-delay="3">
+        <div class="testi-card__stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testi-card__quote">My 10-year-old son loves his kids fitness sessions with Ashish. He's more active, more confident, and actually looks forward to working out now. Best decision we made.</p>
+        <div class="testi-card__author">
+          <div class="testi-card__avatar">A</div>
+          <div>
+            <div class="testi-card__name">Anjali Mehta</div>
+            <div class="testi-card__meta">Kids Program · Nashik</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ PRICING PREVIEW ══ -->
+<section class="pricing section" id="pricing">
+  <div class="container">
+    <div class="text-center" data-animate>
+      <p class="section-label" style="justify-content:center;">Investment In You</p>
+      <h2 class="section-title">Choose Your <span class="text-red">Plan</span></h2>
+      <p class="section-subtitle" style="margin-inline:auto;margin-top:var(--sp-4);">Transparent pricing in INR. No hidden fees. All plans include WhatsApp support.</p>
+    </div>
+
+    <div class="pricing__grid">
+      <!-- Starter -->
+      <div class="pricing-card" data-animate data-delay="1">
+        <div>
+          <div class="pricing-card__name">Starter</div>
+          <div class="pricing-card__desc">Perfect for beginners ready to build healthy habits.</div>
+        </div>
+        <div class="pricing-card__price">
+          <span class="currency">₹</span>
+          <span class="amount">2,999</span>
+          <span class="period">/ month</span>
+        </div>
+        <ul class="pricing-card__features">
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            2 Sessions per week
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Basic diet plan included
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            WhatsApp check-in (weekly)
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Progress tracking
+          </li>
+        </ul>
+        <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%27m%20interested%20in%20the%20Starter%20Plan!" class="btn btn-outline" target="_blank" rel="noopener">Book Starter Plan</a>
+      </div>
+
+      <!-- Pro — Featured -->
+      <div class="pricing-card pricing-card--featured" data-animate data-delay="2">
+        <div class="pricing-card__badge">🔥 Most Popular</div>
+        <div>
+          <div class="pricing-card__name">Pro</div>
+          <div class="pricing-card__desc">For serious trainees ready for full transformation.</div>
+        </div>
+        <div class="pricing-card__price">
+          <span class="currency">₹</span>
+          <span class="amount">5,999</span>
+          <span class="period">/ month</span>
+        </div>
+        <ul class="pricing-card__features">
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            4 Sessions per week
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Full nutrition + meal plan
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Daily WhatsApp support
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Progress photos + monthly review
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Goal-oriented training plan
+          </li>
+        </ul>
+        <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%27m%20interested%20in%20the%20Pro%20Plan!" class="btn btn-primary" target="_blank" rel="noopener">Book Pro Plan →</a>
+      </div>
+
+      <!-- Elite -->
+      <div class="pricing-card" data-animate data-delay="3">
+        <div>
+          <div class="pricing-card__name">Elite</div>
+          <div class="pricing-card__desc">Maximum results. Unlimited access to Ashish.</div>
+        </div>
+        <div class="pricing-card__price">
+          <span class="currency">₹</span>
+          <span class="amount">9,999</span>
+          <span class="period">/ month</span>
+        </div>
+        <ul class="pricing-card__features">
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Unlimited sessions
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Full nutrition &amp; lifestyle coaching
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            24/7 WhatsApp support
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Personalised performance programs
+          </li>
+          <li class="pricing-card__feature">
+            <span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>
+            Weekly video calls + strategy sessions
+          </li>
+        </ul>
+        <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%27m%20interested%20in%20the%20Elite%20Plan!" class="btn btn-outline" target="_blank" rel="noopener">Book Elite Plan</a>
+      </div>
+    </div>
+
+    <p class="text-center text-muted" style="margin-top:var(--sp-6);font-size:var(--fs-sm);">
+      💬 Not sure which plan? <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20help%20me%20choose%20the%20right%20plan!" style="color:var(--clr-red);" target="_blank" rel="noopener">Chat with Ashish on WhatsApp</a> for a free consultation.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ CTA BANNER ══ -->
+<section class="cta-banner section">
+  <div class="container cta-banner__inner" data-animate>
+    <h2 class="cta-banner__title">Ready To <span>Transform?</span></h2>
+    <p class="cta-banner__sub">Start your fitness journey today. First consultation is completely free, with no commitment needed.</p>
+    <div class="cta-banner__buttons">
+      <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%20want%20a%20free%20consultation!" class="btn btn-wa btn-lg" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg>
+        Free Consultation on WhatsApp
+      </a>
+      <a href="contact.html" class="btn btn-outline btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ FOOTER ══ -->
+<footer class="footer" id="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <!-- Brand -->
+      <div class="footer__brand">
+        <a href="index.html" class="navbar__logo" style="margin-bottom:var(--sp-4);display:inline-flex;">
+          <div class="logo-mark"><img src="images/fititup-logo.png" alt="Fit It Up Emblem" class="logo-img"></div>
+          <div class="logo-text"><span class="logo-text__main">Fit It Up</span><span class="logo-text__sub">By Ashish Satarkar</span></div>
+        </a>
+        <p>India's premium personal fitness coaching brand. Real trainer, real results | Since 2019.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg>
+          </a>
+          <a href="https://wa.me/919999999999" class="footer__social-link" aria-label="WhatsApp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer__col" id="footer-links">
+        <div class="footer__col-title" onclick="toggleFooterCol('footer-links')">
+          Quick Links
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="footer__col-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About Ashish</a>
+          <a href="services.html">All Services</a>
+          <a href="programs.html">Pricing &amp; Plans</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="footer__col" id="footer-services">
+        <div class="footer__col-title" onclick="toggleFooterCol('footer-services')">
+          Services
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="footer__col-links">
+          <a href="services.html">1-on-1 Coaching</a>
+          <a href="services.html">E-Coaching Online</a>
+          <a href="services.html">Diet Plans</a>
+          <a href="services.html">Home Workouts</a>
+          <a href="services.html">Kids Training</a>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer__col" id="footer-contact">
+        <div class="footer__col-title" onclick="toggleFooterCol('footer-contact')">
+          Contact
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="footer__col-links">
+          <a href="https://wa.me/919999999999" target="_blank" rel="noopener">WhatsApp: +91 99999 99999</a>
+          <a href="mailto:ashish@fititup.in">ashish@fititup.in</a>
+          <a href="contact.html">Studio Location</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">© 2025 <span>FitItUp</span> by Ashish Satarkar. All rights reserved.</p>
+      <div class="footer__policy-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Grievance Officer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  function toggleFooterCol(id) {
+    const col = document.getElementById(id);
+    if (window.innerWidth < 768) {
+      col.classList.toggle('is-open');
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Contact Ashish Satarkar | FitItUp. Book a free 15-minute clarity call or message on WhatsApp." />
+  <title>Contact Us | FIT IT UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-hero { min-height:42vh;display:flex;align-items:flex-end;padding-top:var(--nav-height);background:var(--clr-bg);position:relative;overflow:hidden; }
+    .page-hero::before { content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 60% 0%,rgba(0,242,254,0.12) 0%,transparent 60%); }
+    .page-hero__content { position:relative;z-index:1;padding-block:var(--sp-16) var(--sp-12); }
+    .page-hero__eyebrow { font-size:var(--fs-xs);font-weight:var(--fw-semi);color:var(--clr-red);text-transform:uppercase;letter-spacing:0.18em;margin-bottom:var(--sp-4);display:flex;align-items:center;gap:var(--sp-2); }
+    .page-hero__eyebrow::before { content:'';display:block;width:20px;height:2px;background:var(--clr-red); }
+    .page-hero h1 { font-family:var(--font-heading);font-size:clamp(2.8rem,8vw,6rem);text-transform:uppercase;line-height:0.95;margin-bottom:var(--sp-5); }
+    .page-hero p { font-size:var(--fs-md);color:var(--clr-gray-300);max-width:520px;line-height:1.7; }
+
+    /* Contact Grid */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-10);
+      margin-top: var(--sp-6);
+    }
+
+    /* Info Blocks */
+    .contact-methods {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-4);
+    }
+    .method-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-6);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      text-decoration: none;
+      transition: all var(--ease-normal);
+    }
+    .method-card:hover {
+      border-color: rgba(200,245,58,0.25);
+      transform: translateY(-2px);
+    }
+    .method-card__icon {
+      width: 48px; height: 48px;
+      background: rgba(200,245,58,0.1);
+      border: 1px solid rgba(200,245,58,0.2);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .method-card__body h3 {
+      font-family: var(--font-heading);
+      font-size: var(--fs-lg);
+      text-transform: uppercase;
+      color: var(--clr-white);
+    }
+    .method-card__body p { font-size: var(--fs-xs); color: var(--clr-gray-300); }
+
+    /* Form Container */
+    .contact-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-8);
+      position: relative;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-5);
+    }
+    .form-group label {
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-semi);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--clr-gray-300);
+    }
+    .form-input {
+      background: var(--clr-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: var(--sp-3) var(--sp-4);
+      font-family: var(--font-body);
+      font-size: var(--fs-sm);
+      color: var(--clr-white);
+      transition: border-color var(--ease-fast);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--clr-red);
+    }
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: var(--sp-10) var(--sp-6);
+    }
+    .success-state svg {
+      width: 64px; height: 64px;
+      color: var(--clr-red);
+      margin-bottom: var(--sp-4);
+    }
+    .success-state h3 {
+      font-family: var(--font-heading);
+      font-size: var(--fs-2xl);
+      text-transform: uppercase;
+      margin-bottom: var(--sp-2);
+    }
+    .success-state p {
+      font-size: var(--fs-sm);
+      color: var(--clr-gray-300);
+    }
+
+    /* Booking Widget */
+    .booking-widget {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: var(--sp-8);
+      text-align: center;
+    }
+    .booking-widget h3 {
+      font-family: var(--font-heading);
+      font-size: var(--fs-xl);
+      text-transform: uppercase;
+      margin-bottom: var(--sp-2);
+    }
+    .booking-widget__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-3);
+      margin-top: var(--sp-6);
+    }
+    .time-slot-btn {
+      background: var(--clr-bg);
+      border: 1px solid var(--clr-border);
+      color: var(--clr-white);
+      border-radius: var(--radius-md);
+      padding: var(--sp-3);
+      font-family: var(--font-body);
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-medium);
+      cursor: pointer;
+      transition: all var(--ease-fast);
+    }
+    .time-slot-btn:hover {
+      border-color: var(--clr-red);
+      color: var(--clr-red);
+    }
+    .time-slot-btn.is-selected {
+      background: var(--clr-red);
+      color: #080C08;
+      border-color: var(--clr-red);
+      font-weight: var(--fw-bold);
+    }
+
+    /* Trust Strip */
+    .contact-trust {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--sp-6) var(--sp-10);
+      margin-top: var(--sp-8);
+      font-size: var(--fs-xs);
+      color: var(--clr-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    @media (min-width: 1024px) {
+      .contact-layout { grid-template-columns: 5fr 7fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar--scrolled" id="navbar">
+  <div class="container navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <div class="logo-mark"><img src="images/fititup-logo.png" alt="Fit It Up Emblem" class="logo-img"></div>
+    </a>
+    <ul class="navbar__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="navbar__cta">
+      <a href="contact.html" class="btn btn-primary btn-sm">Book Free Call</a>
+    </div>
+    <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav class="mobile-menu__nav">
+    <a href="index.html">Home <span class="arrow">→</span></a>
+    <a href="about.html">About <span class="arrow">→</span></a>
+    <a href="services.html">Services <span class="arrow">→</span></a>
+    <a href="programs.html">Programs <span class="arrow">→</span></a>
+    <a href="contact.html" class="active">Contact <span class="arrow">→</span></a>
+  </nav>
+  <div class="mobile-menu__cta">
+    <a href="https://wa.me/919999999999" class="btn btn-wa" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a href="contact.html" class="btn btn-primary">Book Free Call</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container page-hero__content">
+    <p class="page-hero__eyebrow" data-animate>Let's Talk</p>
+    <h1 data-animate data-delay="1">Let's Get<br><span class="text-red">Started</span></h1>
+    <p data-animate data-delay="2">Book a free 15-minute call or drop a message. No spam, no pressure.</p>
+  </div>
+</section>
+
+<!-- CONTACT GRID -->
+<section class="section" style="background:var(--clr-bg);">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- Left Column: Methods & Calendar Widget -->
+      <div style="display:flex;flex-direction:column;gap:var(--sp-6);" data-animate="left">
+        <div class="contact-methods">
+          <!-- WhatsApp -->
+          <a href="https://wa.me/919999999999?text=Hi%20Ashish!" class="method-card" target="_blank" rel="noopener">
+            <div class="method-card__icon">💬</div>
+            <div class="method-card__body">
+              <h3>WhatsApp</h3>
+              <p>Message directly for fastest response</p>
+            </div>
+          </a>
+          <!-- Email -->
+          <a href="mailto:ashish@fititup.in" class="method-card">
+            <div class="method-card__icon">📧</div>
+            <div class="method-card__body">
+              <h3>Email</h3>
+              <p>ashish@fititup.in</p>
+            </div>
+          </a>
+          <!-- Instagram -->
+          <a href="https://instagram.com/fititup07" class="method-card" target="_blank" rel="noopener">
+            <div class="method-card__icon">📸</div>
+            <div class="method-card__body">
+              <h3>Instagram</h3>
+              <p>DM @fititup07</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Booking widget placeholder -->
+        <div class="booking-widget">
+          <h3>📅 Book a Free 15-Min Call</h3>
+          <p class="text-muted" style="font-size:var(--fs-xs);margin-bottom:var(--sp-4);">This is a no-obligation clarity call, just a conversation.</p>
+          <p style="font-size:var(--fs-sm);font-weight:var(--fw-semi);">Select a Time Slot (Mon–Sat, 9AM–7PM):</p>
+          <div class="booking-widget__grid">
+            <button class="time-slot-btn" onclick="selectSlot(this)">10:00 AM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">11:30 AM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">02:00 PM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">04:30 PM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">06:00 PM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">07:00 PM</button>
+          </div>
+          <button class="btn btn-primary btn-sm" id="book-slot-cta" style="width:100%;margin-top:var(--sp-5);display:none;" onclick="confirmBooking()">Confirm Slot</button>
+        </div>
+      </div>
+
+      <!-- Right Column: Form -->
+      <div class="contact-card" data-animate="right" data-delay="1">
+        <!-- Form Block -->
+        <form id="contact-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="fname">Full Name *</label>
+            <input type="text" id="fname" class="form-input" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <label for="wa-num">WhatsApp Number *</label>
+            <input type="tel" id="wa-num" class="form-input" placeholder="e.g. 9876543210" inputmode="numeric" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" class="form-input" placeholder="yourname@domain.com" required />
+          </div>
+          <div class="form-group">
+            <label for="goal">Your Primary Goal *</label>
+            <select id="goal" class="form-input" required>
+              <option value="" disabled selected>Select goal</option>
+              <option value="Fat Loss">Fat Loss</option>
+              <option value="Muscle Gain">Muscle Gain</option>
+              <option value="General Fitness">General Fitness</option>
+              <option value="Kids Training">Kids Training</option>
+              <option value="Diet Plan Only">Diet Plan Only</option>
+              <option value="Not Sure">Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message (Optional)</label>
+            <textarea id="message" class="form-input" rows="4" placeholder="Any details you'd like to share..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--sp-2);">Send Message →</button>
+        </form>
+
+        <!-- Success state -->
+        <div class="success-state" id="form-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <h3>✅ Thanks!</h3>
+          <p>Ashish will reach out to you within 24 hours.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Trust indicators -->
+    <div class="contact-trust">
+      <div>⚡ Usually replies within 2 hours</div>
+      <div>🔒 Your info is 100% private</div>
+      <div>🇮🇳 Proudly coaching across India</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="navbar__logo" style="display:inline-flex;margin-bottom:var(--sp-4);"><div class="logo-mark"><img src="images/fititup-logo.png" alt="Fit It Up Emblem" class="logo-img"></div><div class="logo-text"><span class="logo-text__main">Fit It Up</span><span class="logo-text__sub">Train Smart. Live Fit.</span></div></a>
+        <p>India's premium online personal fitness coaching brand.</p>
+        <div class="footer__socials">
+          <a href="https://instagram.com/fititup07" class="footer__social-link" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="https://youtube.com/@fititup07" class="footer__social-link" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg></a>
+          <a href="https://wa.me/919999999999" class="footer__social-link" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col" id="fc-links"><div class="footer__col-title" onclick="toggleFooterCol('fc-links')">Quick Links<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="footer__col-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="programs.html">Programs</a><a href="contact.html">Contact</a></div></div>
+      <div class="footer__col" id="fc-services"><div class="footer__col-title" onclick="toggleFooterCol('fc-services')">Services<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="footer__col-links"><a href="services.html">1-on-1 Coaching</a><a href="services.html">Home Workouts</a><a href="services.html">Diet Plans</a><a href="services.html">Kids Training</a><a href="services.html">Calisthenics</a></div></div>
+      <div class="footer__col" id="fc-contact"><div class="footer__col-title" onclick="toggleFooterCol('fc-contact')">Contact<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="footer__col-links"><a href="https://wa.me/919999999999" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:ashish@fititup.in">ashish@fititup.in</a><a href="https://instagram.com/fititup07" target="_blank" rel="noopener">@fititup07</a></div></div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copyright">© 2024 <span>FitItUp</span> by Ashish Satarkar. All rights reserved.</p>
+      <div class="footer__policy-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919999999999" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg>
+</a>
+<div class="mobile-cta-bar">
+  <a href="https://wa.me/919999999999" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="contact.html" class="btn btn-primary" style="flex:2;">🚀 Book My Free Call</a>
+</div>
+
+<script src="script.js"></script>
+<script>
+  function toggleFooterCol(id){const c=document.getElementById(id);if(window.innerWidth<768)c.classList.toggle('is-open');}
+
+  // Time slot select
+  let selectedSlotBtn = null;
+  function selectSlot(btn) {
+    if(selectedSlotBtn) selectedSlotBtn.classList.remove('is-selected');
+    btn.classList.add('is-selected');
+    selectedSlotBtn = btn;
+    document.getElementById('book-slot-cta').style.display = 'block';
+  }
+
+  function confirmBooking() {
+    if(selectedSlotBtn) {
+      alert(`📅 Slot Selected: ${selectedSlotBtn.textContent} (Mon–Sat). Ashish will send you the WhatsApp/Google Meet invite link!`);
+    }
+  }
+
+  // Contact Form Onsubmit Success State
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+</body>
+</html>

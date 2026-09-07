@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitItUp Admin CMS | Coach Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0A0D0A;
+      --surface: #121812;
+      --surface-elevated: #172117;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: #C8F53A;
+      --accent: #C8F53A;
+      --accent-glow: rgba(200, 245, 58, 0.15);
+      --red: #FF3B30;
+      --text: #F3F4F6;
+      --text-muted: #8E928E;
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── AUTH MODAL (PIN LOCK) ─────────────────────────────── */
+    #auth-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 10, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .auth-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+    .auth-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--surface-elevated);
+      border: 2px solid var(--accent);
+      margin: 0 auto 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .auth-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .auth-title {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .auth-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .pin-input-group {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .pin-input {
+      width: 50px;
+      height: 60px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .pin-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .auth-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+    .auth-hint code {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    /* ── LAYOUT ────────────────────────────────────────────── */
+    .cms-sidebar {
+      width: 260px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+    .sidebar-header {
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+    .sidebar-brand h2 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      line-height: 1;
+      letter-spacing: 0.05em;
+    }
+    .sidebar-brand span {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-tabs {
+      list-style: none;
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+    }
+    .nav-tab-btn {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .nav-tab-btn:hover {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+    .nav-tab-btn.active {
+      background: var(--accent);
+      color: #080C08;
+      font-weight: 700;
+    }
+    .nav-tab-btn .badge-pill {
+      margin-left: auto;
+      background: rgba(0,0,0,0.3);
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .live-site-link {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+    }
+    .btn-logout {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .btn-logout:hover { color: var(--red); }
+
+    /* ── MAIN CONTENT ──────────────────────────────────────── */
+    .cms-main {
+      flex: 1;
+      padding: 2.5rem;
+      overflow-y: auto;
+      max-width: 1300px;
+    }
+    .view-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+    .view-title {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+    .view-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+    .view-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* ── BUTTONS & BADGES ──────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: #080C08;
+    }
+    .btn-accent:hover {
+      box-shadow: 0 4px 15px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .btn-wa {
+      background: #25D366;
+      color: white;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.78rem;
+    }
+    .btn-danger {
+      background: rgba(255, 59, 48, 0.15);
+      color: var(--red);
+      border: 1px solid rgba(255, 59, 48, 0.3);
+    }
+    .btn-danger:hover {
+      background: var(--red);
+      color: white;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-new { background: rgba(200, 245, 58, 0.15); color: var(--accent); border: 1px solid rgba(200, 245, 58, 0.3); }
+    .badge-contacted { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-converted { background: rgba(34, 197, 94, 0.15); color: #22C55E; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge-archived { background: rgba(142, 146, 142, 0.15); color: #8E928E; }
+
+    /* ── STATS CARDS ───────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .stat-card__label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .stat-card__val {
+      font-family: var(--font-head);
+      font-size: 2.6rem;
+      line-height: 1;
+      color: var(--text);
+    }
+    .stat-card__val span { color: var(--accent); }
+
+    /* ── TABLE STYLES ──────────────────────────────────────── */
+    .data-table-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+    .data-table th {
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .data-table td {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover { background: rgba(255,255,255,0.02); }
+
+    /* ── FORMS & INPUTS ────────────────────────────────────── */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+    .form-control {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .form-control:focus {
+      border-color: var(--accent);
+    }
+    textarea.form-control { resize: vertical; }
+
+    /* ── TAB PANELS ────────────────────────────────────────── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── PROGRAMS GRID ─────────────────────────────────────── */
+    .programs-manager-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .program-edit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .program-edit-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* ── SLOTS GRID ────────────────────────────────────────── */
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .slot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .slot-card.inactive {
+      opacity: 0.45;
+      filter: grayscale(1);
+    }
+    .slot-time {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── TOAST NOTIFICATION ────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent);
+      color: #080C08;
+      font-weight: 700;
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10000;
+    }
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════ PIN AUTH SCREEN ══ -->
+  <div id="auth-screen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="images/fititup-logo.png" alt="FitItUp Logo">
+      </div>
+      <h1 class="auth-title">FITITUP PORTAL</h1>
+      <p class="auth-subtitle">Enter Coach Security PIN to access the CRM &amp; Content Management System</p>
+
+      <form id="pin-form" onsubmit="verifyPin(event)">
+        <div class="pin-input-group">
+          <input type="password" class="pin-input" maxlength="1" autofocus oninput="onPinDigit(this, 0)">
+          <input type="password" class="pin-input" maxlength="1" oninput="onPinDigit(this, 1)">
+          <input type="password" class="pin-input" maxlength="1" oninput="onPinDigit(this, 2)">
+          <input type="password" class="pin-input" maxlength="1" oninput="onPinDigit(this, 3)">
+        </div>
+        <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center;">Unlock Dashboard</button>
+      </form>
+      <p class="auth-hint">Default Master PIN: <code>7777</code></p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ SIDEBAR ══ -->
+  <aside class="cms-sidebar">
+    <div class="sidebar-header">
+      <img src="images/fititup-logo.png" class="sidebar-logo" alt="FitItUp">
+      <div class="sidebar-brand">
+        <h2>FIT IT UP</h2>
+        <span>Coach Dashboard</span>
+      </div>
+    </div>
+
+    <ul class="nav-tabs">
+      <li>
+        <button class="nav-tab-btn active" onclick="switchTab('tab-overview', this)">
+          📊 Overview
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" onclick="switchTab('tab-leads', this)">
+          👥 Leads CRM <span class="badge-pill" id="badge-leads-count">0</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" onclick="switchTab('tab-programs', this)">
+          💰 Programs &amp; Pricing
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" onclick="switchTab('tab-testimonials', this)">
+          🌟 Reviews &amp; Social Proof
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" onclick="switchTab('tab-faqs', this)">
+          ❓ FAQ Editor
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" onclick="switchTab('tab-slots', this)">
+          ⏰ Slot Availability
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" onclick="switchTab('tab-settings', this)">
+          ⚙️ Settings &amp; Backup
+        </button>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a href="index.html" class="live-site-link" target="_blank" rel="noopener">
+        <span>🌐</span> View Live Site →
+      </a>
+      <button class="btn-logout" onclick="lockPortal()">Lock</button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════ MAIN CONTENT ══ -->
+  <main class="cms-main">
+
+    <!-- ── TAB 1: OVERVIEW ─────────────────────────────────── -->
+    <section id="tab-overview" class="tab-panel active">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">COACH OVERVIEW</h1>
+          <p class="view-subtitle">High-level snapshot of your coaching business &amp; client pipeline</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-accent" onclick="switchTab('tab-leads', document.querySelectorAll('.nav-tab-btn')[1])">
+            View New Leads
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card__label">Total Consultation Leads</div>
+          <div class="stat-card__val" id="stat-total-leads">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">New / Uncontacted</div>
+          <div class="stat-card__val"><span id="stat-new-leads">0</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Active Programs</div>
+          <div class="stat-card__val" id="stat-active-programs">3</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">WhatsApp Enquiries</div>
+          <div class="stat-card__val"><span>100%</span> Direct</div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+        <h3 style="font-family:var(--font-head);font-size:1.6rem;letter-spacing:0.05em;margin-bottom:1rem;">⚡ Quick Lead Pipeline</h3>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">Recent consultation requests received from the single-page website:</p>
+        <div id="overview-recent-leads"></div>
+      </div>
+    </section>
+
+    <!-- ── TAB 2: LEADS CRM ────────────────────────────────── -->
+    <section id="tab-leads" class="tab-panel">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">LEADS CRM</h1>
+          <p class="view-subtitle">Track consultation bookings, update pipeline statuses, and chat on WhatsApp</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-outline" onclick="exportLeadsCsv()">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Client Name</th>
+              <th>WhatsApp Number</th>
+              <th>Goal</th>
+              <th>Slot Booked</th>
+              <th>Status</th>
+              <th>Received</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="leads-table-body">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── TAB 3: PROGRAMS & PRICING ───────────────────────── -->
+    <section id="tab-programs" class="tab-panel">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">PROGRAMS &amp; PRICING</h1>
+          <p class="view-subtitle">Adjust pricing tiers, badges, and features displayed on the main landing page</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-accent" onclick="savePrograms()">Save All Changes</button>
+        </div>
+      </div>
+
+      <div class="programs-manager-grid" id="programs-editor-container">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ── TAB 4: TESTIMONIALS ─────────────────────────────── -->
+    <section id="tab-testimonials" class="tab-panel">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">TRANSFORMATIONS &amp; REVIEWS</h1>
+          <p class="view-subtitle">Manage client social proof and transformation stories</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-accent" onclick="openAddTestimonialModal()">+ Add New Review</button>
+        </div>
+      </div>
+
+      <div id="testimonials-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem;">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ── TAB 5: FAQ EDITOR ───────────────────────────────── -->
+    <section id="tab-faqs" class="tab-panel">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">FAQ ACCORDION EDITOR</h1>
+          <p class="view-subtitle">Manage frequently asked questions to overcome pre-purchase objections</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-accent" onclick="openAddFaqModal()">+ Add Question</button>
+        </div>
+      </div>
+
+      <div id="faqs-list" style="display:flex;flex-direction:column;gap:1rem;max-width:850px;">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ── TAB 6: SLOTS AVAILABILITY ───────────────────────── -->
+    <section id="tab-slots" class="tab-panel">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">CONSULTATION SLOTS</h1>
+          <p class="view-subtitle">Toggle which 15-minute call slots are active or disabled for clients</p>
+        </div>
+      </div>
+
+      <div class="slots-grid" id="slots-container">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ── TAB 7: SETTINGS & BACKUP ────────────────────────── -->
+    <section id="tab-settings" class="tab-panel">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">GLOBAL SETTINGS</h1>
+          <p class="view-subtitle">Configure coach contact info, WhatsApp dispatch number, and data backups</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-accent" onclick="saveSettings()">Save Settings</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:1rem;">Coach Profile &amp; Contact</h3>
+          
+          <div class="form-group">
+            <label>Coach Name</label>
+            <input type="text" id="cfg-coach-name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Number (with Country Code e.g. 919999999999)</label>
+            <input type="text" id="cfg-wa-phone" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Support Email</label>
+            <input type="email" id="cfg-email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Instagram URL</label>
+            <input type="text" id="cfg-instagram" class="form-control">
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:1rem;">Data Backup &amp; Portability</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+            Download all your leads, programs, testimonials, and FAQs as a single JSON file. You can restore this data anytime.
+          </p>
+
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <button class="btn btn-outline" onclick="downloadBackup()">📥 Export Full Backup (JSON)</button>
+            <label class="btn btn-outline" style="justify-content:center;cursor:pointer;">
+              📤 Restore From Backup
+              <input type="file" accept=".json" onchange="restoreBackupFile(event)" style="display:none;">
+            </label>
+            <button class="btn btn-danger" onclick="confirmResetDefaults()" style="margin-top:1rem;">⚠️ Reset to Default Demo Data</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Message -->
+  <div id="toast">Saved Successfully!</div>
+
+  <!-- Shared Store Script -->
+  <script src="js/cms-store.js"></script>
+
+  <script>
+    'use strict';
+
+    // ── PIN AUTH LOGIC ──────────────────────────────────────────
+    const CORRECT_PIN = '7777';
+    let enteredPin = ['', '', '', ''];
+
+    function onPinDigit(input, index) {
+      enteredPin[index] = input.value;
+      if (input.value && index < 3) {
+        document.querySelectorAll('.pin-input')[index + 1].focus();
+      }
+      if (enteredPin.join('').length === 4) {
+        verifyPin();
+      }
+    }
+
+    function verifyPin(e) {
+      if (e) e.preventDefault();
+      const pin = enteredPin.join('');
+      if (pin === CORRECT_PIN || sessionStorage.getItem('fititup_auth') === 'true') {
+        sessionStorage.setItem('fititup_auth', 'true');
+        document.getElementById('auth-screen').style.display = 'none';
+        initDashboard();
+      } else {
+        alert('❌ Invalid Coach PIN. Hint: Default PIN is 7777');
+        enteredPin = ['', '', '', ''];
+        document.querySelectorAll('.pin-input').forEach(i => i.value = '');
+        document.querySelectorAll('.pin-input')[0].focus();
+      }
+    }
+
+    function lockPortal() {
+      sessionStorage.removeItem('fititup_auth');
+      location.reload();
+    }
+
+    // Auto-login if session exists
+    if (sessionStorage.getItem('fititup_auth') === 'true') {
+      document.getElementById('auth-screen').style.display = 'none';
+      window.addEventListener('DOMContentLoaded', initDashboard);
+    }
+
+    // ── TOAST NOTIFICATION ──────────────────────────────────────
+    function showToast(msg = 'Saved Successfully!') {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    // ── TAB SWITCHING ───────────────────────────────────────────
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    // ── DASHBOARD INITIALIZATION ────────────────────────────────
+    function initDashboard() {
+      renderOverview();
+      renderLeads();
+      renderProgramsEditor();
+      renderTestimonials();
+      renderFaqs();
+      renderSlots();
+      renderSettings();
+    }
+
+    // ── 1. OVERVIEW ─────────────────────────────────────────────
+    function renderOverview() {
+      const leads = window.FitItUpCMS.getLeads();
+      const programs = window.FitItUpCMS.getPrograms();
+
+      document.getElementById('stat-total-leads').textContent = leads.length;
+      document.getElementById('stat-new-leads').textContent = leads.filter(l => l.status === 'New').length;
+      document.getElementById('badge-leads-count').textContent = leads.filter(l => l.status === 'New').length;
+      document.getElementById('stat-active-programs').textContent = programs.length;
+
+      const recentContainer = document.getElementById('overview-recent-leads');
+      if (!leads.length) {
+        recentContainer.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;">No leads logged yet.</p>';
+        return;
+      }
+
+      recentContainer.innerHTML = leads.slice(0, 3).map(lead => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--border);">
+          <div>
+            <strong>${escapeHtml(lead.name)}</strong> · <span style="color:var(--text-muted);font-size:0.85rem;">${escapeHtml(lead.goal)}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span class="badge badge-${lead.status.toLowerCase()}">${lead.status}</span>
+            <a href="https://wa.me/${lead.phone}?text=Hi%20${encodeURIComponent(lead.name)}%2C%20Coach%20Ashish%20here%20from%20FitItUp!" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ── 2. LEADS CRM ────────────────────────────────────────────
+    function renderLeads() {
+      const tbody = document.getElementById('leads-table-body');
+      const leads = window.FitItUpCMS.getLeads();
+
+      if (!leads.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">No consultation leads found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = leads.map(lead => {
+        const dateStr = new Date(lead.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const waMsg = encodeURIComponent(`Hi ${lead.name}! Coach Ashish here from FitItUp. I saw your consultation request for ${lead.goal}. When are you free to chat?`);
+
+        return `
+          <tr>
+            <td><strong>${escapeHtml(lead.name)}</strong></td>
+            <td><a href="tel:${escapeHtml(lead.phone)}" style="color:var(--accent);text-decoration:none;">${escapeHtml(lead.phone)}</a></td>
+            <td><span class="badge" style="background:rgba(255,255,255,0.06);color:var(--text);">${escapeHtml(lead.goal)}</span></td>
+            <td>${escapeHtml(lead.slot || 'N/A')}</td>
+            <td>
+              <select onchange="changeLeadStatus('${lead.id}', this.value)" class="form-control" style="padding:0.35rem 0.5rem;font-size:0.75rem;width:auto;">
+                <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
+                <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                <option value="Converted" ${lead.status === 'Converted' ? 'selected' : ''}>Converted</option>
+                <option value="Archived" ${lead.status === 'Archived' ? 'selected' : ''}>Archived</option>
+              </select>
+            </td>
+            <td style="color:var(--text-muted);font-size:0.75rem;">${dateStr}</td>
+            <td>
+              <div style="display:flex;gap:0.4rem;">
+                <a href="https://wa.me/${lead.phone}?text=${waMsg}" class="btn btn-wa" target="_blank" rel="noopener">Chat</a>
+                <button class="btn btn-danger" style="padding:0.3rem 0.6rem;font-size:0.75rem;" onclick="removeLead('${lead.id}')">✕</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function changeLeadStatus(id, newStatus) {
+      window.FitItUpCMS.updateLeadStatus(id, newStatus);
+      showToast('Status Updated');
+      renderOverview();
+    }
+
+    function removeLead(id) {
+      if (confirm('Delete this lead record?')) {
+        window.FitItUpCMS.deleteLead(id);
+        renderLeads();
+        renderOverview();
+        showToast('Lead Deleted');
+      }
+    }
+
+    function exportLeadsCsv() {
+      const leads = window.FitItUpCMS.getLeads();
+      let csv = 'Name,Phone,Email,Goal,Slot,Status,Date\n';
+      leads.forEach(l => {
+        csv += `"${l.name}","${l.phone}","${l.email}","${l.goal}","${l.slot || ''}","${l.status}","${l.createdAt}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `fititup_leads_${Date.now()}.csv`;
+      a.click();
+    }
+
+    // ── 3. PROGRAMS & PRICING EDITOR ────────────────────────────
+    function renderProgramsEditor() {
+      const container = document.getElementById('programs-editor-container');
+      const programs = window.FitItUpCMS.getPrograms();
+
+      container.innerHTML = programs.map(p => `
+        <div class="program-edit-card ${p.featured ? 'featured' : ''}" data-id="${p.id}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <h3 style="font-family:var(--font-head);font-size:1.6rem;letter-spacing:0.05em;">${p.name} Tier</h3>
+            <label style="font-size:0.75rem;color:var(--accent);display:flex;align-items:center;gap:0.3rem;">
+              <input type="checkbox" ${p.featured ? 'checked' : ''} onchange="toggleFeaturedProgram('${p.id}', this.checked)"> Most Popular
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label>Price in ₹ (INR)</label>
+            <input type="text" class="form-control p-price" value="${escapeHtml(p.price)}">
+          </div>
+
+          <div class="form-group">
+            <label>Badge Text</label>
+            <input type="text" class="form-control p-badge" value="${escapeHtml(p.badge || '')}" placeholder="e.g. 🔥 Most Popular">
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control p-desc" value="${escapeHtml(p.description)}">
+          </div>
+
+          <div class="form-group">
+            <label>Features (One per line)</label>
+            <textarea class="form-control p-features" rows="5">${escapeHtml(p.features.join('\n'))}</textarea>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleFeaturedProgram(id, checked) {
+      window.FitItUpCMS.updateProgram(id, { featured: checked });
+      renderProgramsEditor();
+      showToast('Badge Updated');
+    }
+
+    function savePrograms() {
+      document.querySelectorAll('.program-edit-card').forEach(card => {
+        const id = card.getAttribute('data-id');
+        const price = card.querySelector('.p-price').value.trim();
+        const badge = card.querySelector('.p-badge').value.trim();
+        const description = card.querySelector('.p-desc').value.trim();
+        const features = card.querySelector('.p-features').value.split('\n').map(f => f.trim()).filter(Boolean);
+
+        window.FitItUpCMS.updateProgram(id, { price, badge, description, features });
+      });
+      showToast('Programs & Pricing Saved! Live site updated.');
+    }
+
+    // ── 4. TESTIMONIALS ─────────────────────────────────────────
+    function renderTestimonials() {
+      const container = document.getElementById('testimonials-list');
+      const list = window.FitItUpCMS.getTestimonials();
+
+      container.innerHTML = list.map(t => `
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+              <strong style="font-size:1.1rem;">${escapeHtml(t.name)}</strong>
+              <button class="btn btn-danger" style="padding:0.25rem 0.5rem;font-size:0.75rem;" onclick="removeTestimonial('${t.id}')">Delete</button>
+            </div>
+            <div style="font-size:0.8rem;color:var(--accent);margin-bottom:0.75rem;">${escapeHtml(t.tag)}</div>
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">"${escapeHtml(t.quote)}"</p>
+          </div>
+          <div style="margin-top:1rem;color:#FBBF24;">★★★★★</div>
+        </div>
+      `).join('');
+    }
+
+    function openAddTestimonialModal() {
+      const name = prompt('Client Name:');
+      if (!name) return;
+      const tag = prompt('Metric Tag (e.g. "Lost 8 kg in 60 days · Delhi"):');
+      const quote = prompt('Review Quote:');
+      if (!quote) return;
+
+      window.FitItUpCMS.addTestimonial({ name, tag: tag || 'Client Transformation', quote });
+      renderTestimonials();
+      showToast('Review Added!');
+    }
+
+    function removeTestimonial(id) {
+      if (confirm('Delete this review?')) {
+        window.FitItUpCMS.deleteTestimonial(id);
+        renderTestimonials();
+        showToast('Review Removed');
+      }
+    }
+
+    // ── 5. FAQS ─────────────────────────────────────────────────
+    function renderFaqs() {
+      const container = document.getElementById('faqs-list');
+      const faqs = window.FitItUpCMS.getFaqs();
+
+      container.innerHTML = faqs.map(f => `
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
+            <div style="flex:1;">
+              <strong style="font-size:0.95rem;color:var(--text);display:block;margin-bottom:0.4rem;">${escapeHtml(f.question)}</strong>
+              <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">${escapeHtml(f.answer)}</p>
+            </div>
+            <button class="btn btn-danger" style="padding:0.3rem 0.6rem;font-size:0.75rem;" onclick="removeFaq('${f.id}')">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddFaqModal() {
+      const question = prompt('FAQ Question:');
+      if (!question) return;
+      const answer = prompt('FAQ Answer:');
+      if (!answer) return;
+
+      window.FitItUpCMS.addFaq({ question, answer });
+      renderFaqs();
+      showToast('Question Added!');
+    }
+
+    function removeFaq(id) {
+      if (confirm('Delete this FAQ question?')) {
+        window.FitItUpCMS.deleteFaq(id);
+        renderFaqs();
+        showToast('FAQ Removed');
+      }
+    }
+
+    // ── 6. SLOTS ────────────────────────────────────────────────
+    function renderSlots() {
+      const container = document.getElementById('slots-container');
+      const slots = window.FitItUpCMS.getSlots();
+
+      container.innerHTML = slots.map(s => `
+        <div class="slot-card ${s.active ? '' : 'inactive'}">
+          <div class="slot-time">${s.time}</div>
+          <button class="btn ${s.active ? 'btn-danger' : 'btn-accent'}" style="width:100%;padding:0.4rem 0.6rem;font-size:0.75rem;justify-content:center;" onclick="toggleSlotActive('${s.time}', ${!s.active})">
+            ${s.active ? 'Disable Slot' : 'Enable Slot'}
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function toggleSlotActive(time, active) {
+      window.FitItUpCMS.toggleSlot(time, active);
+      renderSlots();
+      showToast(active ? 'Slot Enabled' : 'Slot Disabled');
+    }
+
+    // ── 7. SETTINGS ─────────────────────────────────────────────
+    function renderSettings() {
+      const cfg = window.FitItUpCMS.getSettings();
+      document.getElementById('cfg-coach-name').value = cfg.coachName || '';
+      document.getElementById('cfg-wa-phone').value = cfg.whatsappPhone || '';
+      document.getElementById('cfg-email').value = cfg.supportEmail || '';
+      document.getElementById('cfg-instagram').value = cfg.instagramUrl || '';
+    }
+
+    function saveSettings() {
+      const coachName = document.getElementById('cfg-coach-name').value.trim();
+      const whatsappPhone = document.getElementById('cfg-wa-phone').value.trim();
+      const supportEmail = document.getElementById('cfg-email').value.trim();
+      const instagramUrl = document.getElementById('cfg-instagram').value.trim();
+
+      window.FitItUpCMS.updateSettings({ coachName, whatsappPhone, supportEmail, instagramUrl });
+      showToast('Settings Saved!');
+    }
+
+    function downloadBackup() {
+      const data = window.FitItUpCMS.exportBackup();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `fititup_backup_${Date.now()}.json`;
+      a.click();
+      showToast('Backup downloaded');
+    }
+
+    function restoreBackupFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        try {
+          const data = JSON.parse(evt.target.result);
+          window.FitItUpCMS.restoreBackup(data);
+          initDashboard();
+          showToast('Data Restored Successfully!');
+        } catch(err) {
+          alert('Invalid backup JSON file');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function confirmResetDefaults() {
+      if (confirm('Are you sure you want to reset all data back to original defaults?')) {
+        window.FitItUpCMS.resetDefaults();
+        initDashboard();
+        showToast('Reset to defaults');
+      }
+    }
+
+    // Escape helper
+    function escapeHtml(str) {
+      return (str || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>

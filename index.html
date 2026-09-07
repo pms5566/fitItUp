@@ -25,15 +25,15 @@
     </a>
 
     <ul class="navbar__links" role="list">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="programs.html">Programs</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#pricing">Programs</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
 
     <div class="navbar__cta">
-      <a href="programs.html" class="btn btn-primary btn-sm">Book a Session</a>
+      <a href="#contact" class="btn btn-primary btn-sm">Book Free Call</a>
     </div>
 
     <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -47,15 +47,15 @@
 <!-- ══════════════════════════════════════ MOBILE MENU ══ -->
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <nav class="mobile-menu__nav">
-    <a href="index.html" class="active">Home <span class="arrow">→</span></a>
-    <a href="about.html">About <span class="arrow">→</span></a>
-    <a href="services.html">Services <span class="arrow">→</span></a>
-    <a href="programs.html">Programs <span class="arrow">→</span></a>
-    <a href="contact.html">Contact <span class="arrow">→</span></a>
+    <a href="#hero" class="active">Home <span class="arrow">→</span></a>
+    <a href="#services">Services <span class="arrow">→</span></a>
+    <a href="#about">About <span class="arrow">→</span></a>
+    <a href="#pricing">Programs <span class="arrow">→</span></a>
+    <a href="#contact">Contact <span class="arrow">→</span></a>
   </nav>
   <div class="mobile-menu__cta">
     <a href="https://wa.me/919999999999?text=Hi%20Ashish!" class="btn btn-wa" target="_blank" rel="noopener">Chat on WhatsApp</a>
-    <a href="programs.html" class="btn btn-primary">Book Free Consultation</a>
+    <a href="#contact" class="btn btn-primary">Book Free Consultation</a>
   </div>
 </div>
 
@@ -126,7 +126,7 @@
              rel="noopener noreferrer">
             TRY FOR FREE →
           </a>
-          <a href="contact.html"
+          <a href="#contact"
              class="btn btn-outline btn-lg"
              style="border-radius: var(--radius-pill); border-color: var(--clr-gray-700); background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"
              rel="noopener noreferrer">
@@ -204,7 +204,7 @@
         </div>
         <h3 class="service-card__title">Home Workout Coaching</h3>
         <p class="service-card__desc">Zero equipment plans built for your space. Get active, fit, and strong without stepping foot outside.</p>
-        <a href="services.html" class="service-card__link">Learn More →</a>
+        <a href="#pricing" class="service-card__link">View Details →</a>
       </div>
 
       <!-- 2. Diet & Nutrition Plans -->
@@ -214,7 +214,7 @@
         </div>
         <h3 class="service-card__title">Diet &amp; Nutrition Plans</h3>
         <p class="service-card__desc">Science-backed, customised to your lifestyle. Indian food options, both veg and non-veg tailored for you.</p>
-        <a href="services.html" class="service-card__link">Learn More →</a>
+        <a href="#pricing" class="service-card__link">View Details →</a>
       </div>
 
       <!-- 3. Online E-Coaching -->
@@ -224,7 +224,7 @@
         </div>
         <h3 class="service-card__title">Online E-Coaching</h3>
         <p class="service-card__desc">Weekly check-ins, form feedback, and 24/7 support directly via WhatsApp. Train with Ashish from anywhere in India.</p>
-        <a href="services.html" class="service-card__link">Learn More →</a>
+        <a href="#pricing" class="service-card__link">View Details →</a>
       </div>
 
       <!-- 4. Kids Fitness Training -->
@@ -234,14 +234,14 @@
         </div>
         <h3 class="service-card__title">Kids Fitness Training</h3>
         <p class="service-card__desc">Building strong habits from an early age. Fun, engaging, and structured fitness exercises for kids aged 6–16.</p>
-        <a href="services.html" class="service-card__link">Learn More →</a>
+        <a href="#pricing" class="service-card__link">View Details →</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════ WHY CHOOSE US ══ -->
-<section class="why section" id="about-preview">
+<section class="why section" id="about">
   <div class="container">
     <div class="why__layout">
       <div class="why__image" data-animate="left">
@@ -301,7 +301,7 @@
           </div>
         </div>
 
-        <a href="about.html" class="btn btn-primary" style="margin-top:var(--sp-8);">Meet Ashish →</a>
+        <a href="#contact" class="btn btn-primary" style="margin-top:var(--sp-8);">Train With Ashish →</a>
       </div>
     </div>
   </div>
@@ -484,6 +484,71 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════ FAQs ══ -->
+<section class="section" id="faq" style="background:var(--clr-card);">
+  <div class="container">
+    <div class="text-center" data-animate>
+      <p class="section-label" style="justify-content:center;">Got Questions?</p>
+      <h2 class="section-title">Frequently Asked <span class="text-red">Questions</span></h2>
+      <p class="section-subtitle" style="margin-inline:auto;margin-top:var(--sp-4);">Everything you need to know about coaching, programs, and getting started.</p>
+    </div>
+
+    <div class="faq-list">
+      <!-- FAQ 1 -->
+      <div class="faq-item" data-animate data-delay="1">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Is there a lock-in period?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-panel">
+          <div class="faq-content">
+            No, there is absolutely no lock-in period. You pay on a monthly subscription basis and can cancel anytime after your current month expires.
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="faq-item" data-animate data-delay="2">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Do I need gym equipment?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-panel">
+          <div class="faq-content">
+            No gym equipment is required. All programs can be adapted entirely to home environments using bodyweight and minimal items like resistance bands.
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="faq-item" data-animate data-delay="3">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          How do I receive my plan?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-panel">
+          <div class="faq-content">
+            You will receive your customized diet and workout charts via WhatsApp and as a PDF document within 48 hours of completing your onboarding consultation.
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="faq-item" data-animate data-delay="4">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Is vegetarian / Jain food supported?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-panel">
+          <div class="faq-content">
+            Yes, 100%! All diet plans are built around authentic Indian home-cooked meals including vegetarian, eggetarian, Jain, and non-vegetarian preferences.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════════════════════════ CTA BANNER ══ -->
 <section class="cta-banner section">
   <div class="container cta-banner__inner" data-animate>
@@ -494,7 +559,116 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg>
         Free Consultation on WhatsApp
       </a>
-      <a href="contact.html" class="btn btn-outline btn-lg">Contact Us</a>
+      <a href="#contact" class="btn btn-outline btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ CONTACT & BOOKING ══ -->
+<section class="section" id="contact" style="background:var(--clr-bg);">
+  <div class="container">
+    <div class="text-center" data-animate style="margin-bottom:var(--sp-10);">
+      <p class="section-label" style="justify-content:center;">Get In Touch</p>
+      <h2 class="section-title">Book Your <span class="text-red">Free Consultation</span></h2>
+      <p class="section-subtitle" style="margin-inline:auto;margin-top:var(--sp-4);">Choose a time slot for a 15-minute clarity call, send a message, or chat directly on WhatsApp.</p>
+    </div>
+
+    <div class="contact-layout">
+      <!-- Left Column: Methods & Calendar Widget -->
+      <div style="display:flex;flex-direction:column;gap:var(--sp-6);" data-animate="left">
+        <div class="contact-methods">
+          <a href="https://wa.me/919999999999?text=Hi%20Ashish!" class="method-card" target="_blank" rel="noopener">
+            <div class="method-card__icon">💬</div>
+            <div class="method-card__body">
+              <h3>WhatsApp</h3>
+              <p>Message directly for fastest response</p>
+            </div>
+          </a>
+          <a href="mailto:ashish@fititup.in" class="method-card">
+            <div class="method-card__icon">📧</div>
+            <div class="method-card__body">
+              <h3>Email</h3>
+              <p>ashish@fititup.in</p>
+            </div>
+          </a>
+          <a href="https://instagram.com/fititup07" class="method-card" target="_blank" rel="noopener">
+            <div class="method-card__icon">📸</div>
+            <div class="method-card__body">
+              <h3>Instagram</h3>
+              <p>DM @fititup07</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Booking Widget -->
+        <div class="booking-widget">
+          <h3>📅 Book a Free 15-Min Call</h3>
+          <p class="text-muted" style="font-size:var(--fs-xs);margin-bottom:var(--sp-4);">This is a no-obligation clarity call, just a conversation.</p>
+          <p style="font-size:var(--fs-sm);font-weight:var(--fw-semi);">Select a Time Slot (Mon–Sat, 9AM–7PM):</p>
+          <div class="booking-widget__grid">
+            <button class="time-slot-btn" onclick="selectSlot(this)">10:00 AM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">11:30 AM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">02:00 PM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">04:30 PM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">06:00 PM</button>
+            <button class="time-slot-btn" onclick="selectSlot(this)">07:00 PM</button>
+          </div>
+          <button class="btn btn-primary btn-sm" id="book-slot-cta" style="width:100%;margin-top:var(--sp-5);display:none;" onclick="confirmBooking()">Confirm Slot</button>
+        </div>
+      </div>
+
+      <!-- Right Column: Form -->
+      <div class="contact-card" data-animate="right" data-delay="1">
+        <form id="contact-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="fname">Full Name *</label>
+            <input type="text" id="fname" class="form-input" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <label for="wa-num">WhatsApp Number *</label>
+            <input type="tel" id="wa-num" class="form-input" placeholder="e.g. 9876543210" inputmode="numeric" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" class="form-input" placeholder="yourname@domain.com" required />
+          </div>
+          <div class="form-group">
+            <label for="goal">Your Primary Goal *</label>
+            <select id="goal" class="form-input" required>
+              <option value="" disabled selected>Select goal</option>
+              <option value="Fat Loss">Fat Loss</option>
+              <option value="Muscle Gain">Muscle Gain</option>
+              <option value="General Fitness">General Fitness</option>
+              <option value="Kids Training">Kids Training</option>
+              <option value="Diet Plan Only">Diet Plan Only</option>
+              <option value="Not Sure">Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message (Optional)</label>
+            <textarea id="message" class="form-input" rows="4" placeholder="Any details you'd like to share..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--sp-2);">Send Message →</button>
+        </form>
+
+        <div class="success-state" id="form-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <h3>Opening WhatsApp...</h3>
+          <p style="margin-bottom:var(--sp-4);">Your consultation details are ready! If WhatsApp did not open automatically, tap below:</p>
+          <a id="success-wa-btn" href="#" class="btn btn-wa" target="_blank" rel="noopener" style="display:inline-flex;margin-inline:auto;">
+            💬 Continue to WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust indicators -->
+    <div class="contact-trust">
+      <div>⚡ Usually replies within 2 hours</div>
+      <div>🔒 Your info is 100% private</div>
+      <div>🇮🇳 Proudly coaching across India</div>
     </div>
   </div>
 </section>
@@ -505,7 +679,7 @@
     <div class="footer__grid">
       <!-- Brand -->
       <div class="footer__brand">
-        <a href="index.html" class="navbar__logo" style="margin-bottom:var(--sp-4);display:inline-flex;">
+        <a href="#hero" class="navbar__logo" style="margin-bottom:var(--sp-4);display:inline-flex;">
           <div class="logo-mark"><img src="images/fititup-logo.png" alt="Fit It Up Emblem" class="logo-img"></div>
           <div class="logo-text"><span class="logo-text__main">Fit It Up</span><span class="logo-text__sub">By Ashish Satarkar</span></div>
         </a>
@@ -530,11 +704,12 @@
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="footer__col-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About Ashish</a>
-          <a href="services.html">All Services</a>
-          <a href="programs.html">Pricing &amp; Plans</a>
-          <a href="contact.html">Contact</a>
+          <a href="#hero">Home</a>
+          <a href="#services">Services</a>
+          <a href="#about">About Ashish</a>
+          <a href="#pricing">Pricing &amp; Plans</a>
+          <a href="#faq">FAQs</a>
+          <a href="#contact">Contact</a>
         </div>
       </div>
 
@@ -545,11 +720,11 @@
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="footer__col-links">
-          <a href="services.html">1-on-1 Coaching</a>
-          <a href="services.html">E-Coaching Online</a>
-          <a href="services.html">Diet Plans</a>
-          <a href="services.html">Home Workouts</a>
-          <a href="services.html">Kids Training</a>
+          <a href="#services">1-on-1 Coaching</a>
+          <a href="#services">E-Coaching Online</a>
+          <a href="#services">Diet Plans</a>
+          <a href="#services">Home Workouts</a>
+          <a href="#services">Kids Training</a>
         </div>
       </div>
 
@@ -562,7 +737,7 @@
         <div class="footer__col-links">
           <a href="https://wa.me/919999999999" target="_blank" rel="noopener">WhatsApp: +91 99999 99999</a>
           <a href="mailto:ashish@fititup.in">ashish@fititup.in</a>
-          <a href="contact.html">Studio Location</a>
+          <a href="#contact">Book 15-Min Call</a>
         </div>
       </div>
     </div>
@@ -578,6 +753,11 @@
   </div>
 </footer>
 
+<a href="https://wa.me/919999999999" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg>
+</a>
+
+<script src="js/cms-store.js"></script>
 <script src="script.js"></script>
 <script>
   function toggleFooterCol(id) {

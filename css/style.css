@@ -496,3 +496,33 @@ h1, h2, h3, h4, h5, h6 {
   margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
   white-space: nowrap; border: 0;
 }
+
+/* ── Modern Button & Layout Utilities ─────────────────────── */
+.btn-pill {
+  border-radius: var(--radius-pill);
+  font-weight: var(--fw-black);
+  letter-spacing: 0.05em;
+}
+
+.btn-glass {
+  border-radius: var(--radius-pill);
+  border-color: var(--clr-gray-700);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--clr-white);
+}
+
+.section-label-center {
+  justify-content: center;
+}
+
+.section-subtitle-center {
+  margin-inline: auto;
+  margin-top: var(--sp-4);
+}
+

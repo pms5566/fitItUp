@@ -62,13 +62,15 @@
 <!-- ══════════════════════════════════════ HERO ══ -->
 <section class="hero" id="hero" aria-label="Hero section">
 
-  <!-- Background Image (Real Portrait Photo - IMG_1365) -->
+  <!-- Background Image (Real Portrait Photo - IMG_1365 WebP) -->
   <div class="hero__bg">
     <picture>
+      <source srcset="images/ashish-1365.webp" type="image/webp">
       <img
-        src="images/ashish-1365.png"
+        src="images/ashish-1365.webp"
         alt="Ashish Satarkar | Personal Fitness Trainer, FitItUp"
         fetchpriority="high"
+        loading="eager"
       />
     </picture>
   </div>
@@ -120,15 +122,13 @@
         <!-- CTAs (Pill layout) -->
         <div class="hero__cta" data-animate data-delay="3">
           <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%20want%20to%20book%20a%20free%20call!"
-             class="btn btn-primary btn-lg"
-             style="border-radius: var(--radius-pill); font-weight: var(--fw-black); letter-spacing: 0.05em;"
+             class="btn btn-primary btn-lg btn-pill"
              target="_blank"
              rel="noopener noreferrer">
             TRY FOR FREE →
           </a>
           <a href="#contact"
-             class="btn btn-outline btn-lg"
-             style="border-radius: var(--radius-pill); border-color: var(--clr-gray-700); background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"
+             class="btn btn-outline btn-lg btn-glass"
              rel="noopener noreferrer">
             SCHEDULE CALL 📅
           </a>
@@ -245,7 +245,10 @@
   <div class="container">
     <div class="why__layout">
       <div class="why__image" data-animate="left">
-        <img src="images/why-fititup.jpg" alt="Coach Ashish Satarkar standing on the beach at sunset" loading="lazy" />
+        <picture>
+          <source srcset="images/why-fititup.webp" type="image/webp">
+          <img src="images/why-fititup.jpg" alt="Coach Ashish Satarkar standing on the beach at sunset" loading="lazy" />
+        </picture>
         <div class="why__badge">
           <div class="why__badge-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -758,7 +761,7 @@
 </a>
 
 <script src="js/cms-store.js"></script>
-<script src="script.js"></script>
+<script src="js/app.js"></script>
 <script>
   function toggleFooterCol(id) {
     const col = document.getElementById(id);

@@ -70,27 +70,66 @@
 })();
 
 
-// ── Scroll-Triggered Animations (IntersectionObserver) ────────
+// ── Scroll-Triggered Animations (IntersectionObserver + Scroll Fallback) ──
 (function initScrollAnimations() {
   const elements = document.querySelectorAll('[data-animate]');
   if (!elements.length) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target); // animate once
-        }
-      });
-    },
-    {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+  function revealElement(el) {
+    if (!el.classList.contains('in-view')) {
+      el.classList.add('in-view');
     }
-  );
+  }
 
-  elements.forEach(el => observer.observe(el));
+  // Fallback scanner for robust reveal on scroll, jump, and load
+  function checkVisibility() {
+    const windowH = window.innerHeight || document.documentElement.clientHeight;
+    elements.forEach(el => {
+      if (el.classList.contains('in-view')) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < windowH + 80 && rect.bottom > -50) {
+        revealElement(el);
+      }
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            revealElement(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.02,
+        rootMargin: '0px 0px 80px 0px'
+      }
+    );
+    elements.forEach(el => observer.observe(el));
+  }
+
+  // Fail-safe listeners for anchor navigation, rapid scrolling, and mobile orientation change
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener('resize', checkVisibility, { passive: true });
+  window.addEventListener('hashchange', () => {
+    setTimeout(checkVisibility, 50);
+    setTimeout(checkVisibility, 350);
+  });
+
+  // When clicking any in-page anchor, trigger visibility check after smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', () => {
+      setTimeout(checkVisibility, 100);
+      setTimeout(checkVisibility, 400);
+    });
+  });
+
+  // Run on initial load and after a short tick
+  checkVisibility();
+  setTimeout(checkVisibility, 200);
 })();
 
 

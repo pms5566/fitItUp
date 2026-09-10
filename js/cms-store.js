@@ -13,10 +13,30 @@
     PROGRAMS: 'fititup_programs',
     TESTIMONIALS: 'fititup_testimonials',
     FAQS: 'fititup_faqs',
-    SLOTS: 'fititup_slots'
+    SLOTS: 'fititup_slots',
+    STUDIO: 'fititup_studio'
   };
 
   // ── Default State ─────────────────────────────────────────────
+  const DEFAULT_STUDIO = {
+    hourlyRate: '599',
+    hourlyUnit: 'Per Hour / Solo or Client',
+    creatorRate: '1,999',
+    creatorUnit: '4-Hour Shoot Session',
+    trainerRate: '7,999',
+    trainerUnit: '20 Hours / Month',
+    description: 'Fully equipped, private, and air-conditioned fitness studio. Perfect for personal trainers, yoga & calisthenics coaches, and fitness content creators.',
+    equipmentNotes: 'Includes continuous softbox lighting, wireless mics, private changing room & full dumbbell rack.',
+    amenities: [
+      { id: 'a1', name: '100% Private Access (Exclusive Slot, Zero Crowds)', icon: '🔒', active: true },
+      { id: 'a2', name: 'Full Squat Rack, Barbells & Dumbbell Set', icon: '🏋️', active: true },
+      { id: 'a3', name: 'Continuous Softbox & Ring Lights (Shoots Ready)', icon: '🎬', active: true },
+      { id: 'a4', name: 'Dual Wireless Lapel Mics (Type-C / Lightning)', icon: '🎙️', active: true },
+      { id: 'a5', name: 'Air Conditioned + Bluetooth Sound & Mirrors', icon: '❄️', active: true },
+      { id: 'a6', name: 'Private Changing Room + Fast Wi-Fi', icon: '🚿', active: true }
+    ],
+    blackoutDates: ''
+  };
   const DEFAULT_SETTINGS = {
     coachName: 'Ashish Satarkar',
     brandName: 'Fit It Up',
@@ -161,6 +181,18 @@
       message: 'Need home workout guidance without dumbbells.',
       status: 'Contacted',
       createdAt: new Date(Date.now() - 3600000 * 18).toISOString()
+    },
+    {
+      id: 'lead-sample-3',
+      name: 'Karan Patel',
+      phone: '9823456789',
+      email: 'karan.shoots@gmail.com',
+      goal: 'Studio Rental / Shoot',
+      slot: '02:00 PM',
+      message: 'Need 4-hour creator shoot slot for fitness reels with studio lighting and barbells.',
+      source: 'Instagram DM',
+      status: 'New',
+      createdAt: new Date(Date.now() - 3600000 * 5).toISOString()
     }
   ];
 
@@ -286,6 +318,46 @@
       return slots;
     },
 
+    // Studio Rental
+    getStudio() {
+      return get(STORAGE_KEYS.STUDIO, DEFAULT_STUDIO);
+    },
+    updateStudio(data) {
+      const current = this.getStudio();
+      const updated = { ...current, ...data };
+      set(STORAGE_KEYS.STUDIO, updated);
+      return updated;
+    },
+    toggleStudioAmenity(id, active) {
+      const studio = this.getStudio();
+      const amenities = (studio.amenities || []).map(a => a.id === id ? { ...a, active } : a);
+      return this.updateStudio({ amenities });
+    },
+    addStudioAmenity(item) {
+      const studio = this.getStudio();
+      const amenities = studio.amenities || [];
+      const newAmenity = {
+        id: 'a-' + Date.now(),
+        icon: item.icon || '✨',
+        name: item.name || 'Studio Feature',
+        active: true
+      };
+      amenities.push(newAmenity);
+      return this.updateStudio({ amenities });
+    },
+    deleteStudioAmenity(id) {
+      const studio = this.getStudio();
+      const amenities = (studio.amenities || []).filter(a => a.id !== id);
+      return this.updateStudio({ amenities });
+    },
+    getStudioLeads() {
+      const leads = this.getLeads();
+      return leads.filter(l => {
+        const text = `${l.goal || ''} ${l.message || ''}`.toLowerCase();
+        return text.includes('studio') || text.includes('shoot') || text.includes('rent');
+      });
+    },
+
     // Backup / Restore
     exportBackup() {
       return {
@@ -295,6 +367,7 @@
         testimonials: this.getTestimonials(),
         faqs: this.getFaqs(),
         slots: this.getSlots(),
+        studio: this.getStudio(),
         exportedAt: new Date().toISOString()
       };
     },
@@ -306,6 +379,7 @@
       if (data.testimonials) set(STORAGE_KEYS.TESTIMONIALS, data.testimonials);
       if (data.faqs) set(STORAGE_KEYS.FAQS, data.faqs);
       if (data.slots) set(STORAGE_KEYS.SLOTS, data.slots);
+      if (data.studio) set(STORAGE_KEYS.STUDIO, data.studio);
       return true;
     },
     resetDefaults() {
@@ -315,6 +389,7 @@
       set(STORAGE_KEYS.TESTIMONIALS, DEFAULT_TESTIMONIALS);
       set(STORAGE_KEYS.FAQS, DEFAULT_FAQS);
       set(STORAGE_KEYS.SLOTS, DEFAULT_SLOTS);
+      set(STORAGE_KEYS.STUDIO, DEFAULT_STUDIO);
     }
   };
 

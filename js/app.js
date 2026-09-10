@@ -358,6 +358,27 @@ function toggleFaq(btn) {
         </div>
       `).join('');
     }
+
+    // 5. Render Studio Rates
+    const studioStrip = document.querySelector('.studio-rate-strip');
+    if (studioStrip && window.FitItUpCMS.getStudio) {
+      const studio = window.FitItUpCMS.getStudio();
+      const rateItems = studioStrip.querySelectorAll('.studio-rate-item');
+      if (rateItems.length >= 3) {
+        if (studio.hourlyRate) {
+          const p = rateItems[0].querySelector('.studio-rate-item__price');
+          if (p) p.textContent = `₹${studio.hourlyRate}`;
+        }
+        if (studio.creatorRate) {
+          const p = rateItems[1].querySelector('.studio-rate-item__price');
+          if (p) p.textContent = `₹${studio.creatorRate}`;
+        }
+        if (studio.trainerRate) {
+          const p = rateItems[2].querySelector('.studio-rate-item__price');
+          if (p) p.textContent = `₹${studio.trainerRate}`;
+        }
+      }
+    }
   }
 
   // Initial sync

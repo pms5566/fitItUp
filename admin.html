@@ -623,6 +623,161 @@
         font-size: 0.8rem;
       }
     }
+
+    /* ── MODALS ────────────────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 10, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 9990;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.is-open {
+      display: flex;
+    }
+    .modal-dialog {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      overflow: hidden;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.25rem;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* ── QUICK WHATSAPP TEMPLATES ─────────────────────────── */
+    .wa-template-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .wa-template-card:hover {
+      border-color: rgba(200, 245, 58, 0.4);
+    }
+    .wa-template-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .wa-template-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      background: rgba(0,0,0,0.25);
+      padding: 0.6rem 0.75rem;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      white-space: pre-wrap;
+    }
+
+    /* ── FILTER CHIPS ─────────────────────────────────────── */
+    .filter-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .filter-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill.active {
+      background: var(--accent);
+      color: #0A0D0A;
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ── STUDIO AMENITIES CHIPS ───────────────────────────── */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.85rem;
+    }
+    .amenity-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .amenity-card.inactive {
+      opacity: 0.45;
+      filter: grayscale(0.8);
+    }
+    .amenity-card__info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .amenity-card__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
   </style>
 </head>
 <body>
@@ -686,6 +841,11 @@
       <li>
         <button class="nav-tab-btn" onclick="switchTab('tab-leads', this)">
           👥 Leads CRM <span class="badge-pill" id="badge-leads-count">0</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" onclick="switchTab('tab-studio', this)">
+          🏢 Studio Rental <span class="badge-pill" id="badge-studio-count">0</span>
         </button>
       </li>
       <li>
@@ -771,30 +931,148 @@
       <div class="view-header">
         <div>
           <h1 class="view-title">LEADS CRM</h1>
-          <p class="view-subtitle">Track consultation bookings, update pipeline statuses, and chat on WhatsApp</p>
+          <p class="view-subtitle">Track consultation bookings, log walk-ins, update pipeline statuses &amp; 1-tap WhatsApp response</p>
         </div>
         <div class="view-actions">
-          <button class="btn btn-outline" onclick="exportLeadsCsv()">Export CSV</button>
+          <button class="btn btn-accent" onclick="openAddLeadModal()">+ Add Lead</button>
+          <button class="btn btn-outline" onclick="exportLeadsCsv()">📥 Export to CSV</button>
         </div>
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="filter-pills" id="lead-filter-pills">
+        <button class="filter-pill active" onclick="filterLeadsBy('all', this)">All Leads (<span id="count-all-leads">0</span>)</button>
+        <button class="filter-pill" onclick="filterLeadsBy('coaching', this)">🏋️ Fitness Coaching (<span id="count-coaching-leads">0</span>)</button>
+        <button class="filter-pill" onclick="filterLeadsBy('studio', this)">🏢 Studio Rental (<span id="count-studio-leads">0</span>)</button>
+        <button class="filter-pill" onclick="filterLeadsBy('new', this)">🔥 Uncontacted (<span id="count-uncontacted-leads">0</span>)</button>
       </div>
 
       <div class="data-table-wrapper">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Client Name</th>
+              <th>Client Name &amp; Source</th>
               <th>WhatsApp Number</th>
-              <th>Goal</th>
+              <th>Goal / Service</th>
               <th>Slot Booked</th>
               <th>Status</th>
               <th>Received</th>
-              <th>Action</th>
+              <th>Quick Actions</th>
             </tr>
           </thead>
           <tbody id="leads-table-body">
             <!-- Rendered by JS -->
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- ── TAB 3: STUDIO RENTAL MANAGEMENT ─────────────────── -->
+    <section id="tab-studio" class="tab-panel">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">STUDIO RENTAL MANAGEMENT</h1>
+          <p class="view-subtitle">Manage private gym rental rates, creator packages, equipment inventory &amp; shoot booking leads</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-accent" onclick="saveStudioPricing()">Save Studio Rates</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card__label">Studio Inquiries</div>
+          <div class="stat-card__val" id="stat-studio-inquiries">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Hourly Rate</div>
+          <div class="stat-card__val">₹<span id="stat-studio-hourly">599</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Creator Pass (4h)</div>
+          <div class="stat-card__val">₹<span id="stat-studio-creator">1,999</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Trainer Pack (20h)</div>
+          <div class="stat-card__val">₹<span id="stat-studio-trainer">7,999</span></div>
+        </div>
+      </div>
+
+      <!-- Studio Pricing Configuration -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;">
+        <h3 style="font-family:var(--font-head);font-size:1.5rem;letter-spacing:0.05em;margin-bottom:1rem;">💰 Studio Rental Rates &amp; Packages</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.25rem;margin-bottom:1.25rem;">
+          <div class="form-group">
+            <label>Hourly Slot Price (₹)</label>
+            <input type="text" id="cfg-studio-hourly" class="form-control" placeholder="599">
+            <small style="color:var(--text-muted);font-size:0.75rem;margin-top:0.25rem;display:block;">Default: ₹599/hr solo or trainer + 1 client</small>
+          </div>
+          <div class="form-group">
+            <label>Creator Half-Day Pass (₹)</label>
+            <input type="text" id="cfg-studio-creator" class="form-control" placeholder="1,999">
+            <small style="color:var(--text-muted);font-size:0.75rem;margin-top:0.25rem;display:block;">Default: ₹1,999 for 4-Hour Shoot Session</small>
+          </div>
+          <div class="form-group">
+            <label>Trainer Monthly Pack (₹)</label>
+            <input type="text" id="cfg-studio-trainer" class="form-control" placeholder="7,999">
+            <small style="color:var(--text-muted);font-size:0.75rem;margin-top:0.25rem;display:block;">Default: ₹7,999 for 20 Hours / Month</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Facility &amp; Space Overview</label>
+          <input type="text" id="cfg-studio-desc" class="form-control" placeholder="Fully equipped, private, and air-conditioned fitness studio...">
+        </div>
+        <div class="form-group">
+          <label>Included Creator Equipment (Softbox Lights, Audio, Sound System)</label>
+          <input type="text" id="cfg-studio-notes" class="form-control" placeholder="Includes continuous softbox lighting, wireless mics, private changing room &amp; full dumbbell rack.">
+        </div>
+        <div class="form-group">
+          <label>Blackout Dates / Booking Restrictions (Optional)</label>
+          <input type="text" id="cfg-studio-blackout" class="form-control" placeholder="e.g. Sep 18 (Private Shoot 2-6 PM), Sep 25 (Maintenance)">
+        </div>
+        <button class="btn btn-accent" onclick="saveStudioPricing()">Update Studio Rates on Website</button>
+      </div>
+
+      <!-- Studio Amenities & Creator Equipment -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;">
+          <div>
+            <h3 style="font-family:var(--font-head);font-size:1.5rem;letter-spacing:0.05em;">🎬 Studio Amenities &amp; Creator Equipment</h3>
+            <p style="color:var(--text-muted);font-size:0.82rem;">Toggle equipment availability or add new facility perks</p>
+          </div>
+          <button class="btn btn-outline" onclick="openAddAmenityModal()">+ Add Amenity / Gear</button>
+        </div>
+        <div class="amenities-grid" id="studio-amenities-container">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Dedicated Studio Bookings Pipeline -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+          <div>
+            <h3 style="font-family:var(--font-head);font-size:1.5rem;letter-spacing:0.05em;">📋 Studio Rental Booking Enquiries</h3>
+            <p style="color:var(--text-muted);font-size:0.82rem;">Direct inquiries for photo/video shoots, private coaching &amp; studio hire</p>
+          </div>
+        </div>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Creator / Trainer</th>
+                <th>Phone</th>
+                <th>Slot / Date</th>
+                <th>Shoot Details</th>
+                <th>Status</th>
+                <th>Quick Action</th>
+              </tr>
+            </thead>
+            <tbody id="studio-leads-table-body">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -917,6 +1195,113 @@
 
   </main>
 
+  <!-- ══════════════════════════════════════ MODAL: ADD LEAD ══ -->
+  <div id="modal-add-lead" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 class="modal-title">+ LOG NEW LEAD / WALK-IN</h2>
+        <button class="modal-close" onclick="closeAddLeadModal()">&times;</button>
+      </div>
+      <form id="form-add-lead" onsubmit="submitManualLead(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="newlead-name" class="form-control" required placeholder="e.g. Rohan Verma">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Number (10 digits) *</label>
+            <input type="tel" id="newlead-phone" class="form-control" required placeholder="e.g. 9876543210">
+          </div>
+          <div class="form-group">
+            <label>Email Address (Optional)</label>
+            <input type="email" id="newlead-email" class="form-control" placeholder="e.g. rohan@gmail.com">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label>Goal / Service *</label>
+              <select id="newlead-goal" class="form-control">
+                <option value="Fat Loss">Fat Loss</option>
+                <option value="Muscle Building">Muscle Building</option>
+                <option value="Kids Fitness">Kids Fitness</option>
+                <option value="Studio Rental / Shoot">Studio Rental / Shoot</option>
+                <option value="Strength &amp; Conditioning">Strength &amp; Conditioning</option>
+                <option value="General Fitness">General Fitness</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Lead Source</label>
+              <select id="newlead-source" class="form-control">
+                <option value="Walk-in">Walk-in</option>
+                <option value="Instagram DM">Instagram DM</option>
+                <option value="Phone Call">Phone Call</option>
+                <option value="WhatsApp">WhatsApp Inquiry</option>
+                <option value="Website">Website</option>
+                <option value="Referral">Client Referral</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preferred Consultation Slot</label>
+            <input type="text" id="newlead-slot" class="form-control" placeholder="e.g. 11:30 AM or 04:30 PM">
+          </div>
+          <div class="form-group">
+            <label>Requirement / Notes</label>
+            <textarea id="newlead-message" class="form-control" rows="3" placeholder="e.g. Looking for 3-month fat loss transformation, wants morning slot..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeAddLeadModal()">Cancel</button>
+          <button type="submit" class="btn btn-accent">+ Save &amp; Log Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ MODAL: WHATSAPP TEMPLATES ══ -->
+  <div id="modal-wa-templates" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">⚡ QUICK WHATSAPP DISPATCH</h2>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;" id="wa-modal-target-client">Client: -</p>
+        </div>
+        <button class="modal-close" onclick="closeWaModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="wa-templates-container">
+        <!-- Injected by JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeWaModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ MODAL: ADD AMENITY ══ -->
+  <div id="modal-add-amenity" class="modal-backdrop">
+    <div class="modal-dialog" style="max-width:440px;">
+      <div class="modal-header">
+        <h2 class="modal-title">+ ADD STUDIO AMENITY / GEAR</h2>
+        <button class="modal-close" onclick="closeAddAmenityModal()">&times;</button>
+      </div>
+      <form onsubmit="submitNewAmenity(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Icon / Emoji</label>
+            <input type="text" id="newamenity-icon" class="form-control" value="✨" maxlength="4" style="font-size:1.3rem;">
+          </div>
+          <div class="form-group">
+            <label>Amenity / Equipment Name</label>
+            <input type="text" id="newamenity-name" class="form-control" required placeholder="e.g. Motorized Green Screen Backdrop">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeAddAmenityModal()">Cancel</button>
+          <button type="submit" class="btn btn-accent">Add Equipment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Toast Message -->
   <div id="toast">Saved Successfully!</div>
 
@@ -1003,9 +1388,11 @@
     }
 
     // ── DASHBOARD INITIALIZATION ────────────────────────────────
+    // ── DASHBOARD INITIALIZATION ────────────────────────────────
     function initDashboard() {
       renderOverview();
       renderLeads();
+      renderStudio();
       renderProgramsEditor();
       renderTestimonials();
       renderFaqs();
@@ -1017,11 +1404,14 @@
     function renderOverview() {
       const leads = window.FitItUpCMS.getLeads();
       const programs = window.FitItUpCMS.getPrograms();
+      const studioLeads = window.FitItUpCMS.getStudioLeads();
 
       document.getElementById('stat-total-leads').textContent = leads.length;
       document.getElementById('stat-new-leads').textContent = leads.filter(l => l.status === 'New').length;
       document.getElementById('badge-leads-count').textContent = leads.filter(l => l.status === 'New').length;
       document.getElementById('stat-active-programs').textContent = programs.length;
+      const badgeStudio = document.getElementById('badge-studio-count');
+      if (badgeStudio) badgeStudio.textContent = studioLeads.length;
 
       const recentContainer = document.getElementById('overview-recent-leads');
       if (!leads.length) {
@@ -1029,39 +1419,88 @@
         return;
       }
 
-      recentContainer.innerHTML = leads.slice(0, 3).map(lead => `
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--border);">
-          <div>
-            <strong>${escapeHtml(lead.name)}</strong> · <span style="color:var(--text-muted);font-size:0.85rem;">${escapeHtml(lead.goal)}</span>
+      recentContainer.innerHTML = leads.slice(0, 4).map(lead => {
+        const isStudio = ((lead.goal || '') + ' ' + (lead.message || '')).toLowerCase().includes('studio');
+        return `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:0.5rem;">
+            <div>
+              <strong>${escapeHtml(lead.name)}</strong> · <span style="color:var(--text-muted);font-size:0.85rem;">${escapeHtml(lead.goal)}</span>
+              ${isStudio ? '<span class="badge" style="background:rgba(200,245,58,0.15);color:var(--accent);font-size:0.65rem;margin-left:0.35rem;">🏢 Studio</span>' : ''}
+            </div>
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <span class="badge badge-${lead.status.toLowerCase()}">${lead.status}</span>
+              <button class="btn btn-wa" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="openWaModal('${lead.id}')">⚡ WhatsApp</button>
+            </div>
           </div>
-          <div style="display:flex;align-items:center;gap:0.75rem;">
-            <span class="badge badge-${lead.status.toLowerCase()}">${lead.status}</span>
-            <a href="https://wa.me/${lead.phone}?text=Hi%20${encodeURIComponent(lead.name)}%2C%20Coach%20Ashish%20here%20from%20FitItUp!" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     // ── 2. LEADS CRM ────────────────────────────────────────────
+    let currentLeadFilter = 'all';
+
+    function filterLeadsBy(filter, btn) {
+      currentLeadFilter = filter;
+      document.querySelectorAll('#lead-filter-pills .filter-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderLeads();
+    }
+
     function renderLeads() {
       const tbody = document.getElementById('leads-table-body');
-      const leads = window.FitItUpCMS.getLeads();
+      const allLeads = window.FitItUpCMS.getLeads();
 
-      if (!leads.length) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">No consultation leads found.</td></tr>';
+      // Update counters
+      const coachingCount = allLeads.filter(l => !((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio')).length;
+      const studioCount = allLeads.filter(l => ((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio')).length;
+      const newCount = allLeads.filter(l => l.status === 'New').length;
+
+      const cAll = document.getElementById('count-all-leads');
+      const cCoach = document.getElementById('count-coaching-leads');
+      const cStudio = document.getElementById('count-studio-leads');
+      const cNew = document.getElementById('count-uncontacted-leads');
+      const badgeStudio = document.getElementById('badge-studio-count');
+
+      if (cAll) cAll.textContent = allLeads.length;
+      if (cCoach) cCoach.textContent = coachingCount;
+      if (cStudio) cStudio.textContent = studioCount;
+      if (cNew) cNew.textContent = newCount;
+      if (badgeStudio) badgeStudio.textContent = studioCount;
+
+      let filtered = allLeads;
+      if (currentLeadFilter === 'coaching') {
+        filtered = allLeads.filter(l => !((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio'));
+      } else if (currentLeadFilter === 'studio') {
+        filtered = allLeads.filter(l => ((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio'));
+      } else if (currentLeadFilter === 'new') {
+        filtered = allLeads.filter(l => l.status === 'New');
+      }
+
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">No leads matching this filter.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = leads.map(lead => {
+      tbody.innerHTML = filtered.map(lead => {
         const dateStr = new Date(lead.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        const waMsg = encodeURIComponent(`Hi ${lead.name}! Coach Ashish here from FitItUp. I saw your consultation request for ${lead.goal}. When are you free to chat?`);
-
+        const isStudio = ((lead.goal || '') + ' ' + (lead.message || '')).toLowerCase().includes('studio');
+        
         return `
           <tr>
-            <td><strong>${escapeHtml(lead.name)}</strong></td>
-            <td><a href="tel:${escapeHtml(lead.phone)}" style="color:var(--accent);text-decoration:none;">${escapeHtml(lead.phone)}</a></td>
-            <td><span class="badge" style="background:rgba(255,255,255,0.06);color:var(--text);">${escapeHtml(lead.goal)}</span></td>
-            <td>${escapeHtml(lead.slot || 'N/A')}</td>
+            <td>
+              <strong style="display:block;font-size:0.92rem;">${escapeHtml(lead.name)}</strong>
+              <span style="font-size:0.72rem;color:var(--text-muted);">via ${escapeHtml(lead.source || 'Website Form')}</span>
+            </td>
+            <td>
+              <a href="tel:${escapeHtml(lead.phone)}" style="color:var(--accent);text-decoration:none;font-weight:600;">+91 ${escapeHtml(lead.phone)}</a>
+            </td>
+            <td>
+              ${isStudio 
+                ? '<span class="badge" style="background:rgba(200,245,58,0.15);color:var(--accent);border:1px solid rgba(200,245,58,0.35);">🏢 Studio Rental</span>' 
+                : `<span class="badge" style="background:rgba(255,255,255,0.06);color:var(--text);">${escapeHtml(lead.goal)}</span>`}
+              ${lead.message ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${escapeHtml(lead.message)}">${escapeHtml(lead.message)}</div>` : ''}
+            </td>
+            <td>${escapeHtml(lead.slot || 'Flexible')}</td>
             <td>
               <select onchange="changeLeadStatus('${lead.id}', this.value)" class="form-control" style="padding:0.35rem 0.5rem;font-size:0.75rem;width:auto;">
                 <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
@@ -1072,9 +1511,11 @@
             </td>
             <td style="color:var(--text-muted);font-size:0.75rem;">${dateStr}</td>
             <td>
-              <div style="display:flex;gap:0.4rem;">
-                <a href="https://wa.me/${lead.phone}?text=${waMsg}" class="btn btn-wa" target="_blank" rel="noopener">Chat</a>
-                <button class="btn btn-danger" style="padding:0.3rem 0.6rem;font-size:0.75rem;" onclick="removeLead('${lead.id}')">✕</button>
+              <div style="display:flex;gap:0.4rem;align-items:center;">
+                <button class="btn btn-wa" style="display:inline-flex;align-items:center;gap:0.3rem;" onclick="openWaModal('${lead.id}')">
+                  ⚡ WhatsApp
+                </button>
+                <button class="btn btn-danger" style="padding:0.3rem 0.6rem;font-size:0.75rem;" onclick="removeLead('${lead.id}')" title="Delete lead">✕</button>
               </div>
             </td>
           </tr>
@@ -1086,6 +1527,8 @@
       window.FitItUpCMS.updateLeadStatus(id, newStatus);
       showToast('Status Updated');
       renderOverview();
+      renderLeads();
+      renderStudio();
     }
 
     function removeLead(id) {
@@ -1093,21 +1536,268 @@
         window.FitItUpCMS.deleteLead(id);
         renderLeads();
         renderOverview();
+        renderStudio();
         showToast('Lead Deleted');
       }
     }
 
     function exportLeadsCsv() {
       const leads = window.FitItUpCMS.getLeads();
-      let csv = 'Name,Phone,Email,Goal,Slot,Status,Date\n';
+      let csv = 'Lead ID,Name,Phone,Email,Service / Goal,Slot,Source,Status,Date Received,Notes\n';
       leads.forEach(l => {
-        csv += `"${l.name}","${l.phone}","${l.email}","${l.goal}","${l.slot || ''}","${l.status}","${l.createdAt}"\n`;
+        const clean = (str) => `"${(str || '').replace(/"/g, '""')}"`;
+        csv += `${clean(l.id)},${clean(l.name)},${clean(l.phone)},${clean(l.email)},${clean(l.goal)},${clean(l.slot)},${clean(l.source || 'Website')},${clean(l.status)},${clean(l.createdAt)},${clean(l.message)}\n`;
       });
-      const blob = new Blob([csv], { type: 'text/csv' });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `fititup_leads_${Date.now()}.csv`;
+      const dateStr = new Date().toISOString().slice(0, 10);
+      a.download = `fititup_leads_${dateStr}.csv`;
       a.click();
+      showToast('📥 CSV Leads Downloaded!');
+    }
+
+    // ── MANUAL LEAD ENTRY ───────────────────────────────────────
+    function openAddLeadModal() {
+      document.getElementById('modal-add-lead').classList.add('is-open');
+      document.getElementById('newlead-name').focus();
+    }
+
+    function closeAddLeadModal() {
+      document.getElementById('modal-add-lead').classList.remove('is-open');
+      document.getElementById('form-add-lead').reset();
+    }
+
+    function submitManualLead(e) {
+      e.preventDefault();
+      const name = document.getElementById('newlead-name').value.trim();
+      const phone = document.getElementById('newlead-phone').value.trim().replace(/\D/g, '');
+      const email = document.getElementById('newlead-email').value.trim();
+      const goal = document.getElementById('newlead-goal').value;
+      const source = document.getElementById('newlead-source').value;
+      const slot = document.getElementById('newlead-slot').value.trim();
+      const message = document.getElementById('newlead-message').value.trim();
+
+      if (!name || !phone) {
+        alert('Please provide Name and Phone number');
+        return;
+      }
+
+      window.FitItUpCMS.addLead({
+        name,
+        phone,
+        email,
+        goal,
+        source,
+        slot: slot || 'Flexible',
+        message
+      });
+
+      closeAddLeadModal();
+      renderLeads();
+      renderOverview();
+      renderStudio();
+      showToast('🎉 New Lead Logged Successfully!');
+    }
+
+    // ── QUICK WHATSAPP TEMPLATES ───────────────────────────────
+    function openWaModal(leadId) {
+      const leads = window.FitItUpCMS.getLeads();
+      const lead = leads.find(l => l.id === leadId);
+      if (!lead) return;
+
+      const studioConfig = window.FitItUpCMS.getStudio();
+      const hourlyRate = studioConfig.hourlyRate || '599';
+
+      document.getElementById('wa-modal-target-client').textContent = `Client: ${lead.name} (+91 ${lead.phone}) · Goal: ${lead.goal}`;
+
+      const t1 = `Hi ${lead.name}! Coach Ashish here from FitItUp. I saw your consultation request for ${lead.goal}. Are you free for a quick 5-min intro call today at ${lead.slot || 'your preferred time'}?`;
+      const t2 = `Hi ${lead.name}! Thanks for reaching out regarding the FitItUp Private Studio. Our slots are ₹${hourlyRate}/hr and include full camera lighting, wireless mics & private equipment access. Which date & duration would you like to reserve?`;
+      const t3 = `Hi ${lead.name}! Coach Ashish here. To help me prepare your personalized plan, could you quickly share: 1) Current Age & Weight, 2) Dietary preference (Veg/Non-Veg/Jain), 3) Any past workout injuries?`;
+      const t4 = `Hi ${lead.name}! Just following up on our previous chat regarding your ${lead.goal} goals with FitItUp. Let me know if you have any questions before we get you started on your plan!`;
+
+      const templates = [
+        { title: '🏋️ 1. Intro Consultation Call', text: t1 },
+        { title: '🏢 2. Studio Rental & Shoot Slot', text: t2 },
+        { title: '🥗 3. Diet & Fitness Assessment Form', text: t3 },
+        { title: '🤝 4. Follow-Up Message', text: t4 }
+      ];
+
+      const container = document.getElementById('wa-templates-container');
+      container.innerHTML = templates.map((tmpl, idx) => `
+        <div class="wa-template-card">
+          <div class="wa-template-title">${tmpl.title}</div>
+          <div class="wa-template-text">${escapeHtml(tmpl.text)}</div>
+          <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+            <button class="btn btn-outline" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="copyWaText(${idx})">📋 Copy Text</button>
+            <a href="https://wa.me/91${lead.phone}?text=${encodeURIComponent(tmpl.text)}" class="btn btn-wa" target="_blank" rel="noopener">
+              💬 Send on WhatsApp →
+            </a>
+          </div>
+        </div>
+      `).join('');
+
+      window._currentWaTemplates = templates;
+      document.getElementById('modal-wa-templates').classList.add('is-open');
+    }
+
+    function copyWaText(idx) {
+      if (window._currentWaTemplates && window._currentWaTemplates[idx]) {
+        navigator.clipboard.writeText(window._currentWaTemplates[idx].text);
+        showToast('Template text copied!');
+      }
+    }
+
+    function closeWaModal() {
+      document.getElementById('modal-wa-templates').classList.remove('is-open');
+    }
+
+    // ── STUDIO RENTAL MANAGEMENT ────────────────────────────────
+    function renderStudio() {
+      const studio = window.FitItUpCMS.getStudio();
+      const studioLeads = window.FitItUpCMS.getStudioLeads();
+
+      // Update Top Stats
+      const statInquiries = document.getElementById('stat-studio-inquiries');
+      const statHourly = document.getElementById('stat-studio-hourly');
+      const statCreator = document.getElementById('stat-studio-creator');
+      const statTrainer = document.getElementById('stat-studio-trainer');
+      const badgeCount = document.getElementById('badge-studio-count');
+
+      if (statInquiries) statInquiries.textContent = studioLeads.length;
+      if (statHourly) statHourly.textContent = studio.hourlyRate || '599';
+      if (statCreator) statCreator.textContent = studio.creatorRate || '1,999';
+      if (statTrainer) statTrainer.textContent = studio.trainerRate || '7,999';
+      if (badgeCount) badgeCount.textContent = studioLeads.length;
+
+      // Inputs
+      const inHourly = document.getElementById('cfg-studio-hourly');
+      const inCreator = document.getElementById('cfg-studio-creator');
+      const inTrainer = document.getElementById('cfg-studio-trainer');
+      const inDesc = document.getElementById('cfg-studio-desc');
+      const inNotes = document.getElementById('cfg-studio-notes');
+      const inBlackout = document.getElementById('cfg-studio-blackout');
+
+      if (inHourly) inHourly.value = studio.hourlyRate || '599';
+      if (inCreator) inCreator.value = studio.creatorRate || '1,999';
+      if (inTrainer) inTrainer.value = studio.trainerRate || '7,999';
+      if (inDesc) inDesc.value = studio.description || '';
+      if (inNotes) inNotes.value = studio.equipmentNotes || '';
+      if (inBlackout) inBlackout.value = studio.blackoutDates || '';
+
+      // Render Amenities
+      const amenitiesContainer = document.getElementById('studio-amenities-container');
+      if (amenitiesContainer) {
+        const amenities = studio.amenities || [];
+        amenitiesContainer.innerHTML = amenities.map(a => `
+          <div class="amenity-card ${a.active ? '' : 'inactive'}">
+            <div class="amenity-card__info">
+              <span style="font-size:1.2rem;">${a.icon || '✨'}</span>
+              <span>${escapeHtml(a.name)}</span>
+            </div>
+            <div class="amenity-card__actions">
+              <button class="btn ${a.active ? 'btn-danger' : 'btn-accent'}" style="padding:0.25rem 0.6rem;font-size:0.72rem;" onclick="toggleAmenity('${a.id}', ${!a.active})">
+                ${a.active ? 'Disable' : 'Enable'}
+              </button>
+              <button class="btn btn-danger" style="padding:0.25rem 0.5rem;font-size:0.72rem;" onclick="deleteAmenity('${a.id}')">✕</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Render Studio Bookings Table
+      const studioTbody = document.getElementById('studio-leads-table-body');
+      if (studioTbody) {
+        if (!studioLeads.length) {
+          studioTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem;">No studio rental inquiries logged yet.</td></tr>';
+          return;
+        }
+
+        studioTbody.innerHTML = studioLeads.map(lead => {
+          const dateStr = new Date(lead.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+          const shootDetails = lead.message || lead.goal || 'General shoot session';
+          return `
+            <tr>
+              <td>
+                <strong style="display:block;font-size:0.92rem;">${escapeHtml(lead.name)}</strong>
+                <span style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(lead.source || 'Website Form')}</span>
+              </td>
+              <td><a href="tel:${escapeHtml(lead.phone)}" style="color:var(--accent);text-decoration:none;font-weight:600;">+91 ${escapeHtml(lead.phone)}</a></td>
+              <td>${escapeHtml(lead.slot || 'Flexible')}</td>
+              <td style="max-width:240px;font-size:0.8rem;color:var(--text-muted);">${escapeHtml(shootDetails)}</td>
+              <td>
+                <select onchange="changeLeadStatus('${lead.id}', this.value)" class="form-control" style="padding:0.35rem 0.5rem;font-size:0.75rem;width:auto;">
+                  <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
+                  <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                  <option value="Converted" ${lead.status === 'Converted' ? 'selected' : ''}>Converted</option>
+                  <option value="Archived" ${lead.status === 'Archived' ? 'selected' : ''}>Archived</option>
+                </select>
+              </td>
+              <td>
+                <button class="btn btn-wa" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="openWaModal('${lead.id}')">
+                  ⚡ Reply
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    function saveStudioPricing() {
+      const hourlyRate = document.getElementById('cfg-studio-hourly').value.trim();
+      const creatorRate = document.getElementById('cfg-studio-creator').value.trim();
+      const trainerRate = document.getElementById('cfg-studio-trainer').value.trim();
+      const description = document.getElementById('cfg-studio-desc').value.trim();
+      const equipmentNotes = document.getElementById('cfg-studio-notes').value.trim();
+      const blackoutDates = document.getElementById('cfg-studio-blackout').value.trim();
+
+      window.FitItUpCMS.updateStudio({
+        hourlyRate,
+        creatorRate,
+        trainerRate,
+        description,
+        equipmentNotes,
+        blackoutDates
+      });
+
+      renderStudio();
+      showToast('🏢 Studio Rates & Packages Saved! Live site updated.');
+    }
+
+    function toggleAmenity(id, active) {
+      window.FitItUpCMS.toggleStudioAmenity(id, active);
+      renderStudio();
+      showToast(active ? 'Amenity Enabled' : 'Amenity Disabled');
+    }
+
+    function deleteAmenity(id) {
+      if (confirm('Delete this amenity/gear item?')) {
+        window.FitItUpCMS.deleteStudioAmenity(id);
+        renderStudio();
+        showToast('Amenity Removed');
+      }
+    }
+
+    function openAddAmenityModal() {
+      document.getElementById('modal-add-amenity').classList.add('is-open');
+      document.getElementById('newamenity-name').focus();
+    }
+
+    function closeAddAmenityModal() {
+      document.getElementById('modal-add-amenity').classList.remove('is-open');
+    }
+
+    function submitNewAmenity(e) {
+      e.preventDefault();
+      const icon = document.getElementById('newamenity-icon').value.trim() || '✨';
+      const name = document.getElementById('newamenity-name').value.trim();
+      if (!name) return;
+
+      window.FitItUpCMS.addStudioAmenity({ icon, name });
+      closeAddAmenityModal();
+      renderStudio();
+      showToast('New Studio Amenity Added!');
     }
 
     // ── 3. PROGRAMS & PRICING EDITOR ────────────────────────────

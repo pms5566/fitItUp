@@ -52,9 +52,14 @@
       border-radius: var(--radius);
       padding: 2.5rem 2rem;
       width: 100%;
-      max-width: 400px;
+      max-width: 440px;
+      text-align: left;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      position: relative;
+    }
+    .auth-header {
       text-align: center;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      margin-bottom: 1.75rem;
     }
     .auth-logo {
       width: 64px;
@@ -62,7 +67,7 @@
       border-radius: 50%;
       background: var(--surface-elevated);
       border: 2px solid var(--accent);
-      margin: 0 auto 1.25rem;
+      margin: 0 auto 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -73,46 +78,107 @@
       font-family: var(--font-head);
       font-size: 2.2rem;
       letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.35rem;
+      text-align: center;
     }
     .auth-subtitle {
       font-size: 0.85rem;
       color: var(--text-muted);
-      margin-bottom: 2rem;
-    }
-    .pin-input-group {
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
+      text-align: center;
       margin-bottom: 1.5rem;
     }
-    .pin-input {
-      width: 50px;
-      height: 60px;
-      background: var(--surface-elevated);
+    .auth-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .auth-input-wrapper input {
+      padding-right: 2.5rem;
+    }
+    .toggle-pass-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .toggle-pass-btn:hover {
+      color: var(--accent);
+    }
+    .auth-lockout-banner {
+      background: rgba(255, 59, 48, 0.12);
+      border: 1px solid rgba(255, 59, 48, 0.35);
+      border-radius: var(--radius-sm);
+      color: #FF6B6B;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      margin-bottom: 1.25rem;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      line-height: 1.4;
+    }
+    .auth-lockout-banner.is-active {
+      display: flex;
+    }
+    .auth-footer-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      margin-top: 0.85rem;
+    }
+    .auth-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+    .auth-hint-card {
+      background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--accent);
-      outline: none;
-      transition: all 0.2s ease;
-    }
-    .pin-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-    .auth-hint {
-      font-size: 0.75rem;
+      padding: 0.75rem 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
     }
-    .auth-hint code {
-      background: rgba(255,255,255,0.06);
+    .auth-hint-card code {
+      color: var(--accent);
+      background: rgba(200, 245, 58, 0.1);
       padding: 2px 6px;
       border-radius: 4px;
-      color: var(--accent);
+      font-family: monospace;
+    }
+    .pass-strength-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.1);
+      margin-top: 0.35rem;
+      overflow: hidden;
+    }
+    .pass-strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s;
     }
 
     /* ── LAYOUT ────────────────────────────────────────────── */
@@ -630,7 +696,7 @@
       inset: 0;
       background: rgba(10, 13, 10, 0.85);
       backdrop-filter: blur(10px);
-      z-index: 9990;
+      z-index: 10005;
       display: none;
       align-items: center;
       justify-content: center;
@@ -782,25 +848,62 @@
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════ PIN AUTH SCREEN ══ -->
+  <!-- ══════════════════════════════════════ AUTH SCREEN (PASSWORD PROTECTED) ══ -->
   <div id="auth-screen">
     <div class="auth-card">
-      <div class="auth-logo">
-        <img src="images/fititup-logo.png" alt="FitItUp Logo">
-      </div>
-      <h1 class="auth-title">FITITUP PORTAL</h1>
-      <p class="auth-subtitle">Enter Coach Security PIN to access the CRM &amp; Content Management System</p>
-
-      <form id="pin-form" onsubmit="verifyPin(event)">
-        <div class="pin-input-group">
-          <input type="password" class="pin-input" maxlength="1" autofocus oninput="onPinDigit(this, 0)">
-          <input type="password" class="pin-input" maxlength="1" oninput="onPinDigit(this, 1)">
-          <input type="password" class="pin-input" maxlength="1" oninput="onPinDigit(this, 2)">
-          <input type="password" class="pin-input" maxlength="1" oninput="onPinDigit(this, 3)">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <img src="images/fititup-logo.png" alt="FitItUp Logo">
         </div>
-        <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center;">Unlock Dashboard</button>
+        <h1 class="auth-title">FITITUP PORTAL</h1>
+        <p class="auth-subtitle">Coach Ashish Secure CMS &amp; Client CRM</p>
+      </div>
+
+      <!-- Lockout Alert Banner -->
+      <div id="auth-lockout-banner" class="auth-lockout-banner">
+        <span>⚠️</span>
+        <div>
+          <strong>Account Temporarily Locked</strong><br>
+          <span id="lockout-timer-text">Too many failed attempts. Try again in 05:00</span>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label for="login-username">Coach ID / Username</label>
+          <input type="text" id="login-username" class="form-control" value="admin" required placeholder="admin or ashish@fititup.in" autocomplete="username">
+        </div>
+
+        <div class="form-group" style="margin-bottom:0.75rem;">
+          <label for="login-password">Password</label>
+          <div class="auth-input-wrapper">
+            <input type="password" id="login-password" class="form-control" required placeholder="Enter password" autocomplete="current-password">
+            <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('login-password', this)" title="Show / Hide Password">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-footer-links">
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-muted);cursor:pointer;">
+            <input type="checkbox" id="login-remember" checked> Keep me logged in
+          </label>
+          <button type="button" class="auth-link" onclick="openRecoveryModal()">Forgot Password?</button>
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="btn btn-accent" style="width:100%;justify-content:center;margin-top:1.25rem;padding:0.8rem;">
+          🔐 Unlock Dashboard
+        </button>
       </form>
-      <p class="auth-hint">Default Master PIN: <code>7777</code></p>
+
+      <!-- Default Credentials Hint Card -->
+      <div class="auth-hint-card">
+        <div>
+          <span>Default: </span><code>admin</code> / <code>Ashish@FitItUp2026</code>
+        </div>
+        <button class="auth-link" style="font-size:0.75rem;" onclick="prefillDefaultCredentials()">Autofill</button>
+      </div>
     </div>
   </div>
 
@@ -1178,7 +1281,7 @@
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
           <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:1rem;">Data Backup &amp; Portability</h3>
           <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
-            Download all your leads, programs, testimonials, and FAQs as a single JSON file. You can restore this data anytime.
+            Download all your leads, programs, testimonials, studio configuration, and security settings as a single encrypted JSON file.
           </p>
 
           <div style="display:flex;flex-direction:column;gap:1rem;">
@@ -1188,6 +1291,90 @@
               <input type="file" accept=".json" onchange="restoreBackupFile(event)" style="display:none;">
             </label>
             <button class="btn btn-danger" onclick="confirmResetDefaults()" style="margin-top:1rem;">⚠️ Reset to Default Demo Data</button>
+          </div>
+        </div>
+
+        <!-- Security Card 1: Change Password -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:0.5rem;">🛡️ Change Admin Password</h3>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1.25rem;">Protected with Web Crypto SHA-256 salted cryptographic hashing.</p>
+
+          <form onsubmit="handleSettingsChangePassword(event)">
+            <div class="form-group">
+              <label>Current Password</label>
+              <div class="auth-input-wrapper">
+                <input type="password" id="chg-old-pass" class="form-control" required placeholder="Enter current password">
+                <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('chg-old-pass', this)">👁️</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>New Password (Min. 8 characters)</label>
+              <div class="auth-input-wrapper">
+                <input type="password" id="chg-new-pass" class="form-control" required placeholder="Enter new strong password" oninput="checkPassStrength(this.value, 'chg-strength-bar')">
+                <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('chg-new-pass', this)">👁️</button>
+              </div>
+              <div class="pass-strength-bar"><div id="chg-strength-bar" class="pass-strength-fill"></div></div>
+            </div>
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <div class="auth-input-wrapper">
+                <input type="password" id="chg-confirm-pass" class="form-control" required placeholder="Re-type new password">
+                <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('chg-confirm-pass', this)">👁️</button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center;">Update Admin Password</button>
+          </form>
+        </div>
+
+        <!-- Security Card 2: Master Recovery Key & Session -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:0.5rem;">🔑 Master Emergency Recovery Key</h3>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">Keep this key in a secure vault (e.g. 1Password or Notes) in case you forget your password.</p>
+
+          <div style="background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+            <code id="display-recovery-key" style="color:var(--accent);font-weight:700;font-size:0.85rem;letter-spacing:0.05em;">FITITUP-ASHISH-RECOVER-2026</code>
+            <button type="button" class="btn btn-outline" style="padding:0.3rem 0.6rem;font-size:0.72rem;" onclick="copyRecoveryKey()">📋 Copy</button>
+          </div>
+
+          <div style="display:flex;gap:0.75rem;margin-bottom:1.5rem;">
+            <button type="button" class="btn btn-outline" style="flex:1;font-size:0.78rem;justify-content:center;" onclick="handleRegenerateKey()">
+              🔄 Regenerate Key
+            </button>
+            <button type="button" class="btn btn-danger" style="flex:1;font-size:0.78rem;justify-content:center;" onclick="lockPortal()">
+              🔒 Lock Portal Now
+            </button>
+          </div>
+
+          <div style="border-top:1px solid var(--border);padding-top:1rem;">
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.35rem;">Auto-Lock Inactivity Timeout:</div>
+            <span class="badge" style="background:rgba(200,245,58,0.15);color:var(--accent);">⏱️ 15 Minutes Idle Lock Active</span>
+          </div>
+        </div>
+
+        <!-- Security Card 3: Security Audit Log -->
+        <div style="grid-column:1 / -1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+            <div>
+              <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;">📋 Security &amp; Access Audit Log</h3>
+              <p style="font-size:0.8rem;color:var(--text-muted);">Timestamped audit trail of logins, failed attempts, and credential changes</p>
+            </div>
+            <button type="button" class="btn btn-outline" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="renderSecurityAuditLog()">
+              🔄 Refresh Logs
+            </button>
+          </div>
+          <div class="data-table-wrapper" style="max-height:220px;overflow-y:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Event Type</th>
+                  <th>Details</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="security-log-tbody">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1302,6 +1489,85 @@
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════ MODAL: FORGOT PASSWORD RECOVERY ══ -->
+  <div id="modal-forgot-password" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">🔑 CREDENTIAL RECOVERY</h2>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">Emergency password reset for Coach Ashish</p>
+        </div>
+        <button class="modal-close" onclick="closeRecoveryModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Recovery Choice Tabs -->
+        <div class="filter-pills" style="margin-bottom:1.25rem;">
+          <button type="button" class="filter-pill active" id="recov-tab-key-btn" onclick="switchRecoveryTab('key')">
+            🛡️ Master Emergency Key
+          </button>
+          <button type="button" class="filter-pill" id="recov-tab-wa-btn" onclick="switchRecoveryTab('wa')">
+            💬 WhatsApp Recovery
+          </button>
+        </div>
+
+        <!-- Mode 1: Master Emergency Recovery Key -->
+        <div id="recov-view-key">
+          <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:1rem;line-height:1.5;">
+            Enter the 20-character <strong>Master Emergency Recovery Key</strong> generated during initial setup or found in your settings vault:
+          </p>
+          <div class="form-group">
+            <label>Master Emergency Recovery Key</label>
+            <input type="text" id="recov-input-key" class="form-control" placeholder="e.g. FITITUP-ASHISH-RECOVER-2026" style="text-transform:uppercase;font-family:monospace;letter-spacing:0.05em;">
+            <small style="color:var(--text-muted);font-size:0.72rem;display:block;margin-top:0.35rem;">Default Key: <code>FITITUP-ASHISH-RECOVER-2026</code></small>
+          </div>
+
+          <div class="form-group">
+            <label>Set New Password (Min. 8 characters)</label>
+            <div class="auth-input-wrapper">
+              <input type="password" id="recov-new-pass" class="form-control" placeholder="Enter new strong password" oninput="checkPassStrength(this.value, 'recov-strength-bar')">
+              <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('recov-new-pass', this)">👁️</button>
+            </div>
+            <div class="pass-strength-bar"><div id="recov-strength-bar" class="pass-strength-fill"></div></div>
+          </div>
+
+          <div class="form-group">
+            <label>Confirm New Password</label>
+            <div class="auth-input-wrapper">
+              <input type="password" id="recov-confirm-pass" class="form-control" placeholder="Re-enter new password">
+              <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('recov-confirm-pass', this)">👁️</button>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-accent" style="width:100%;justify-content:center;margin-top:0.5rem;" onclick="submitRecoveryWithKey()">
+            🔐 Reset Password &amp; Unlock Dashboard
+          </button>
+        </div>
+
+        <!-- Mode 2: Emergency WhatsApp Dispatch -->
+        <div id="recov-view-wa" style="display:none;">
+          <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.5;">
+            Need an urgent reset? Send an automated emergency verification ping directly to Coach Ashish's verified WhatsApp number:
+          </p>
+          <div style="background:var(--surface-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.25rem;">
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">Verified Coach Phone:</div>
+            <strong style="font-size:1.1rem;color:var(--accent);" id="recov-wa-display-phone">+91 9999999999</strong>
+          </div>
+          <a id="btn-recov-wa-dispatch" href="#" target="_blank" rel="noopener" class="btn btn-wa" style="width:100%;justify-content:center;padding:0.75rem;margin-bottom:1rem;text-decoration:none;">
+            💬 Send Reset Request to Coach WhatsApp →
+          </a>
+          <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;">
+            Use the Master Emergency Key tab once confirmed with Coach Ashish.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeRecoveryModal()">Back to Login</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Message -->
   <div id="toast">Saved Successfully!</div>
 
@@ -1311,44 +1577,134 @@
   <script>
     'use strict';
 
-    // ── PIN AUTH LOGIC ──────────────────────────────────────────
-    const CORRECT_PIN = '7777';
-    let enteredPin = ['', '', '', ''];
+    // ── SECURITY & PASSWORD AUTHENTICATION ──────────────────────
+    let lockoutInterval = null;
 
-    function onPinDigit(input, index) {
-      enteredPin[index] = input.value;
-      if (input.value && index < 3) {
-        document.querySelectorAll('.pin-input')[index + 1].focus();
-      }
-      if (enteredPin.join('').length === 4) {
-        verifyPin();
+    function checkLockoutState() {
+      const status = window.FitItUpCMS.getLockoutStatus();
+      const banner = document.getElementById('auth-lockout-banner');
+      const timerText = document.getElementById('lockout-timer-text');
+      const submitBtn = document.getElementById('btn-login-submit');
+
+      if (status.locked) {
+        banner.classList.add('is-active');
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+
+        clearInterval(lockoutInterval);
+        let remaining = status.remainingSec;
+        const updateTimer = () => {
+          const mins = String(Math.floor(remaining / 60)).padStart(2, '0');
+          const secs = String(remaining % 60).padStart(2, '0');
+          timerText.textContent = `Too many failed attempts. Locked out for ${mins}:${secs}`;
+          if (remaining <= 0) {
+            clearInterval(lockoutInterval);
+            banner.classList.remove('is-active');
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+          }
+          remaining--;
+        };
+        updateTimer();
+        lockoutInterval = setInterval(updateTimer, 1000);
+      } else {
+        banner.classList.remove('is-active');
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        clearInterval(lockoutInterval);
       }
     }
 
-    function verifyPin(e) {
-      if (e) e.preventDefault();
-      const pin = enteredPin.join('');
-      if (pin === CORRECT_PIN || sessionStorage.getItem('fititup_auth') === 'true') {
-        sessionStorage.setItem('fititup_auth', 'true');
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-username').value.trim();
+      const pass = document.getElementById('login-password').value;
+
+      if (!user || !pass) {
+        alert('Please provide both username and password.');
+        return;
+      }
+
+      const res = await window.FitItUpCMS.authenticate(user, pass);
+      if (res.success) {
+        const remember = document.getElementById('login-remember').checked;
+        if (remember) {
+          localStorage.setItem('fititup_auth_token', 'session_' + Date.now());
+        } else {
+          sessionStorage.setItem('fititup_auth_token', 'session_' + Date.now());
+        }
         document.getElementById('auth-screen').style.display = 'none';
         initDashboard();
+        startInactivityTimer();
+        showToast('Welcome back, Coach Ashish!');
       } else {
-        alert('❌ Invalid Coach PIN. Hint: Default PIN is 7777');
-        enteredPin = ['', '', '', ''];
-        document.querySelectorAll('.pin-input').forEach(i => i.value = '');
-        document.querySelectorAll('.pin-input')[0].focus();
+        alert(res.message);
+        checkLockoutState();
+        document.getElementById('login-password').value = '';
+        document.getElementById('login-password').focus();
       }
     }
 
-    function lockPortal() {
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    function prefillDefaultCredentials() {
+      document.getElementById('login-username').value = 'admin';
+      document.getElementById('login-password').value = 'Ashish@FitItUp2026';
+      showToast('Default credentials filled');
+    }
+
+    function lockPortal(reason) {
+      localStorage.removeItem('fititup_auth_token');
+      sessionStorage.removeItem('fititup_auth_token');
       sessionStorage.removeItem('fititup_auth');
+      if (reason) {
+        alert(reason);
+      }
       location.reload();
     }
 
-    // Auto-login if session exists
-    if (sessionStorage.getItem('fititup_auth') === 'true') {
+    // ── SESSION TIMEOUT / INACTIVITY AUTO-LOCK (15 MINS) ────────
+    let idleTimer = null;
+    const IDLE_LIMIT_MS = 15 * 60 * 1000; // 15 minutes
+
+    function resetInactivityTimer() {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        window.FitItUpCMS.logSecurityEvent('inactivity_lock', 'Session locked automatically due to 15m inactivity');
+        lockPortal('⏱️ Session locked due to 15 minutes of inactivity for security.');
+      }, IDLE_LIMIT_MS);
+    }
+
+    function startInactivityTimer() {
+      ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
+        window.addEventListener(evt, resetInactivityTimer, { passive: true });
+      });
+      resetInactivityTimer();
+    }
+
+    // Auto-login check
+    function isAlreadyAuthenticated() {
+      return localStorage.getItem('fititup_auth_token') || sessionStorage.getItem('fititup_auth_token');
+    }
+
+    if (isAlreadyAuthenticated()) {
       document.getElementById('auth-screen').style.display = 'none';
-      window.addEventListener('DOMContentLoaded', initDashboard);
+      window.addEventListener('DOMContentLoaded', () => {
+        initDashboard();
+        startInactivityTimer();
+      });
+    } else {
+      window.addEventListener('DOMContentLoaded', checkLockoutState);
     }
 
     // ── TOAST NOTIFICATION ──────────────────────────────────────
@@ -1961,6 +2317,7 @@
       document.getElementById('cfg-wa-phone').value = cfg.whatsappPhone || '';
       document.getElementById('cfg-email').value = cfg.supportEmail || '';
       document.getElementById('cfg-instagram').value = cfg.instagramUrl || '';
+      renderSecurityAuditLog();
     }
 
     function saveSettings() {
@@ -2005,6 +2362,176 @@
         window.FitItUpCMS.resetDefaults();
         initDashboard();
         showToast('Reset to defaults');
+      }
+    }
+
+    // ── FORGOT PASSWORD RECOVERY ────────────────────────────────
+    function openRecoveryModal() {
+      const phone = window.FitItUpCMS.getSettings().whatsappPhone || '919999999999';
+      const dispPhone = document.getElementById('recov-wa-display-phone');
+      if (dispPhone) dispPhone.textContent = `+${phone}`;
+      
+      const resetMsg = encodeURIComponent(`Hi Coach Ashish! This is an emergency password recovery request for FitItUp Admin Portal dispatched at ${new Date().toLocaleTimeString()}.`);
+      const btnWa = document.getElementById('btn-recov-wa-dispatch');
+      if (btnWa) btnWa.setAttribute('href', `https://wa.me/${phone}?text=${resetMsg}`);
+
+      document.getElementById('modal-forgot-password').classList.add('is-open');
+    }
+
+    function closeRecoveryModal() {
+      document.getElementById('modal-forgot-password').classList.remove('is-open');
+    }
+
+    function switchRecoveryTab(tab) {
+      if (tab === 'key') {
+        document.getElementById('recov-tab-key-btn').classList.add('active');
+        document.getElementById('recov-tab-wa-btn').classList.remove('active');
+        document.getElementById('recov-view-key').style.display = 'block';
+        document.getElementById('recov-view-wa').style.display = 'none';
+      } else {
+        document.getElementById('recov-tab-key-btn').classList.remove('active');
+        document.getElementById('recov-tab-wa-btn').classList.add('active');
+        document.getElementById('recov-view-key').style.display = 'none';
+        document.getElementById('recov-view-wa').style.display = 'block';
+      }
+    }
+
+    function checkPassStrength(pass, barId) {
+      const bar = document.getElementById(barId);
+      if (!bar) return;
+      let score = 0;
+      if (pass.length >= 8) score++;
+      if (/[A-Z]/.test(pass)) score++;
+      if (/[0-9]/.test(pass)) score++;
+      if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+      if (score === 0) {
+        bar.style.width = '0%';
+        bar.style.background = 'transparent';
+      } else if (score <= 2) {
+        bar.style.width = '35%';
+        bar.style.background = '#FF3B30';
+      } else if (score === 3) {
+        bar.style.width = '70%';
+        bar.style.background = '#FBBF24';
+      } else {
+        bar.style.width = '100%';
+        bar.style.background = 'var(--accent)';
+      }
+    }
+
+    async function submitRecoveryWithKey() {
+      const key = document.getElementById('recov-input-key').value.trim();
+      const newPass = document.getElementById('recov-new-pass').value;
+      const confPass = document.getElementById('recov-confirm-pass').value;
+
+      if (!key) {
+        alert('Please enter your Master Emergency Recovery Key.');
+        return;
+      }
+      if (newPass.length < 8) {
+        alert('Password must be at least 8 characters long.');
+        return;
+      }
+      if (newPass !== confPass) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+      const res = await window.FitItUpCMS.resetPasswordWithKey(key, newPass);
+      if (res.success) {
+        alert('🎉 Password reset successfully! Logging you into dashboard.');
+        closeRecoveryModal();
+        sessionStorage.setItem('fititup_auth_token', 'session_' + Date.now());
+        document.getElementById('auth-screen').style.display = 'none';
+        initDashboard();
+        startInactivityTimer();
+        showToast('Password Reset Successfully!');
+      } else {
+        alert('❌ ' + res.message);
+      }
+    }
+
+    // ── SETTINGS: PASSWORD CHANGE & RECOVERY KEY ───────────────
+    async function handleSettingsChangePassword(e) {
+      e.preventDefault();
+      const oldPass = document.getElementById('chg-old-pass').value;
+      const newPass = document.getElementById('chg-new-pass').value;
+      const confPass = document.getElementById('chg-confirm-pass').value;
+
+      if (newPass.length < 8) {
+        alert('New password must be at least 8 characters long.');
+        return;
+      }
+      if (newPass !== confPass) {
+        alert('New passwords do not match.');
+        return;
+      }
+
+      const res = await window.FitItUpCMS.changePassword(oldPass, newPass);
+      if (res.success) {
+        showToast('🔒 Admin Password Updated!');
+        document.getElementById('chg-old-pass').value = '';
+        document.getElementById('chg-new-pass').value = '';
+        document.getElementById('chg-confirm-pass').value = '';
+        document.getElementById('chg-strength-bar').style.width = '0%';
+        renderSecurityAuditLog();
+      } else {
+        alert('❌ ' + res.message);
+      }
+    }
+
+    function copyRecoveryKey() {
+      const key = document.getElementById('display-recovery-key').textContent;
+      navigator.clipboard.writeText(key);
+      showToast('Master Key Copied to Clipboard!');
+    }
+
+    function handleRegenerateKey() {
+      if (confirm('Regenerate Master Emergency Recovery Key? Previous key will no longer work.')) {
+        const newKey = window.FitItUpCMS.regenerateRecoveryKey();
+        document.getElementById('display-recovery-key').textContent = newKey;
+        renderSecurityAuditLog();
+        showToast('New Master Key Generated!');
+      }
+    }
+
+    function renderSecurityAuditLog() {
+      const tbody = document.getElementById('security-log-tbody');
+      if (!tbody) return;
+      const logs = window.FitItUpCMS.getSecurityLogs();
+
+      if (!logs.length) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:1rem;">No security events recorded.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = logs.map(l => {
+        const timeStr = new Date(l.timestamp).toLocaleString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        let badgeColor = 'rgba(255,255,255,0.06)';
+        let badgeText = l.type;
+
+        if (l.type === 'login_success') {
+          badgeColor = 'rgba(34, 197, 94, 0.15);color:#22C55E;';
+        } else if (l.type === 'login_failed' || l.type === 'inactivity_lock') {
+          badgeColor = 'rgba(255, 59, 48, 0.15);color:#FF3B30;';
+        } else if (l.type === 'password_reset' || l.type === 'password_changed') {
+          badgeColor = 'rgba(200, 245, 58, 0.15);color:var(--accent);';
+        }
+
+        return `
+          <tr>
+            <td><span class="badge" style="background:${badgeColor}">${escapeHtml(badgeText)}</span></td>
+            <td style="font-size:0.82rem;">${escapeHtml(l.event)}</td>
+            <td style="color:var(--text-muted);font-size:0.75rem;">${timeStr}</td>
+          </tr>
+        `;
+      }).join('');
+
+      const sec = window.FitItUpCMS.getSecurity();
+      const recovEl = document.getElementById('display-recovery-key');
+      if (recovEl && sec.recoveryKey) {
+        recovEl.textContent = sec.recoveryKey;
       }
     }
 

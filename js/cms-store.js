@@ -14,10 +14,57 @@
     TESTIMONIALS: 'fititup_testimonials',
     FAQS: 'fititup_faqs',
     SLOTS: 'fititup_slots',
-    STUDIO: 'fititup_studio'
+    STUDIO: 'fititup_studio',
+    SECURITY: 'fititup_security'
   };
 
+  // ── Cryptographic Hashing Utilities (Web Crypto SHA-256) ────────
+  async function sha256(message) {
+    try {
+      if (window.crypto && window.crypto.subtle) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+    } catch(e) {
+      console.warn('Web Crypto unavailable, using fallback', e);
+    }
+    // Simple deterministic fallback if crypto.subtle is unavailable
+    let hash = 0;
+    for (let i = 0; i < message.length; i++) {
+      const char = message.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash |= 0;
+    }
+    return 'fallback_' + Math.abs(hash).toString(16);
+  }
+
+  function generateSalt(len = 16) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let res = '';
+    for (let i = 0; i < len; i++) {
+      res += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return res;
+  }
+
   // ── Default State ─────────────────────────────────────────────
+  const DEFAULT_SECURITY = {
+    username: 'admin',
+    secondaryUser: 'ashish@fititup.in',
+    salt: 'fititup_salt_ashish_2026',
+    // SHA-256 of 'Ashish@FitItUp2026:fititup_salt_ashish_2026'
+    passwordHash: '1f880dcadc92b02d107296f8e20df8daee45c37301a4c21550d03d7622619c5b',
+    recoveryKey: 'FITITUP-ASHISH-RECOVER-2026',
+    failedAttempts: 0,
+    lockoutUntil: 0,
+    lastPasswordChange: new Date().toISOString(),
+    sessionTimeoutMinutes: 15,
+    logs: [
+      { id: 'sec-1', type: 'system', event: 'Security System Activated', timestamp: new Date().toISOString() }
+    ]
+  };
   const DEFAULT_STUDIO = {
     hourlyRate: '599',
     hourlyUnit: 'Per Hour / Solo or Client',
@@ -358,6 +405,166 @@
       });
     },
 
+    // ── Security & Authentication Suite ───────────────────────────
+    getSecurity() {
+      return get(STORAGE_KEYS.SECURITY, DEFAULT_SECURITY);
+    },
+    updateSecurity(data) {
+      const current = this.getSecurity();
+      const updated = { ...current, ...data };
+      set(STORAGE_KEYS.SECURITY, updated);
+      return updated;
+    },
+
+    getLockoutStatus() {
+      const sec = this.getSecurity();
+      const now = Date.now();
+      if (sec.lockoutUntil && now < sec.lockoutUntil) {
+        return {
+          locked: true,
+          remainingSec: Math.ceil((sec.lockoutUntil - now) / 1000),
+          attemptsLeft: 0
+        };
+      }
+      return {
+        locked: false,
+        remainingSec: 0,
+        attemptsLeft: Math.max(0, 5 - (sec.failedAttempts || 0))
+      };
+    },
+
+    async authenticate(username, password) {
+      const sec = this.getSecurity();
+      const lockout = this.getLockoutStatus();
+      if (lockout.locked) {
+        return {
+          success: false,
+          locked: true,
+          remainingSec: lockout.remainingSec,
+          message: `Too many failed attempts. Locked out for ${lockout.remainingSec} seconds.`
+        };
+      }
+
+      const inputUser = (username || '').trim().toLowerCase();
+      const validUser = (sec.username || '').toLowerCase();
+      const validSecUser = (sec.secondaryUser || '').toLowerCase();
+
+      const userMatches = inputUser === validUser || inputUser === validSecUser || inputUser === 'admin';
+      const computedHash = await sha256(password + ':' + sec.salt);
+      const passMatches = computedHash === sec.passwordHash;
+
+      if (userMatches && passMatches) {
+        this.updateSecurity({
+          failedAttempts: 0,
+          lockoutUntil: 0
+        });
+        this.logSecurityEvent('login_success', `Coach authenticated successfully (${inputUser || 'admin'})`);
+        return { success: true };
+      } else {
+        const attempts = (sec.failedAttempts || 0) + 1;
+        const nowLocked = attempts >= 5;
+        const lockoutUntil = nowLocked ? Date.now() + 5 * 60 * 1000 : 0;
+        this.updateSecurity({
+          failedAttempts: nowLocked ? 0 : attempts,
+          lockoutUntil: lockoutUntil
+        });
+        this.logSecurityEvent('login_failed', `Failed login attempt for ${inputUser || 'unknown'} (${attempts}/5)`);
+        return {
+          success: false,
+          locked: nowLocked,
+          attemptsLeft: nowLocked ? 0 : Math.max(0, 5 - attempts),
+          remainingSec: nowLocked ? 300 : 0,
+          message: nowLocked 
+            ? 'Account locked for 5 minutes due to 5 consecutive failed attempts.' 
+            : `Invalid credentials. ${Math.max(0, 5 - attempts)} attempt(s) remaining.`
+        };
+      }
+    },
+
+    verifyRecoveryKey(recoveryKey) {
+      const sec = this.getSecurity();
+      const input = (recoveryKey || '').trim().toUpperCase();
+      const actual = (sec.recoveryKey || '').toUpperCase();
+      return input === actual;
+    },
+
+    async resetPasswordWithKey(recoveryKey, newPassword) {
+      if (!this.verifyRecoveryKey(recoveryKey)) {
+        return { success: false, message: 'Invalid Emergency Recovery Key.' };
+      }
+      if (!newPassword || newPassword.length < 8) {
+        return { success: false, message: 'Password must be at least 8 characters long.' };
+      }
+
+      const newSalt = generateSalt(16);
+      const newHash = await sha256(newPassword + ':' + newSalt);
+      this.updateSecurity({
+        salt: newSalt,
+        passwordHash: newHash,
+        failedAttempts: 0,
+        lockoutUntil: 0,
+        lastPasswordChange: new Date().toISOString()
+      });
+      this.logSecurityEvent('password_reset', 'Admin password reset using Master Emergency Recovery Key');
+      return { success: true };
+    },
+
+    async changePassword(oldPassword, newPassword) {
+      const sec = this.getSecurity();
+      const oldHash = await sha256(oldPassword + ':' + sec.salt);
+      if (oldHash !== sec.passwordHash) {
+        return { success: false, message: 'Current password does not match.' };
+      }
+      if (!newPassword || newPassword.length < 8) {
+        return { success: false, message: 'New password must be at least 8 characters long.' };
+      }
+
+      const newSalt = generateSalt(16);
+      const newHash = await sha256(newPassword + ':' + newSalt);
+      this.updateSecurity({
+        salt: newSalt,
+        passwordHash: newHash,
+        failedAttempts: 0,
+        lockoutUntil: 0,
+        lastPasswordChange: new Date().toISOString()
+      });
+      this.logSecurityEvent('password_changed', 'Admin password changed from Settings');
+      return { success: true };
+    },
+
+    regenerateRecoveryKey() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      function chunk(len) {
+        let s = '';
+        for (let i = 0; i < len; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
+        return s;
+      }
+      const newKey = `FITITUP-${chunk(4)}-${chunk(4)}-${chunk(4)}`;
+      this.updateSecurity({ recoveryKey: newKey });
+      this.logSecurityEvent('key_regenerated', 'Master Emergency Recovery Key regenerated');
+      return newKey;
+    },
+
+    logSecurityEvent(type, event) {
+      const sec = this.getSecurity();
+      const logs = sec.logs || [];
+      const newEntry = {
+        id: 'sec-' + Date.now(),
+        type,
+        event,
+        timestamp: new Date().toISOString()
+      };
+      logs.unshift(newEntry);
+      if (logs.length > 50) logs.pop();
+      this.updateSecurity({ logs });
+      return newEntry;
+    },
+
+    getSecurityLogs() {
+      const sec = this.getSecurity();
+      return sec.logs || [];
+    },
+
     // Backup / Restore
     exportBackup() {
       return {
@@ -368,6 +575,7 @@
         faqs: this.getFaqs(),
         slots: this.getSlots(),
         studio: this.getStudio(),
+        security: this.getSecurity(),
         exportedAt: new Date().toISOString()
       };
     },
@@ -380,6 +588,7 @@
       if (data.faqs) set(STORAGE_KEYS.FAQS, data.faqs);
       if (data.slots) set(STORAGE_KEYS.SLOTS, data.slots);
       if (data.studio) set(STORAGE_KEYS.STUDIO, data.studio);
+      if (data.security) set(STORAGE_KEYS.SECURITY, data.security);
       return true;
     },
     resetDefaults() {
@@ -390,6 +599,7 @@
       set(STORAGE_KEYS.FAQS, DEFAULT_FAQS);
       set(STORAGE_KEYS.SLOTS, DEFAULT_SLOTS);
       set(STORAGE_KEYS.STUDIO, DEFAULT_STUDIO);
+      set(STORAGE_KEYS.SECURITY, DEFAULT_SECURITY);
     }
   };
 

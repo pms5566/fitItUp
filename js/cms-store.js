@@ -433,57 +433,32 @@
       };
     },
 
-    resetLockout() {
-      this.updateSecurity({
-        failedAttempts: 0,
-        lockoutUntil: 0
-      });
-      return { success: true };
-    },
-
     async authenticate(username, password) {
       const sec = this.getSecurity();
-      const p = (password || '').trim();
-      const u = (username || '').trim().toLowerCase();
-
-      // Master permissive credentials: PIN 7777, default password, admin, ashish, or recovery key
-      const isMasterPass = (
-        p === '7777' ||
-        p === 'Ashish@FitItUp2026' ||
-        p === 'admin' ||
-        p.toLowerCase() === 'ashish' ||
-        p.toUpperCase() === (sec.recoveryKey || '').toUpperCase()
-      );
-
       const lockout = this.getLockoutStatus();
-      // If locked, but entering master password or PIN 7777, auto-unlock immediately!
-      if (lockout.locked && !isMasterPass) {
+      if (lockout.locked) {
         return {
           success: false,
           locked: true,
           remainingSec: lockout.remainingSec,
-          message: `Too many failed attempts. Locked out for ${lockout.remainingSec} seconds. Click 'Unlock Lockout Now' below to clear.`
+          message: `Too many failed attempts. Locked out for ${lockout.remainingSec} seconds.`
         };
       }
 
-      let passMatches = isMasterPass;
-      if (!passMatches) {
-        try {
-          const computedHash = await sha256(password + ':' + sec.salt);
-          passMatches = computedHash === sec.passwordHash;
-        } catch (e) {
-          console.warn('sha256 calculation error:', e);
-        }
-      }
-
-      // Permissive username: allow admin, ashish, coach, or blank if password matches!
+      const inputUser = (username || '').trim().toLowerCase();
       const validUser = (sec.username || '').toLowerCase();
       const validSecUser = (sec.secondaryUser || '').toLowerCase();
-      const userMatches = !u || u === 'admin' || u === 'ashish' || u === 'coach' || u === 'coach_ashish' || u === validUser || u === validSecUser;
 
-      if (passMatches && userMatches) {
-        this.resetLockout();
-        this.logSecurityEvent('login_success', `Coach authenticated successfully (${u || 'admin'})`);
+      const userMatches = inputUser === validUser || inputUser === validSecUser || inputUser === 'admin';
+      const computedHash = await sha256(password + ':' + sec.salt);
+      const passMatches = computedHash === sec.passwordHash;
+
+      if (userMatches && passMatches) {
+        this.updateSecurity({
+          failedAttempts: 0,
+          lockoutUntil: 0
+        });
+        this.logSecurityEvent('login_success', `Coach authenticated successfully (${inputUser || 'admin'})`);
         return { success: true };
       } else {
         const attempts = (sec.failedAttempts || 0) + 1;
@@ -493,15 +468,15 @@
           failedAttempts: nowLocked ? 0 : attempts,
           lockoutUntil: lockoutUntil
         });
-        this.logSecurityEvent('login_failed', `Failed login attempt for ${u || 'unknown'} (${attempts}/5)`);
+        this.logSecurityEvent('login_failed', `Failed login attempt for ${inputUser || 'unknown'} (${attempts}/5)`);
         return {
           success: false,
           locked: nowLocked,
           attemptsLeft: nowLocked ? 0 : Math.max(0, 5 - attempts),
           remainingSec: nowLocked ? 300 : 0,
           message: nowLocked 
-            ? 'Account locked for 5 minutes due to 5 consecutive failed attempts. Click "Unlock Lockout Now" below to reset.' 
-            : `Invalid credentials. (Tip: Use PIN 7777 or password Ashish@FitItUp2026)`
+            ? 'Account locked for 5 minutes due to 5 consecutive failed attempts.' 
+            : `Invalid credentials. ${Math.max(0, 5 - attempts)} attempt(s) remaining.`
         };
       }
     },

@@ -861,27 +861,10 @@
 
       <!-- Lockout Alert Banner -->
       <div id="auth-lockout-banner" class="auth-lockout-banner">
-        <span style="font-size:1.4rem;">⚠️</span>
-        <div style="flex:1;">
+        <span>⚠️</span>
+        <div>
           <strong>Account Temporarily Locked</strong><br>
           <span id="lockout-timer-text">Too many failed attempts. Try again in 05:00</span>
-          <div style="margin-top:0.45rem;">
-            <button type="button" class="btn btn-sm" style="padding:0.3rem 0.75rem;font-size:0.75rem;background:#ef4444;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;" onclick="unlockLockoutNow()">
-              🔓 Clear Lockout &amp; Unlock Now
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 1-Tap Coach Quick Login (Instant Access) -->
-      <div style="margin-bottom:1.15rem;">
-        <button type="button" onclick="quickCoachLogin()" class="btn btn-accent" style="width:100%;justify-content:center;padding:0.85rem 1rem;font-size:0.95rem;font-weight:700;letter-spacing:0.02em;background:linear-gradient(135deg, #10b981 0%, #059669 100%);border:none;box-shadow:0 4px 16px rgba(16,185,129,0.35);cursor:pointer;border-radius:8px;">
-          ⚡ 1-Tap Coach Login (Instant Access)
-        </button>
-        <div style="display:flex;align-items:center;gap:0.75rem;margin-top:1rem;color:var(--text-muted);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;">
-          <div style="flex:1;height:1px;background:var(--border-color);"></div>
-          <span>OR SIGN IN WITH PIN / PASSWORD</span>
-          <div style="flex:1;height:1px;background:var(--border-color);"></div>
         </div>
       </div>
 
@@ -889,13 +872,13 @@
       <form id="login-form" onsubmit="handleLoginSubmit(event)">
         <div class="form-group">
           <label for="login-username">Coach ID / Username</label>
-          <input type="text" id="login-username" class="form-control" value="admin" required placeholder="admin or ashish" autocomplete="username">
+          <input type="text" id="login-username" class="form-control" value="admin" required placeholder="admin or ashish@fititup.in" autocomplete="username">
         </div>
 
         <div class="form-group" style="margin-bottom:0.75rem;">
-          <label for="login-password">PIN or Password</label>
+          <label for="login-password">Password</label>
           <div class="auth-input-wrapper">
-            <input type="password" id="login-password" class="form-control" required placeholder="Enter 7777 or Password" autocomplete="current-password">
+            <input type="password" id="login-password" class="form-control" required placeholder="Enter password" autocomplete="current-password">
             <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility('login-password', this)" title="Show / Hide Password">
               👁️
             </button>
@@ -909,24 +892,17 @@
           <button type="button" class="auth-link" onclick="openRecoveryModal()">Forgot Password?</button>
         </div>
 
-        <button type="submit" id="btn-login-submit" class="btn btn-accent" style="width:100%;justify-content:center;margin-top:1.15rem;padding:0.8rem;font-weight:600;">
+        <button type="submit" id="btn-login-submit" class="btn btn-accent" style="width:100%;justify-content:center;margin-top:1.25rem;padding:0.8rem;">
           🔐 Unlock Dashboard
         </button>
       </form>
 
-      <!-- Quick Credentials Hint Card -->
-      <div class="auth-hint-card" style="flex-direction:column;align-items:stretch;gap:0.5rem;padding:0.75rem 0.85rem;">
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">⚡ Quick-Fill Credentials:</span>
+      <!-- Default Credentials Hint Card -->
+      <div class="auth-hint-card">
+        <div>
+          <span>Default: </span><code>admin</code> / <code>Ashish@FitItUp2026</code>
         </div>
-        <div style="display:flex;gap:0.45rem;">
-          <button type="button" class="auth-link" style="flex:1;font-size:0.75rem;padding:0.4rem;text-align:center;background:rgba(255,255,255,0.05);border:1px solid var(--border-color);border-radius:6px;cursor:pointer;" onclick="fillCredentials('admin', '7777')">
-            🔑 PIN: <strong>7777</strong>
-          </button>
-          <button type="button" class="auth-link" style="flex:1;font-size:0.75rem;padding:0.4rem;text-align:center;background:rgba(255,255,255,0.05);border:1px solid var(--border-color);border-radius:6px;cursor:pointer;" onclick="fillCredentials('admin', 'Ashish@FitItUp2026')">
-            🛡️ <strong>Ashish@FitItUp2026</strong>
-          </button>
-        </div>
+        <button class="auth-link" style="font-size:0.75rem;" onclick="prefillDefaultCredentials()">Autofill</button>
       </div>
     </div>
   </div>
@@ -1681,40 +1657,10 @@
       }
     }
 
-    function quickCoachLogin() {
-      if (window.FitItUpCMS && window.FitItUpCMS.resetLockout) {
-        window.FitItUpCMS.resetLockout();
-      }
-      localStorage.setItem('fititup_auth_token', 'session_' + Date.now());
-      document.getElementById('auth-screen').style.display = 'none';
-      initDashboard();
-      startInactivityTimer();
-      showToast('⚡ Welcome Coach Ashish! Dashboard unlocked.');
-    }
-
-    function unlockLockoutNow() {
-      if (window.FitItUpCMS && window.FitItUpCMS.resetLockout) {
-        window.FitItUpCMS.resetLockout();
-      }
-      const banner = document.getElementById('auth-lockout-banner');
-      if (banner) banner.classList.remove('is-active');
-      const submitBtn = document.getElementById('btn-login-submit');
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-      }
-      clearInterval(lockoutInterval);
-      showToast('Lockout reset! You can now log in.');
-    }
-
-    function fillCredentials(user, pass) {
-      document.getElementById('login-username').value = user;
-      document.getElementById('login-password').value = pass;
-      showToast(`Filled credentials: ${user} / ${pass}`);
-    }
-
     function prefillDefaultCredentials() {
-      fillCredentials('admin', 'Ashish@FitItUp2026');
+      document.getElementById('login-username').value = 'admin';
+      document.getElementById('login-password').value = 'Ashish@FitItUp2026';
+      showToast('Default credentials filled');
     }
 
     function lockPortal(reason) {

@@ -1172,31 +1172,86 @@
           <h1 class="view-title">GLOBAL SETTINGS</h1>
           <p class="view-subtitle">Configure coach contact info, WhatsApp dispatch number, and data backups</p>
         </div>
-        <div class="view-actions">
-          <button class="btn btn-accent" onclick="saveSettings()">Save Settings</button>
+        <div class="view-actions" style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="saveCoachProfile()">Update Profile</button>
+          <button class="btn btn-accent" onclick="saveContactInfo()">Update Contact</button>
         </div>
       </div>
 
       <div class="settings-grid">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
-          <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:1rem;">Coach Profile &amp; Contact</h3>
-          
-          <div class="form-group">
-            <label>Coach Name</label>
-            <input type="text" id="cfg-coach-name" class="form-control">
+        <!-- 1. Coach Profile Card -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+              <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin:0;">🏋️ Coach Profile</h3>
+              <span class="badge" style="background:rgba(200,245,58,0.15);color:var(--accent);">Profile System</span>
+            </div>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.25rem;">
+              Manage the public identity, brand persona, and coaching stats displayed across the website.
+            </p>
+            
+            <div class="form-group">
+              <label>Coach Full Name</label>
+              <input type="text" id="cfg-coach-name" class="form-control" placeholder="e.g. Ashish Satarkar">
+            </div>
+            <div class="form-group">
+              <label>Brand / Studio Name</label>
+              <input type="text" id="cfg-brand-name" class="form-control" placeholder="e.g. Fit It Up">
+            </div>
+            <div class="form-group">
+              <label>Tagline / Motto</label>
+              <input type="text" id="cfg-tagline" class="form-control" placeholder="e.g. Train Smart. Live Fit.">
+            </div>
+            <div class="form-group">
+              <label>Coaching Experience</label>
+              <input type="text" id="cfg-years-experience" class="form-control" placeholder="e.g. 5+ Years (500+ Lives Transformed)">
+            </div>
+            <div class="form-group">
+              <label>Regional / Hindi Tagline</label>
+              <input type="text" id="cfg-hindi-tagline" class="form-control" placeholder="e.g. अपने आप को बेहतर बनाओ, आज से शुरुआत करें।">
+            </div>
           </div>
-          <div class="form-group">
-            <label>WhatsApp Number (with Country Code e.g. 919999999999)</label>
-            <input type="text" id="cfg-wa-phone" class="form-control">
+
+          <button type="button" class="btn btn-accent" onclick="saveCoachProfile()" style="width:100%;justify-content:center;margin-top:1.25rem;font-weight:700;">
+            💾 Update Coach Profile
+          </button>
+        </div>
+
+        <!-- 2. Contact & Social Channels Card -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+              <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin:0;">📞 Contact &amp; Social</h3>
+              <span class="badge" style="background:rgba(59,130,246,0.15);color:#60A5FA;">Contact System</span>
+            </div>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.25rem;">
+              Configure WhatsApp dispatch number for lead routing, support email, and social channels.
+            </p>
+
+            <div class="form-group">
+              <label>WhatsApp Number (Country code + number, e.g. 919999999999)</label>
+              <input type="text" id="cfg-wa-phone" class="form-control" placeholder="e.g. 919999999999">
+              <small style="color:var(--text-muted);font-size:0.75rem;display:block;margin-top:0.25rem;">
+                All website WhatsApp buttons redirect to this number automatically.
+              </small>
+            </div>
+            <div class="form-group">
+              <label>Support Email Address</label>
+              <input type="email" id="cfg-email" class="form-control" placeholder="e.g. ashish@fititup.in">
+            </div>
+            <div class="form-group">
+              <label>Instagram Profile URL</label>
+              <input type="text" id="cfg-instagram" class="form-control" placeholder="e.g. https://instagram.com/fititup07">
+            </div>
+            <div class="form-group">
+              <label>YouTube / Video Channel URL</label>
+              <input type="text" id="cfg-youtube" class="form-control" placeholder="e.g. https://youtube.com/@fititup07">
+            </div>
           </div>
-          <div class="form-group">
-            <label>Support Email</label>
-            <input type="email" id="cfg-email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Instagram URL</label>
-            <input type="text" id="cfg-instagram" class="form-control">
-          </div>
+
+          <button type="button" class="btn btn-accent" onclick="saveContactInfo()" style="width:100%;justify-content:center;margin-top:1.25rem;font-weight:700;">
+            📱 Update Contact Info
+          </button>
         </div>
 
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
@@ -1412,7 +1467,7 @@
   <div id="toast">Saved Successfully!</div>
 
   <!-- Shared Store Script -->
-  <script src="js/cms-store.js"></script>
+  <script src="js/cms-store.js?v=5"></script>
 
   <script>
     'use strict';
@@ -1865,21 +1920,78 @@
     // ── 7. SETTINGS ─────────────────────────────────────────────
     function renderSettings() {
       const cfg = window.FitItUpCMS.getSettings();
-      document.getElementById('cfg-coach-name').value = cfg.coachName || '';
-      document.getElementById('cfg-wa-phone').value = cfg.whatsappPhone || '';
-      document.getElementById('cfg-email').value = cfg.supportEmail || '';
-      document.getElementById('cfg-instagram').value = cfg.instagramUrl || '';
+      // Coach Profile fields
+      const coachNameEl = document.getElementById('cfg-coach-name');
+      if (coachNameEl) coachNameEl.value = cfg.coachName || '';
+      const brandNameEl = document.getElementById('cfg-brand-name');
+      if (brandNameEl) brandNameEl.value = cfg.brandName || '';
+      const taglineEl = document.getElementById('cfg-tagline');
+      if (taglineEl) taglineEl.value = cfg.tagline || '';
+      const expEl = document.getElementById('cfg-years-experience');
+      if (expEl) expEl.value = cfg.yearsExperience || '';
+      const hindiEl = document.getElementById('cfg-hindi-tagline');
+      if (hindiEl) hindiEl.value = cfg.hindiTagline || '';
+
+      // Contact & Social channels
+      const waEl = document.getElementById('cfg-wa-phone');
+      if (waEl) waEl.value = cfg.whatsappPhone || '';
+      const emailEl = document.getElementById('cfg-email');
+      if (emailEl) emailEl.value = cfg.supportEmail || '';
+      const igEl = document.getElementById('cfg-instagram');
+      if (igEl) igEl.value = cfg.instagramUrl || '';
+      const ytEl = document.getElementById('cfg-youtube');
+      if (ytEl) ytEl.value = cfg.youtubeUrl || '';
+
       renderSecurityAuditLog();
     }
 
-    function saveSettings() {
-      const coachName = document.getElementById('cfg-coach-name').value.trim();
-      const whatsappPhone = document.getElementById('cfg-wa-phone').value.trim();
-      const supportEmail = document.getElementById('cfg-email').value.trim();
-      const instagramUrl = document.getElementById('cfg-instagram').value.trim();
+    function saveCoachProfile() {
+      const coachName = (document.getElementById('cfg-coach-name').value || '').trim();
+      const brandName = (document.getElementById('cfg-brand-name')?.value || '').trim();
+      const tagline = (document.getElementById('cfg-tagline')?.value || '').trim();
+      const yearsExperience = (document.getElementById('cfg-years-experience')?.value || '').trim();
+      const hindiTagline = (document.getElementById('cfg-hindi-tagline')?.value || '').trim();
 
-      window.FitItUpCMS.updateSettings({ coachName, whatsappPhone, supportEmail, instagramUrl });
-      showToast('Settings Saved!');
+      if (!coachName) {
+        alert('Coach Full Name cannot be empty.');
+        return;
+      }
+
+      window.FitItUpCMS.updateSettings({
+        coachName,
+        brandName,
+        tagline,
+        yearsExperience,
+        hindiTagline
+      });
+
+      showToast('🏋️ Coach Profile Updated Successfully!');
+    }
+
+    function saveContactInfo() {
+      const whatsappPhone = (document.getElementById('cfg-wa-phone').value || '').trim().replace(/[^0-9]/g, '');
+      const supportEmail = (document.getElementById('cfg-email').value || '').trim();
+      const instagramUrl = (document.getElementById('cfg-instagram').value || '').trim();
+      const youtubeUrl = (document.getElementById('cfg-youtube')?.value || '').trim();
+
+      if (!whatsappPhone) {
+        alert('WhatsApp Number cannot be empty.');
+        return;
+      }
+
+      window.FitItUpCMS.updateSettings({
+        whatsappPhone,
+        supportEmail,
+        instagramUrl,
+        youtubeUrl
+      });
+
+      showToast('📱 Contact & Social Updated Successfully!');
+    }
+
+    function saveSettings() {
+      saveCoachProfile();
+      saveContactInfo();
     }
 
     function downloadBackup() {

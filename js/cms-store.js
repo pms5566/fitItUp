@@ -275,6 +275,12 @@
       set(STORAGE_KEYS.SETTINGS, updated);
       return updated;
     },
+    updateCoachProfile(data) {
+      return this.updateSettings(data);
+    },
+    updateContactInfo(data) {
+      return this.updateSettings(data);
+    },
 
     // Leads
     getLeads() {

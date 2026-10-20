@@ -299,6 +299,24 @@ function toggleFaq(btn) {
       link.setAttribute('href', `https://wa.me/${phone}${textParam}`);
     });
 
+    // 1b. Update Support Email Links
+    const cfg = window.FitItUpCMS.getSettings();
+    if (cfg && cfg.supportEmail) {
+      document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+        link.setAttribute('href', `mailto:${cfg.supportEmail}`);
+        if (link.textContent.includes('@')) {
+          link.textContent = cfg.supportEmail;
+        }
+      });
+    }
+
+    // 1c. Update Instagram Links
+    if (cfg && cfg.instagramUrl) {
+      document.querySelectorAll('a[href*="instagram.com"]').forEach(link => {
+        link.setAttribute('href', cfg.instagramUrl);
+      });
+    }
+
     // 2. Render Slots
     const slotGrid = document.querySelector('.booking-widget__grid');
     if (slotGrid) {

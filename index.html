@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
 
@@ -378,34 +378,59 @@
         </div>
 
         <!-- Rental Pricing Strip -->
-        <div class="studio-rate-strip">
-          <div class="studio-rate-item">
-            <div class="studio-rate-item__title">Hourly Slot</div>
+        <div class="studio-rate-strip" role="radiogroup" aria-label="Studio rental plans">
+          <div class="studio-rate-item" 
+               role="radio" 
+               aria-checked="false" 
+               tabindex="0" 
+               onclick="selectStudioPlan(this, 'Hourly Slot', '₹599')"
+               onkeydown="if(event.key==='Enter'||event.key===' ')selectStudioPlan(this, 'Hourly Slot', '₹599')">
+            <div class="studio-rate-item__header">
+              <div class="studio-rate-item__title">Hourly Slot</div>
+              <span class="studio-plan-badge">Select</span>
+            </div>
             <div class="studio-rate-item__price">₹599</div>
             <div class="studio-rate-item__unit">Per Hour / Solo or Client</div>
           </div>
-          <div class="studio-rate-item highlight">
-            <div class="studio-rate-item__title">Creator Pass</div>
+          <div class="studio-rate-item highlight is-selected" 
+               role="radio" 
+               aria-checked="true" 
+               tabindex="0" 
+               onclick="selectStudioPlan(this, 'Creator Pass', '₹1,999')"
+               onkeydown="if(event.key==='Enter'||event.key===' ')selectStudioPlan(this, 'Creator Pass', '₹1,999')">
+            <div class="studio-rate-item__header">
+              <div class="studio-rate-item__title">Creator Pass</div>
+              <span class="studio-plan-badge">✓ Selected</span>
+            </div>
             <div class="studio-rate-item__price">₹1,999</div>
             <div class="studio-rate-item__unit">4-Hour Shoot Session</div>
           </div>
-          <div class="studio-rate-item">
-            <div class="studio-rate-item__title">Trainer Pack</div>
+          <div class="studio-rate-item" 
+               role="radio" 
+               aria-checked="false" 
+               tabindex="0" 
+               onclick="selectStudioPlan(this, 'Trainer Pack', '₹7,999')"
+               onkeydown="if(event.key==='Enter'||event.key===' ')selectStudioPlan(this, 'Trainer Pack', '₹7,999')">
+            <div class="studio-rate-item__header">
+              <div class="studio-rate-item__title">Trainer Pack</div>
+              <span class="studio-plan-badge">Select</span>
+            </div>
             <div class="studio-rate-item__price">₹7,999</div>
             <div class="studio-rate-item__unit">20 Hours / Month</div>
           </div>
         </div>
 
         <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-top:var(--sp-6);">
-          <a href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%20want%20to%20rent%20the%20FitItUp%20Studio%20for%20a%20session!" 
+          <a id="studio-book-wa-btn" 
+             href="https://wa.me/919999999999?text=Hi%20Ashish%2C%20I%20want%20to%20book%20the%20Creator%20Pass%20(%E2%82%B91%2C999)%20for%20the%20FitItUp%20Studio!" 
              class="btn btn-wa" 
              target="_blank" 
              rel="noopener">
-            💬 Book Studio on WhatsApp
+            💬 Book Creator Pass (₹1,999) on WhatsApp →
           </a>
-          <a href="#contact" class="btn btn-outline">
+          <button type="button" class="btn btn-outline" onclick="scheduleStudioVisit()">
             Schedule Studio Visit
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -866,8 +891,8 @@
   <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.524 5.862L.057 23.43a.5.5 0 0 0 .614.614l5.568-1.467A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.004-1.37l-.36-.213-3.722.981.998-3.647-.234-.376A9.818 9.818 0 1 1 12 21.818z"/></svg>
 </a>
 
-<script src="js/cms-store.js"></script>
-<script src="js/app.js"></script>
+<script src="js/cms-store.js?v=4"></script>
+<script src="js/app.js?v=4"></script>
 <script>
   function toggleFooterCol(id) {
     const col = document.getElementById(id);

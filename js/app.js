@@ -393,6 +393,60 @@ function toggleFaq(btn) {
   window.addEventListener('storage', syncFromCMS);
 })();
 
+// ── Studio Rental Plan Selection Handler ────────────────────────
+let currentSelectedStudioPlan = { name: 'Creator Pass', price: '₹1,999' };
+window.currentSelectedStudioPlan = currentSelectedStudioPlan;
+
+function selectStudioPlan(element, planName, defaultPrice) {
+  const strip = element.closest('.studio-rate-strip') || document.querySelector('.studio-rate-strip');
+  if (strip) {
+    const allItems = strip.querySelectorAll('.studio-rate-item');
+    allItems.forEach(item => {
+      item.classList.remove('highlight', 'is-selected');
+      item.setAttribute('aria-checked', 'false');
+      const badge = item.querySelector('.studio-plan-badge');
+      if (badge) badge.textContent = 'Select';
+    });
+  }
+
+  element.classList.add('highlight', 'is-selected');
+  element.setAttribute('aria-checked', 'true');
+  const activeBadge = element.querySelector('.studio-plan-badge');
+  if (activeBadge) activeBadge.textContent = '✓ Selected';
+
+  const priceEl = element.querySelector('.studio-rate-item__price');
+  const price = priceEl ? priceEl.textContent.trim() : defaultPrice;
+
+  currentSelectedStudioPlan = { name: planName, price: price };
+  window.currentSelectedStudioPlan = currentSelectedStudioPlan;
+
+  const phone = window.FitItUpCMS ? window.FitItUpCMS.getSettings().whatsappPhone : '919999999999';
+  const waBtn = document.getElementById('studio-book-wa-btn');
+  if (waBtn) {
+    const text = `Hi Ashish, I want to book the ${planName} (${price}) for the FitItUp Studio!`;
+    waBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    waBtn.textContent = `💬 Book ${planName} (${price}) on WhatsApp →`;
+  }
+}
+
+function scheduleStudioVisit() {
+  const goalSelect = document.getElementById('goal');
+  if (goalSelect) {
+    goalSelect.value = 'Studio Rental / Shoot';
+  }
+  const plan = window.currentSelectedStudioPlan || currentSelectedStudioPlan;
+  const messageEl = document.getElementById('message');
+  if (messageEl && !messageEl.value) {
+    messageEl.value = `Hi Ashish, I would like to schedule an in-person visit to inspect the private studio for the ${plan.name} (${plan.price}) plan.`;
+  }
+  const contactSec = document.getElementById('contact');
+  if (contactSec) {
+    contactSec.scrollIntoView({ behavior: 'smooth' });
+    const nameInput = document.getElementById('fname');
+    if (nameInput) setTimeout(() => nameInput.focus(), 600);
+  }
+}
+
 // ── Time Slot Selection Handler ────────────────────────────────
 let selectedSlotBtn = null;
 function selectSlot(btn) {

@@ -1129,20 +1129,67 @@ section[id] {
 
 .studio-rate-item {
   background: var(--clr-card);
-  border: 1px solid var(--clr-border);
+  border: 1.5px solid var(--clr-border);
   border-radius: var(--radius-md);
-  padding: var(--sp-3) var(--sp-4);
+  padding: var(--sp-4) var(--sp-4);
   text-align: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: transform var(--ease-normal), border-color var(--ease-normal), background var(--ease-normal), box-shadow var(--ease-normal);
+  outline: none;
 }
-.studio-rate-item.highlight {
+.studio-rate-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(191, 255, 0, 0.45);
+  background: rgba(191, 255, 0, 0.03);
+}
+.studio-rate-item:focus-visible {
+  outline: 2px solid var(--clr-red);
+  outline-offset: 2px;
+}
+.studio-rate-item.highlight,
+.studio-rate-item.is-selected {
   border-color: var(--clr-red);
-  background: rgba(200, 245, 58, 0.04);
+  background: rgba(191, 255, 0, 0.07);
+  box-shadow: 0 0 20px rgba(191, 255, 0, 0.16), inset 0 0 15px rgba(191, 255, 0, 0.04);
+}
+.studio-rate-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
 }
 .studio-rate-item__title {
   font-size: var(--fs-xs);
-  color: var(--clr-gray-300);
+  color: var(--clr-gray-200);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-weight: var(--fw-semi);
+}
+.studio-plan-badge {
+  font-size: 0.65rem;
+  font-weight: var(--fw-semi);
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--clr-gray-400);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--ease-fast);
+}
+.studio-rate-item:hover .studio-plan-badge {
+  border-color: rgba(191, 255, 0, 0.3);
+  color: var(--clr-red);
+}
+.studio-rate-item.is-selected .studio-plan-badge,
+.studio-rate-item.highlight .studio-plan-badge {
+  background: var(--clr-red);
+  color: #040808;
+  font-weight: var(--fw-bold);
+  border-color: var(--clr-red);
+  box-shadow: 0 0 10px rgba(191, 255, 0, 0.4);
 }
 .studio-rate-item__price {
   font-family: var(--font-heading);
@@ -1151,8 +1198,8 @@ section[id] {
   margin-block: 2px;
 }
 .studio-rate-item__unit {
-  font-size: 0.7rem;
-  color: var(--clr-gray-500);
+  font-size: 0.72rem;
+  color: var(--clr-gray-400);
 }
 
 

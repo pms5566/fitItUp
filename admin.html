@@ -148,26 +148,6 @@
     .auth-link:hover {
       text-decoration: underline;
     }
-    .auth-hint-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 1rem;
-      margin-top: 1.5rem;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-    .auth-hint-card code {
-      color: var(--accent);
-      background: rgba(200, 245, 58, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
-    }
     .pass-strength-bar {
       height: 4px;
       border-radius: 2px;
@@ -896,14 +876,6 @@
           🔐 Unlock Dashboard
         </button>
       </form>
-
-      <!-- Default Credentials Hint Card -->
-      <div class="auth-hint-card">
-        <div>
-          <span>Default: </span><code>admin</code> / <code>Ashish@FitItUp2026</code>
-        </div>
-        <button class="auth-link" style="font-size:0.75rem;" onclick="prefillDefaultCredentials()">Autofill</button>
-      </div>
     </div>
   </div>
 
@@ -1523,12 +1495,6 @@
         input.type = 'password';
         btn.textContent = '👁️';
       }
-    }
-
-    function prefillDefaultCredentials() {
-      document.getElementById('login-username').value = 'admin';
-      document.getElementById('login-password').value = 'Ashish@FitItUp2026';
-      showToast('Default credentials filled');
     }
 
     function lockPortal(reason) {

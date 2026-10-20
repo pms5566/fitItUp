@@ -354,8 +354,9 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   gap: var(--sp-5);
-  margin-top: var(--sp-10);
-  padding-bottom: var(--sp-4);
+  margin-top: var(--sp-8);
+  padding-top: 28px;
+  padding-bottom: var(--sp-6);
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -376,6 +377,7 @@
   transition: all var(--ease-normal);
   flex: 0 0 85%;
   scroll-snap-align: start;
+  margin-top: 6px;
 }
 
 .pricing-card--featured {
@@ -390,15 +392,29 @@
   left: 50%;
   transform: translateX(-50%);
   background: var(--clr-red);
-  color: #040808;               /* dark text on lime */
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-black);
+  color: #040808 !important;               /* ultra-crisp dark text on lime */
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 5px 16px;
+  letter-spacing: 0.08em;
+  padding: 6px 16px;
   border-radius: var(--radius-pill);
   white-space: nowrap;
-  box-shadow: 0 0 20px rgba(191, 255, 0, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 16px rgba(191, 255, 0, 0.45);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+/* Elite card VIP Badge styling */
+.pricing-card:last-child .pricing-card__badge,
+.pricing-card--vip .pricing-card__badge {
+  background: linear-gradient(135deg, #FFE066, #FFB800);
+  color: #1a0f00 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 16px rgba(255, 184, 0, 0.45);
 }
 
 .pricing-card__name {
@@ -1200,6 +1216,26 @@ section[id] {
 .studio-rate-item__unit {
   font-size: 0.72rem;
   color: var(--clr-gray-400);
+}
+
+/* ── Mobile Pricing Badges & Grid Optimization ───────────────── */
+@media (max-width: 767px) {
+  .pricing__grid {
+    padding-top: 32px !important;
+    padding-bottom: var(--sp-6) !important;
+  }
+  .pricing-card {
+    margin-top: 10px;
+    padding: var(--sp-6) var(--sp-5);
+  }
+  .pricing-card__badge {
+    top: -15px !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    padding: 6px 15px !important;
+    white-space: nowrap !important;
+  }
 }
 
 

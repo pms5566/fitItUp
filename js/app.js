@@ -314,7 +314,7 @@ function toggleFaq(btn) {
     if (pricingGrid) {
       const programs = window.FitItUpCMS.getPrograms();
       pricingGrid.innerHTML = programs.map((p, idx) => `
-        <div class="pricing-card ${p.featured ? 'pricing-card--featured' : ''}" data-animate data-delay="${idx + 1}">
+        <div class="pricing-card ${p.featured ? 'pricing-card--featured' : ''} ${p.id === 'elite' ? 'pricing-card--vip' : ''}" data-animate data-delay="${idx + 1}">
           ${p.badge ? `<div class="pricing-card__badge">${p.badge}</div>` : ''}
           <div>
             <div class="pricing-card__name">${p.name}</div>

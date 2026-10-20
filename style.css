@@ -3,7 +3,7 @@
    style.css
    ============================================================ */
 
-@import url('css/style.css');
-@import url('css/navbar.css');
-@import url('css/hero.css');
-@import url('css/sections.css');
+@import url('css/style.css?v=2');
+@import url('css/navbar.css?v=2');
+@import url('css/hero.css?v=2');
+@import url('css/sections.css?v=2');

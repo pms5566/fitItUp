@@ -942,13 +942,8 @@
         </button>
       </li>
       <li>
-        <button class="nav-tab-btn" onclick="switchTab('tab-leads', this)">
-          👥 Leads CRM <span class="badge-pill" id="badge-leads-count">0</span>
-        </button>
-      </li>
-      <li>
         <button class="nav-tab-btn" onclick="switchTab('tab-studio', this)">
-          🏢 Studio Rental <span class="badge-pill" id="badge-studio-count">0</span>
+          🏢 Studio Rental
         </button>
       </li>
       <li>
@@ -994,79 +989,59 @@
       <div class="view-header">
         <div>
           <h1 class="view-title">COACH OVERVIEW</h1>
-          <p class="view-subtitle">High-level snapshot of your coaching business &amp; client pipeline</p>
+          <p class="view-subtitle">High-level snapshot of your coaching business &amp; website content management</p>
         </div>
         <div class="view-actions">
-          <button class="btn btn-accent" onclick="switchTab('tab-leads', document.querySelectorAll('.nav-tab-btn')[1])">
-            View New Leads
+          <button class="btn btn-accent" onclick="switchTab('tab-programs', document.querySelectorAll('.nav-tab-btn')[2])">
+            💰 Manage Programs
           </button>
         </div>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-card__label">Total Consultation Leads</div>
-          <div class="stat-card__val" id="stat-total-leads">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__label">New / Uncontacted</div>
-          <div class="stat-card__val"><span id="stat-new-leads">0</span></div>
-        </div>
-        <div class="stat-card">
           <div class="stat-card__label">Active Programs</div>
           <div class="stat-card__val" id="stat-active-programs">3</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__label">WhatsApp Enquiries</div>
-          <div class="stat-card__val"><span>100%</span> Direct</div>
+          <div class="stat-card__label">Studio Hourly Rate</div>
+          <div class="stat-card__val" id="stat-studio-rate">₹599</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Published Reviews</div>
+          <div class="stat-card__val" id="stat-total-reviews">6</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">WhatsApp Inquiries</div>
+          <div class="stat-card__val"><span style="color:var(--accent);">100%</span> Direct</div>
         </div>
       </div>
 
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
-        <h3 style="font-family:var(--font-head);font-size:1.6rem;letter-spacing:0.05em;margin-bottom:1rem;">⚡ Quick Lead Pipeline</h3>
-        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">Recent consultation requests received from the single-page website:</p>
-        <div id="overview-recent-leads"></div>
-      </div>
-    </section>
-
-    <!-- ── TAB 2: LEADS CRM ────────────────────────────────── -->
-    <section id="tab-leads" class="tab-panel">
-      <div class="view-header">
-        <div>
-          <h1 class="view-title">LEADS CRM</h1>
-          <p class="view-subtitle">Track consultation bookings, log walk-ins, update pipeline statuses &amp; 1-tap WhatsApp response</p>
+        <h3 style="font-family:var(--font-head);font-size:1.6rem;letter-spacing:0.05em;margin-bottom:0.75rem;">⚡ Quick Website Management</h3>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">Jump directly to configure coaching tiers, facility rental, member reviews, or booking hours:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:1rem;">
+          <div style="background:var(--surface-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.2rem;cursor:pointer;transition:transform 0.2s ease, border-color 0.2s ease;" onclick="switchTab('tab-studio', document.querySelectorAll('.nav-tab-btn')[1])">
+            <div style="font-size:1.5rem;margin-bottom:0.4rem;">🏢</div>
+            <strong style="display:block;font-size:0.95rem;">Studio Rental</strong>
+            <p style="color:var(--text-muted);font-size:0.78rem;margin-top:0.25rem;">Update slot rates &amp; creator amenities</p>
+          </div>
+          <div style="background:var(--surface-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.2rem;cursor:pointer;transition:transform 0.2s ease, border-color 0.2s ease;" onclick="switchTab('tab-programs', document.querySelectorAll('.nav-tab-btn')[2])">
+            <div style="font-size:1.5rem;margin-bottom:0.4rem;">💰</div>
+            <strong style="display:block;font-size:0.95rem;">Programs &amp; Pricing</strong>
+            <p style="color:var(--text-muted);font-size:0.78rem;margin-top:0.25rem;">Adjust coaching fees &amp; features</p>
+          </div>
+          <div style="background:var(--surface-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.2rem;cursor:pointer;transition:transform 0.2s ease, border-color 0.2s ease;" onclick="switchTab('tab-testimonials', document.querySelectorAll('.nav-tab-btn')[3])">
+            <div style="font-size:1.5rem;margin-bottom:0.4rem;">🌟</div>
+            <strong style="display:block;font-size:0.95rem;">Client Reviews</strong>
+            <p style="color:var(--text-muted);font-size:0.78rem;margin-top:0.25rem;">Manage testimonials &amp; transformations</p>
+          </div>
+          <div style="background:var(--surface-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.2rem;cursor:pointer;transition:transform 0.2s ease, border-color 0.2s ease;" onclick="switchTab('tab-slots', document.querySelectorAll('.nav-tab-btn')[5])">
+            <div style="font-size:1.5rem;margin-bottom:0.4rem;">⏰</div>
+            <strong style="display:block;font-size:0.95rem;">Slot Availability</strong>
+            <p style="color:var(--text-muted);font-size:0.78rem;margin-top:0.25rem;">Configure consultation booking hours</p>
+          </div>
         </div>
-        <div class="view-actions">
-          <button class="btn btn-accent" onclick="openAddLeadModal()">+ Add Lead</button>
-          <button class="btn btn-outline" onclick="exportLeadsCsv()">📥 Export to CSV</button>
-        </div>
-      </div>
-
-      <!-- Filter Pills -->
-      <div class="filter-pills" id="lead-filter-pills">
-        <button class="filter-pill active" onclick="filterLeadsBy('all', this)">All Leads (<span id="count-all-leads">0</span>)</button>
-        <button class="filter-pill" onclick="filterLeadsBy('coaching', this)">🏋️ Fitness Coaching (<span id="count-coaching-leads">0</span>)</button>
-        <button class="filter-pill" onclick="filterLeadsBy('studio', this)">🏢 Studio Rental (<span id="count-studio-leads">0</span>)</button>
-        <button class="filter-pill" onclick="filterLeadsBy('new', this)">🔥 Uncontacted (<span id="count-uncontacted-leads">0</span>)</button>
-      </div>
-
-      <div class="data-table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Client Name &amp; Source</th>
-              <th>WhatsApp Number</th>
-              <th>Goal / Service</th>
-              <th>Slot Booked</th>
-              <th>Status</th>
-              <th>Received</th>
-              <th>Quick Actions</th>
-            </tr>
-          </thead>
-          <tbody id="leads-table-body">
-            <!-- Rendered by JS -->
-          </tbody>
-        </table>
       </div>
     </section>
 
@@ -1075,7 +1050,7 @@
       <div class="view-header">
         <div>
           <h1 class="view-title">STUDIO RENTAL MANAGEMENT</h1>
-          <p class="view-subtitle">Manage private gym rental rates, creator packages, equipment inventory &amp; shoot booking leads</p>
+          <p class="view-subtitle">Manage private gym rental rates, creator packages, and equipment inventory</p>
         </div>
         <div class="view-actions">
           <button class="btn btn-accent" onclick="saveStudioPricing()">Save Studio Rates</button>
@@ -1084,8 +1059,8 @@
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-card__label">Studio Inquiries</div>
-          <div class="stat-card__val" id="stat-studio-inquiries">0</div>
+          <div class="stat-card__label">Facility Status</div>
+          <div class="stat-card__val" style="color:var(--accent);">Ready &amp; Active</div>
         </div>
         <div class="stat-card">
           <div class="stat-card__label">Hourly Rate</div>
@@ -1151,32 +1126,6 @@
         </div>
       </div>
 
-      <!-- Dedicated Studio Bookings Pipeline -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
-          <div>
-            <h3 style="font-family:var(--font-head);font-size:1.5rem;letter-spacing:0.05em;">📋 Studio Rental Booking Enquiries</h3>
-            <p style="color:var(--text-muted);font-size:0.82rem;">Direct inquiries for photo/video shoots, private coaching &amp; studio hire</p>
-          </div>
-        </div>
-        <div class="data-table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Creator / Trainer</th>
-                <th>Phone</th>
-                <th>Slot / Date</th>
-                <th>Shoot Details</th>
-                <th>Status</th>
-                <th>Quick Action</th>
-              </tr>
-            </thead>
-            <tbody id="studio-leads-table-body">
-              <!-- Rendered by JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
     </section>
 
     <!-- ── TAB 3: PROGRAMS & PRICING ───────────────────────── -->
@@ -1281,7 +1230,7 @@
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
           <h3 style="font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.05em;margin-bottom:1rem;">Data Backup &amp; Portability</h3>
           <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
-            Download all your leads, programs, testimonials, studio configuration, and security settings as a single encrypted JSON file.
+            Download all your programs, testimonials, studio configuration, and security settings as a single JSON file.
           </p>
 
           <div style="display:flex;flex-direction:column;gap:1rem;">
@@ -1381,87 +1330,6 @@
     </section>
 
   </main>
-
-  <!-- ══════════════════════════════════════ MODAL: ADD LEAD ══ -->
-  <div id="modal-add-lead" class="modal-backdrop">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h2 class="modal-title">+ LOG NEW LEAD / WALK-IN</h2>
-        <button class="modal-close" onclick="closeAddLeadModal()">&times;</button>
-      </div>
-      <form id="form-add-lead" onsubmit="submitManualLead(event)">
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Full Name *</label>
-            <input type="text" id="newlead-name" class="form-control" required placeholder="e.g. Rohan Verma">
-          </div>
-          <div class="form-group">
-            <label>WhatsApp Number (10 digits) *</label>
-            <input type="tel" id="newlead-phone" class="form-control" required placeholder="e.g. 9876543210">
-          </div>
-          <div class="form-group">
-            <label>Email Address (Optional)</label>
-            <input type="email" id="newlead-email" class="form-control" placeholder="e.g. rohan@gmail.com">
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-            <div class="form-group">
-              <label>Goal / Service *</label>
-              <select id="newlead-goal" class="form-control">
-                <option value="Fat Loss">Fat Loss</option>
-                <option value="Muscle Building">Muscle Building</option>
-                <option value="Kids Fitness">Kids Fitness</option>
-                <option value="Studio Rental / Shoot">Studio Rental / Shoot</option>
-                <option value="Strength &amp; Conditioning">Strength &amp; Conditioning</option>
-                <option value="General Fitness">General Fitness</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Lead Source</label>
-              <select id="newlead-source" class="form-control">
-                <option value="Walk-in">Walk-in</option>
-                <option value="Instagram DM">Instagram DM</option>
-                <option value="Phone Call">Phone Call</option>
-                <option value="WhatsApp">WhatsApp Inquiry</option>
-                <option value="Website">Website</option>
-                <option value="Referral">Client Referral</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Preferred Consultation Slot</label>
-            <input type="text" id="newlead-slot" class="form-control" placeholder="e.g. 11:30 AM or 04:30 PM">
-          </div>
-          <div class="form-group">
-            <label>Requirement / Notes</label>
-            <textarea id="newlead-message" class="form-control" rows="3" placeholder="e.g. Looking for 3-month fat loss transformation, wants morning slot..."></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline" onclick="closeAddLeadModal()">Cancel</button>
-          <button type="submit" class="btn btn-accent">+ Save &amp; Log Lead</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ MODAL: WHATSAPP TEMPLATES ══ -->
-  <div id="modal-wa-templates" class="modal-backdrop">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <div>
-          <h2 class="modal-title">⚡ QUICK WHATSAPP DISPATCH</h2>
-          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;" id="wa-modal-target-client">Client: -</p>
-        </div>
-        <button class="modal-close" onclick="closeWaModal()">&times;</button>
-      </div>
-      <div class="modal-body" id="wa-templates-container">
-        <!-- Injected by JS -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline" onclick="closeWaModal()">Close</button>
-      </div>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════════════ MODAL: ADD AMENITY ══ -->
   <div id="modal-add-amenity" class="modal-backdrop">
@@ -1744,10 +1612,8 @@
     }
 
     // ── DASHBOARD INITIALIZATION ────────────────────────────────
-    // ── DASHBOARD INITIALIZATION ────────────────────────────────
     function initDashboard() {
       renderOverview();
-      renderLeads();
       renderStudio();
       renderProgramsEditor();
       renderTestimonials();
@@ -1758,273 +1624,31 @@
 
     // ── 1. OVERVIEW ─────────────────────────────────────────────
     function renderOverview() {
-      const leads = window.FitItUpCMS.getLeads();
       const programs = window.FitItUpCMS.getPrograms();
-      const studioLeads = window.FitItUpCMS.getStudioLeads();
+      const studio = window.FitItUpCMS.getStudio();
+      const testimonials = window.FitItUpCMS.getTestimonials();
 
-      document.getElementById('stat-total-leads').textContent = leads.length;
-      document.getElementById('stat-new-leads').textContent = leads.filter(l => l.status === 'New').length;
-      document.getElementById('badge-leads-count').textContent = leads.filter(l => l.status === 'New').length;
-      document.getElementById('stat-active-programs').textContent = programs.length;
-      const badgeStudio = document.getElementById('badge-studio-count');
-      if (badgeStudio) badgeStudio.textContent = studioLeads.length;
+      const statProg = document.getElementById('stat-active-programs');
+      const statStudio = document.getElementById('stat-studio-rate');
+      const statReviews = document.getElementById('stat-total-reviews');
 
-      const recentContainer = document.getElementById('overview-recent-leads');
-      if (!leads.length) {
-        recentContainer.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;">No leads logged yet.</p>';
-        return;
-      }
-
-      recentContainer.innerHTML = leads.slice(0, 4).map(lead => {
-        const isStudio = ((lead.goal || '') + ' ' + (lead.message || '')).toLowerCase().includes('studio');
-        return `
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:0.5rem;">
-            <div>
-              <strong>${escapeHtml(lead.name)}</strong> · <span style="color:var(--text-muted);font-size:0.85rem;">${escapeHtml(lead.goal)}</span>
-              ${isStudio ? '<span class="badge" style="background:rgba(200,245,58,0.15);color:var(--accent);font-size:0.65rem;margin-left:0.35rem;">🏢 Studio</span>' : ''}
-            </div>
-            <div style="display:flex;align-items:center;gap:0.6rem;">
-              <span class="badge badge-${lead.status.toLowerCase()}">${lead.status}</span>
-              <button class="btn btn-wa" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="openWaModal('${lead.id}')">⚡ WhatsApp</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // ── 2. LEADS CRM ────────────────────────────────────────────
-    let currentLeadFilter = 'all';
-
-    function filterLeadsBy(filter, btn) {
-      currentLeadFilter = filter;
-      document.querySelectorAll('#lead-filter-pills .filter-pill').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      renderLeads();
-    }
-
-    function renderLeads() {
-      const tbody = document.getElementById('leads-table-body');
-      const allLeads = window.FitItUpCMS.getLeads();
-
-      // Update counters
-      const coachingCount = allLeads.filter(l => !((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio')).length;
-      const studioCount = allLeads.filter(l => ((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio')).length;
-      const newCount = allLeads.filter(l => l.status === 'New').length;
-
-      const cAll = document.getElementById('count-all-leads');
-      const cCoach = document.getElementById('count-coaching-leads');
-      const cStudio = document.getElementById('count-studio-leads');
-      const cNew = document.getElementById('count-uncontacted-leads');
-      const badgeStudio = document.getElementById('badge-studio-count');
-
-      if (cAll) cAll.textContent = allLeads.length;
-      if (cCoach) cCoach.textContent = coachingCount;
-      if (cStudio) cStudio.textContent = studioCount;
-      if (cNew) cNew.textContent = newCount;
-      if (badgeStudio) badgeStudio.textContent = studioCount;
-
-      let filtered = allLeads;
-      if (currentLeadFilter === 'coaching') {
-        filtered = allLeads.filter(l => !((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio'));
-      } else if (currentLeadFilter === 'studio') {
-        filtered = allLeads.filter(l => ((l.goal || '') + ' ' + (l.message || '')).toLowerCase().includes('studio'));
-      } else if (currentLeadFilter === 'new') {
-        filtered = allLeads.filter(l => l.status === 'New');
-      }
-
-      if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">No leads matching this filter.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(lead => {
-        const dateStr = new Date(lead.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        const isStudio = ((lead.goal || '') + ' ' + (lead.message || '')).toLowerCase().includes('studio');
-        
-        return `
-          <tr>
-            <td>
-              <strong style="display:block;font-size:0.92rem;">${escapeHtml(lead.name)}</strong>
-              <span style="font-size:0.72rem;color:var(--text-muted);">via ${escapeHtml(lead.source || 'Website Form')}</span>
-            </td>
-            <td>
-              <a href="tel:${escapeHtml(lead.phone)}" style="color:var(--accent);text-decoration:none;font-weight:600;">+91 ${escapeHtml(lead.phone)}</a>
-            </td>
-            <td>
-              ${isStudio 
-                ? '<span class="badge" style="background:rgba(200,245,58,0.15);color:var(--accent);border:1px solid rgba(200,245,58,0.35);">🏢 Studio Rental</span>' 
-                : `<span class="badge" style="background:rgba(255,255,255,0.06);color:var(--text);">${escapeHtml(lead.goal)}</span>`}
-              ${lead.message ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${escapeHtml(lead.message)}">${escapeHtml(lead.message)}</div>` : ''}
-            </td>
-            <td>${escapeHtml(lead.slot || 'Flexible')}</td>
-            <td>
-              <select onchange="changeLeadStatus('${lead.id}', this.value)" class="form-control" style="padding:0.35rem 0.5rem;font-size:0.75rem;width:auto;">
-                <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
-                <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
-                <option value="Converted" ${lead.status === 'Converted' ? 'selected' : ''}>Converted</option>
-                <option value="Archived" ${lead.status === 'Archived' ? 'selected' : ''}>Archived</option>
-              </select>
-            </td>
-            <td style="color:var(--text-muted);font-size:0.75rem;">${dateStr}</td>
-            <td>
-              <div style="display:flex;gap:0.4rem;align-items:center;">
-                <button class="btn btn-wa" style="display:inline-flex;align-items:center;gap:0.3rem;" onclick="openWaModal('${lead.id}')">
-                  ⚡ WhatsApp
-                </button>
-                <button class="btn btn-danger" style="padding:0.3rem 0.6rem;font-size:0.75rem;" onclick="removeLead('${lead.id}')" title="Delete lead">✕</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function changeLeadStatus(id, newStatus) {
-      window.FitItUpCMS.updateLeadStatus(id, newStatus);
-      showToast('Status Updated');
-      renderOverview();
-      renderLeads();
-      renderStudio();
-    }
-
-    function removeLead(id) {
-      if (confirm('Delete this lead record?')) {
-        window.FitItUpCMS.deleteLead(id);
-        renderLeads();
-        renderOverview();
-        renderStudio();
-        showToast('Lead Deleted');
-      }
-    }
-
-    function exportLeadsCsv() {
-      const leads = window.FitItUpCMS.getLeads();
-      let csv = 'Lead ID,Name,Phone,Email,Service / Goal,Slot,Source,Status,Date Received,Notes\n';
-      leads.forEach(l => {
-        const clean = (str) => `"${(str || '').replace(/"/g, '""')}"`;
-        csv += `${clean(l.id)},${clean(l.name)},${clean(l.phone)},${clean(l.email)},${clean(l.goal)},${clean(l.slot)},${clean(l.source || 'Website')},${clean(l.status)},${clean(l.createdAt)},${clean(l.message)}\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      const dateStr = new Date().toISOString().slice(0, 10);
-      a.download = `fititup_leads_${dateStr}.csv`;
-      a.click();
-      showToast('📥 CSV Leads Downloaded!');
-    }
-
-    // ── MANUAL LEAD ENTRY ───────────────────────────────────────
-    function openAddLeadModal() {
-      document.getElementById('modal-add-lead').classList.add('is-open');
-      document.getElementById('newlead-name').focus();
-    }
-
-    function closeAddLeadModal() {
-      document.getElementById('modal-add-lead').classList.remove('is-open');
-      document.getElementById('form-add-lead').reset();
-    }
-
-    function submitManualLead(e) {
-      e.preventDefault();
-      const name = document.getElementById('newlead-name').value.trim();
-      const phone = document.getElementById('newlead-phone').value.trim().replace(/\D/g, '');
-      const email = document.getElementById('newlead-email').value.trim();
-      const goal = document.getElementById('newlead-goal').value;
-      const source = document.getElementById('newlead-source').value;
-      const slot = document.getElementById('newlead-slot').value.trim();
-      const message = document.getElementById('newlead-message').value.trim();
-
-      if (!name || !phone) {
-        alert('Please provide Name and Phone number');
-        return;
-      }
-
-      window.FitItUpCMS.addLead({
-        name,
-        phone,
-        email,
-        goal,
-        source,
-        slot: slot || 'Flexible',
-        message
-      });
-
-      closeAddLeadModal();
-      renderLeads();
-      renderOverview();
-      renderStudio();
-      showToast('🎉 New Lead Logged Successfully!');
-    }
-
-    // ── QUICK WHATSAPP TEMPLATES ───────────────────────────────
-    function openWaModal(leadId) {
-      const leads = window.FitItUpCMS.getLeads();
-      const lead = leads.find(l => l.id === leadId);
-      if (!lead) return;
-
-      const studioConfig = window.FitItUpCMS.getStudio();
-      const hourlyRate = studioConfig.hourlyRate || '599';
-
-      document.getElementById('wa-modal-target-client').textContent = `Client: ${lead.name} (+91 ${lead.phone}) · Goal: ${lead.goal}`;
-
-      const t1 = `Hi ${lead.name}! Coach Ashish here from FitItUp. I saw your consultation request for ${lead.goal}. Are you free for a quick 5-min intro call today at ${lead.slot || 'your preferred time'}?`;
-      const t2 = `Hi ${lead.name}! Thanks for reaching out regarding the FitItUp Private Studio. Our slots are ₹${hourlyRate}/hr and include full camera lighting, wireless mics & private equipment access. Which date & duration would you like to reserve?`;
-      const t3 = `Hi ${lead.name}! Coach Ashish here. To help me prepare your personalized plan, could you quickly share: 1) Current Age & Weight, 2) Dietary preference (Veg/Non-Veg/Jain), 3) Any past workout injuries?`;
-      const t4 = `Hi ${lead.name}! Just following up on our previous chat regarding your ${lead.goal} goals with FitItUp. Let me know if you have any questions before we get you started on your plan!`;
-
-      const templates = [
-        { title: '🏋️ 1. Intro Consultation Call', text: t1 },
-        { title: '🏢 2. Studio Rental & Shoot Slot', text: t2 },
-        { title: '🥗 3. Diet & Fitness Assessment Form', text: t3 },
-        { title: '🤝 4. Follow-Up Message', text: t4 }
-      ];
-
-      const container = document.getElementById('wa-templates-container');
-      container.innerHTML = templates.map((tmpl, idx) => `
-        <div class="wa-template-card">
-          <div class="wa-template-title">${tmpl.title}</div>
-          <div class="wa-template-text">${escapeHtml(tmpl.text)}</div>
-          <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
-            <button class="btn btn-outline" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="copyWaText(${idx})">📋 Copy Text</button>
-            <a href="https://wa.me/91${lead.phone}?text=${encodeURIComponent(tmpl.text)}" class="btn btn-wa" target="_blank" rel="noopener">
-              💬 Send on WhatsApp →
-            </a>
-          </div>
-        </div>
-      `).join('');
-
-      window._currentWaTemplates = templates;
-      document.getElementById('modal-wa-templates').classList.add('is-open');
-    }
-
-    function copyWaText(idx) {
-      if (window._currentWaTemplates && window._currentWaTemplates[idx]) {
-        navigator.clipboard.writeText(window._currentWaTemplates[idx].text);
-        showToast('Template text copied!');
-      }
-    }
-
-    function closeWaModal() {
-      document.getElementById('modal-wa-templates').classList.remove('is-open');
+      if (statProg) statProg.textContent = programs.length;
+      if (statStudio) statStudio.textContent = `₹${studio.hourlyRate || '599'}`;
+      if (statReviews) statReviews.textContent = testimonials.length;
     }
 
     // ── STUDIO RENTAL MANAGEMENT ────────────────────────────────
     function renderStudio() {
       const studio = window.FitItUpCMS.getStudio();
-      const studioLeads = window.FitItUpCMS.getStudioLeads();
 
       // Update Top Stats
-      const statInquiries = document.getElementById('stat-studio-inquiries');
       const statHourly = document.getElementById('stat-studio-hourly');
       const statCreator = document.getElementById('stat-studio-creator');
       const statTrainer = document.getElementById('stat-studio-trainer');
-      const badgeCount = document.getElementById('badge-studio-count');
 
-      if (statInquiries) statInquiries.textContent = studioLeads.length;
       if (statHourly) statHourly.textContent = studio.hourlyRate || '599';
       if (statCreator) statCreator.textContent = studio.creatorRate || '1,999';
       if (statTrainer) statTrainer.textContent = studio.trainerRate || '7,999';
-      if (badgeCount) badgeCount.textContent = studioLeads.length;
 
       // Inputs
       const inHourly = document.getElementById('cfg-studio-hourly');
@@ -2059,44 +1683,6 @@
             </div>
           </div>
         `).join('');
-      }
-
-      // Render Studio Bookings Table
-      const studioTbody = document.getElementById('studio-leads-table-body');
-      if (studioTbody) {
-        if (!studioLeads.length) {
-          studioTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem;">No studio rental inquiries logged yet.</td></tr>';
-          return;
-        }
-
-        studioTbody.innerHTML = studioLeads.map(lead => {
-          const dateStr = new Date(lead.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-          const shootDetails = lead.message || lead.goal || 'General shoot session';
-          return `
-            <tr>
-              <td>
-                <strong style="display:block;font-size:0.92rem;">${escapeHtml(lead.name)}</strong>
-                <span style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(lead.source || 'Website Form')}</span>
-              </td>
-              <td><a href="tel:${escapeHtml(lead.phone)}" style="color:var(--accent);text-decoration:none;font-weight:600;">+91 ${escapeHtml(lead.phone)}</a></td>
-              <td>${escapeHtml(lead.slot || 'Flexible')}</td>
-              <td style="max-width:240px;font-size:0.8rem;color:var(--text-muted);">${escapeHtml(shootDetails)}</td>
-              <td>
-                <select onchange="changeLeadStatus('${lead.id}', this.value)" class="form-control" style="padding:0.35rem 0.5rem;font-size:0.75rem;width:auto;">
-                  <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
-                  <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
-                  <option value="Converted" ${lead.status === 'Converted' ? 'selected' : ''}>Converted</option>
-                  <option value="Archived" ${lead.status === 'Archived' ? 'selected' : ''}>Archived</option>
-                </select>
-              </td>
-              <td>
-                <button class="btn btn-wa" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="openWaModal('${lead.id}')">
-                  ⚡ Reply
-                </button>
-              </td>
-            </tr>
-          `;
-        }).join('');
       }
     }
 
